@@ -33,6 +33,23 @@ body {
   background-color: $bg-light;
   color: $text-dark;
 }
+
+*::selection {
+  background-color: $primary;
+  color: $white;
+}
+::-webkit-scrollbar {
+  height: 0.3rem;
+  width: 0.3rem;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $primary;
+  border-bottom-left-radius: 2rem;
+}
+
 h1,
 h2,
 h3,
@@ -43,6 +60,12 @@ button {
   letter-spacing: 0.5px;
 }
 
+$color-white: #f0f4f8;
+$color-medium: #bcccdc;
+$color-text: #829ab1;
+$color-content: #486581;
+$color-bg: #102a43;
+
 .app-container {
   display: flex;
   height: 100vh;
@@ -50,11 +73,12 @@ button {
 
   .sidebar {
     width: $sidebar-width;
-    background: #ffffff;
+    // background: #011f72;
+    background: $color-bg;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #f1f5f9;
+    box-shadow: 0px 0px 6px white;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: sticky;
     top: 0;
@@ -63,7 +87,8 @@ button {
       padding: 2rem;
       font-size: 1.8rem;
       font-weight: 800;
-      color: #425166;
+      // color: #425166;
+      color: $color-text;
       display: flex;
       align-items: center;
 
@@ -98,9 +123,11 @@ button {
         padding: 14px 18px;
         margin-bottom: 8px;
         border: none;
-        background: transparent;
+        // background: transparent;
+        background: rgba($color-white, 0.1);
         border-radius: 12px;
-        color: #64748b;
+        // color: #64748b;
+        color: $color-medium;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -176,25 +203,34 @@ button {
     .user-profile {
       margin: 20px;
       padding: 15px;
-      background: #f8fafc;
+      // background: #f8fafc;
+      background: rgba($color-white, 0.2);
       border-radius: 16px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
+      transition: 0.3s ease;
+
+      &:hover {
+        transform: scale(1.02);
+      }
 
       .avatar {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         background: #ddd;
         border-radius: 50%;
         object-fit: cover;
       }
 
       .info {
+        text-align: end;
         h4 {
           margin: 0;
           font-size: 0.9rem;
-          color: #1e293b;
+          // color: #1e293b;
+          color: $color-white;
         }
         p {
           margin: 0;
@@ -212,29 +248,34 @@ button {
     overflow-y: auto;
 
     .top-bar {
-      background: $white;
+      background: $color-bg;
       padding: 1rem 2.5rem;
-      border-bottom: 1px solid $border;
+      // border-bottom: 1px solid $border;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 100px;
+      // border-radius: 0 0 1rem 1rem;
 
       h1 {
-        font-size: 1.4rem;
+        font-size: 1.9rem;
         margin: 0;
-        color: #1e293b;
+        // color: #1e293b;
+        color: $color-text;
       }
       .user-info {
         font-weight: 600;
         color: $primary;
         background: #dbeafe;
-        padding: 5px 15px;
+        padding: 5px 25px;
         border-radius: 20px;
       }
     }
 
     .page-render {
       padding: 2.5rem;
+      background-color: $color-content;
+      height: 100vh;
     }
   }
 }
@@ -243,6 +284,7 @@ button {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
+  background: $color-content;
 
   .card {
     background: $white;
@@ -290,7 +332,8 @@ button {
     align-items: center;
     padding: 1.5rem 2.5rem;
     margin-bottom: 1rem;
-    background: rgba(255, 255, 255, 0.8);
+    // background: rgba(255, 255, 255, 0.8);
+    background: $color-content;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px); // Glassmorphism effect
     border-bottom: 1px solid #e2e8f0;
@@ -548,6 +591,29 @@ button {
 }
 
 .papers-page {
+  // background: rgba($color-white, 0.2);
+  // padding: 1rem 50px;
+
+  .card {
+    background: rgba($color-white, 0.4);
+    // background-color: white;
+    padding: 1.5rem;
+    margin-bottom: 6px;
+    border-radius: 15px;
+    border: 1px solid $border;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: #495b74;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+  }
+
   .paper-form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 2fr auto;
@@ -560,13 +626,14 @@ button {
       border-radius: 8px;
       border: 1px solid #e2e8f0;
       outline: none;
+
       &:focus {
-        border-color: #2563eb;
+        border-color: $color-content;
       }
     }
 
     button {
-      background: #2563eb;
+      background: $color-bg;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -580,26 +647,12 @@ button {
       }
     }
   }
-  .border-maths {
-    border-left: 5px solid #2563eb !important;
-  }
-  .border-physics {
-    border-left: 5px solid #ef4444 !important;
-  }
-  .border-chemistry {
-    border-left: 5px solid #10b981 !important;
-  }
-
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
 
   .papers-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+
     th,
     td {
       padding: 15px;
@@ -607,9 +660,10 @@ button {
       border-bottom: 1px solid #f1f5f9;
     }
     th {
-      color: #64748b;
+      // color: #64748b;
+      color: $color-white;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
     }
 
     .tag {
@@ -618,13 +672,17 @@ button {
       font-size: 0.8rem;
       font-weight: 600;
     }
-    .pure {
+    .maths {
       background: #dbeafe;
-      color: #1e40af;
+      color: #2563eb;
     }
-    .applied {
+    .physics {
       background: #fef3c7;
-      color: #92400e;
+      color: #ef4444;
+    }
+    .chemistry {
+      background-color: #ddfcf2;
+      color: #10b981;
     }
 
     .mark-badge {
@@ -635,24 +693,43 @@ button {
       border-radius: 6px;
     }
     .error-cell {
-      color: #64748b;
+      color: $color-content;
       font-style: italic;
       max-width: 250px;
     }
 
     .delete-btn {
       color: #ef4444;
-      background: none;
+      background: transparent;
+      // padding: 3px;
       border: none;
+      border-radius: 3px;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.5rem;
     }
   }
+}
+
+.border-maths {
+  border-left: 5px solid #2563eb !important;
+}
+.border-physics {
+  border-left: 5px solid #ef4444 !important;
+}
+.border-chemistry {
+  border-left: 5px solid #10b981 !important;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .formulas-page {
   .formula-header {
     margin-bottom: 25px;
+
     .search-bar {
       display: flex;
       align-items: center;
@@ -662,6 +739,7 @@ button {
       border: 1px solid #e2e8f0;
       gap: 10px;
       color: #64748b;
+
       input {
         border: none;
         outline: none;
@@ -671,17 +749,45 @@ button {
     }
   }
 
-  .formula-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+  h3 {
+    // margin-top: 0;
+    margin: 25px auto;
+    color: $color-bg;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .card {
+    background: rgba($color-white, 0.4);
+    // background-color: white;
+    padding: 1.5rem;
+    margin-bottom: 6px;
+    border-radius: 15px;
+    border: 1px solid $border;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: #495b74;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
   }
 
   .add-formula-card {
+    // position: static;
+    width: 500px;
+    margin: 0 auto;
     form {
       display: flex;
       flex-direction: column;
       gap: 10px;
+
       select,
       input,
       textarea {
@@ -690,12 +796,13 @@ button {
         border: 1px solid #e2e8f0;
         outline: none;
       }
+
       textarea {
         height: 80px;
         resize: none;
       }
       button {
-        background: #2563eb;
+        background: $color-bg;
         color: white;
         border: none;
         padding: 10px;
@@ -706,6 +813,12 @@ button {
         }
       }
     }
+  }
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    overflow: scroll;
   }
 
   .formula-item-card {
@@ -721,21 +834,34 @@ button {
         font-weight: 700;
         text-transform: uppercase;
       }
-      .trigonometry {
-        background: #dcfce7;
-        color: #166534;
+      // .trigonometry {
+      //   background: #dcfce7;
+      //   color: #166534;
+      // }
+      // .calculus {
+      //   background: #fef3c7;
+      //   color: #92400e;
+      // }
+      // .algebra {
+      //   background: #e0f2fe;
+      //   color: #075985;
+      // }
+      // .mechanics {
+      //   background: #fce7f3;
+      //   color: #9d174d;
+      // }
+
+      .maths {
+        background: #dbeafe;
+        color: #2563eb;
       }
-      .calculus {
+      .physics {
         background: #fef3c7;
-        color: #92400e;
+        color: #ef4444;
       }
-      .algebra {
-        background: #e0f2fe;
-        color: #075985;
-      }
-      .mechanics {
-        background: #fce7f3;
-        color: #9d174d;
+      .chemistry {
+        background-color: #ddfcf2;
+        color: #10b981;
       }
       button {
         background: none;
@@ -1036,5 +1162,110 @@ button {
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+.progress-card-premium {
+  text-align: center;
+  .progress-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .circular-chart {
+      width: 120px;
+      height: 120px;
+      margin: 10px 0;
+    }
+    .circle-bg {
+      fill: none;
+      stroke: #f1f5f9;
+      stroke-width: 3.8;
+    }
+    .circle {
+      fill: none;
+      stroke: #4f46e5;
+      stroke-width: 3.8;
+      stroke-linecap: round;
+      transition: stroke-dasharray 0.5s ease;
+    }
+    .percentage {
+      font-family: $font-exo;
+      font-size: 0.5rem;
+      font-weight: 800;
+      text-anchor: middle;
+      fill: #1e293b;
+    }
+    p {
+      font-size: 0.85rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+  }
+}
+
+.performance-card {
+  text-align: center;
+  .sub-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #eef2ff;
+    color: #4f46e5;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .score-box {
+    margin: 15px 0;
+    .score-num {
+      font-family: $font-exo;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+    .percent-sign {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+  }
+  .paper-type {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+.countdown-card-premium {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: white;
+  text-align: center;
+
+  h3 {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 0.9rem !important;
+  }
+
+  .timer-grid {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+
+    .time-item {
+      span {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: $font-exo;
+      }
+      .secs {
+        color: #fcd34d;
+      } // Seconds වලට පොඩි වෙනස් පාටක්
+      small {
+        font-size: 0.7rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+      }
+    }
   }
 }
