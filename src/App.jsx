@@ -211,6 +211,7 @@
 // export default App;
 
 import { useState } from "react";
+
 import Dashboard from "./pages/Dashboard";
 import Papers from "./pages/Papers";
 import Formulas from "./pages/Formulas";
@@ -219,10 +220,9 @@ import Timetable from "./pages/Timetable";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
-
 import { GiFlyingTarget } from "react-icons/gi";
-import { TbMathFunction } from "react-icons/tb";
 import { LuCalendarDays } from "react-icons/lu";
+import { PiMathOperationsFill } from "react-icons/pi";
 
 import Logo from "../public/logo.jpg";
 
@@ -247,6 +247,15 @@ function App() {
           </button>
 
           <button
+            className={activeTab === "timetable" ? "active" : ""}
+            onClick={() => setActiveTab("timetable")}>
+            <span className="icon">
+              <LuCalendarDays />
+            </span>{" "}
+            Timetable
+          </button>
+
+          <button
             className={activeTab === "papers" ? "active" : ""}
             onClick={() => setActiveTab("papers")}>
             <span className="icon">
@@ -259,7 +268,7 @@ function App() {
             className={activeTab === "formulas" ? "active" : ""}
             onClick={() => setActiveTab("formulas")}>
             <span className="icon">
-              <TbMathFunction />
+              <PiMathOperationsFill />
             </span>{" "}
             Formulas
           </button>
@@ -272,15 +281,6 @@ function App() {
             </span>{" "}
             Analysis
           </button>
-
-          <button
-            className={activeTab === "timetable" ? "active" : ""}
-            onClick={() => setActiveTab("timetable")}>
-            <span className="icon">
-              <LuCalendarDays />
-            </span>{" "}
-            Timetable
-          </button>
         </nav>
         {/* * User Profile Section */}
         <div className="user-profile">
@@ -288,7 +288,7 @@ function App() {
           <img src={Logo} alt="avatar" className="avatar" />{" "}
           <div className="info">
             {" "}
-            <h4>Wihanga</h4> <p>A/L Student</p>{" "}
+            <h4>Wihanga Nimsara</h4> <p>A/L Student</p>{" "}
           </div>{" "}
         </div>
         <div className="sidebar-footer">
@@ -316,9 +316,7 @@ function App() {
             }}>
             <LuBell size={20} />
           </button> */}
-          <div className="user-info">
-            A/L 2026 Target <GiFlyingTarget />
-          </div>
+          <div className="user-info">A/L 2026 Target</div>
         </header>
 
         <section className="page-render">
