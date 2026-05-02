@@ -1,69 +1,3 @@
-// import { useState, useEffect } from "react";
-// import { GiFlyingTarget } from "react-icons/gi";
-
-// const Dashboard = () => {
-//   // විභාගයට ඇති කාලය ගණනය කිරීමේ Logic එක
-//   const calculateTimeLeft = () => {
-//     const examDate = new Date("2026-10-25T00:00:00"); // මල්ලිගේ විභාග දිනය මෙතනට දාන්න
-//     const difference = +examDate - +new Date();
-
-//     let timeLeft = {};
-
-//     if (difference > 0) {
-//       timeLeft = {
-//         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-//         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-//         minutes: Math.floor((difference / 1000 / 60) % 60),
-//         seconds: Math.floor((difference / 1000) % 60),
-//       };
-//     }
-//     return timeLeft;
-//   };
-
-//   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setTimeLeft(calculateTimeLeft());
-//     }, 1000);
-//     return () => clearInterval(timer);
-//   }, []);
-
-//   return (
-//     <div className="dashboard-container">
-//       {/* Countdown Section */}
-//       <div className="status-grid">
-//         <div className="card countdown-card">
-//           <h3>
-//             Exam Countdown <GiFlyingTarget />
-//           </h3>
-//           <div className="timer-display">
-//             <div className="time-unit">
-//               <span>{timeLeft.days || "0"}</span>
-//               <p>Days</p>
-//             </div>
-//             <div className="time-unit">
-//               <span>{timeLeft.hours || "0"}</span>
-//               <p>Hours</p>
-//             </div>
-//             <div className="time-unit">
-//               <span>{timeLeft.minutes || "0"}</span>
-//               <p>Mins</p>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="card welcome-card">
-//           <h3>Good Morning, Malli! 👋</h3>
-//           <p>අද ඔයාගේ ඉලක්කය සපුරාගන්න සූදානම්ද?</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard; // අන්න මේ පේළිය අනිවාර්යයෙන්ම තියෙන්න ඕනේ
-
 import { useState, useEffect } from "react";
 import {
   LuCheck,
@@ -93,11 +27,11 @@ const Dashboard = () => {
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-  // මේ useEffect එක අනිවාර්යයෙන්ම දාන්න, එතකොට තමයි ටයිමර් එක වැඩ කරන්නේ
+  // timer event
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
-    }, 1000); // විනාඩියකට වරක් update වේ (mins පෙන්වන නිසා)
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
@@ -198,6 +132,84 @@ const Dashboard = () => {
 
     return weeksLeft > 0 ? weeksLeft : 0;
   };
+
+  // Dashboard.jsx ඇතුළත මේ logic එක update කරන්න
+
+  //   const [seconds, setSeconds] = useState(1500); // 25 mins
+  //   const [isActive, setIsActive] = useState(false);
+  const [isOvertime, setIsOvertime] = useState(false); // Overtime ද නැද්ද යන්න
+  const [totalFocusTime, setTotalFocusTime] = useState(0); // මුළු කාලය සටහන් කිරීමට
+
+  const playAlarm = () => {
+    const audio = new Audio("https://mixkit.co");
+    audio.play();
+  };
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isActive) {
+      interval = setInterval(() => {
+        if (!isOvertime) {
+          if (seconds > 0) {
+            setSeconds((s) => s - 1);
+          } else {
+            // Timer එක 0 වුණා!
+            setIsOvertime(true);
+            playAlarm(); // Sound එක ප්ලේ කිරීම
+          }
+        } else {
+          // Overtime ගණන් කිරීම (0 සිට ඉහළට)
+          setSeconds((s) => s + 1);
+        }
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds, isOvertime]);
+
+  // Session එක ඉවර කරලා දත්ත save කිරීම
+  const completeSession = () => {
+    const finalTime = isOvertime ? 1500 + seconds : 1500 - seconds;
+    const history = JSON.parse(localStorage.getItem("focus-history") || "[]");
+
+    const newSession = {
+      date: new Date().toLocaleDateString(),
+      duration: Math.floor(finalTime / 60), // විනාඩි වලින්
+      type: "Forest Tree Grown",
+    };
+
+    localStorage.setItem(
+      "focus-history",
+      JSON.stringify([...history, newSession]),
+    );
+
+    // Reset Timer
+    setIsActive(false);
+    setIsOvertime(false);
+    setSeconds(1500);
+    alert("Session Saved! Your tree is added to the forest 🌲");
+  };
+
+  const getTreeStatus = () => {
+    if (!isActive && seconds === 1500) return "🌱 Seed"; // පටන් ගන්න කලින්
+    if (isOvertime) return "🌳 Fully Grown Tree";
+    const progress = ((1500 - seconds) / 1500) * 100;
+    if (progress < 30) return "🌿 Sprout";
+    if (progress < 70) return "🪴 Sapling";
+    return "🌳 Growing Tree";
+  };
+
+  const getForestStats = () => {
+    const history = JSON.parse(localStorage.getItem("focus-history") || "[]");
+    // අද දවසට අදාළ ගස් පමණක් වෙන් කර ගැනීම
+    const today = new Date().toLocaleDateString();
+    const todayTrees = history.filter((session) => session.date === today);
+    return todayTrees;
+  };
+
+  const dailyTrees = getForestStats();
   return (
     <div className="dashboard-wrapper">
       <div className="dashboard-main">
@@ -234,7 +246,6 @@ const Dashboard = () => {
               <span style={{ color: "#eb4d25" }}>{timeLeft?.seconds}s</span>
             </div>
           </div>
-
           <div className="card performance-card">
             <h3>Recent Evaluation 🎯</h3>
             {lastPaper ? (
@@ -257,7 +268,6 @@ const Dashboard = () => {
               </p>
             )}
           </div>
-
           <div className="card focus-card">
             <h3>Focus Timer ⏱️</h3>
             <div className="timer-display">{formatTime(seconds)}</div>
@@ -272,6 +282,33 @@ const Dashboard = () => {
                 }}>
                 <LuRotateCcw />
               </button>
+            </div>
+          </div>
+          // UI එක ඇතුළේ:
+          <div className="card forest-gallery-card">
+            <h3>Daily Achievement Forest 🌲</h3>
+            <div className="trees-display">
+              {dailyTrees.length > 0 ? (
+                dailyTrees.map((tree, index) => (
+                  <div
+                    key={index}
+                    className="mini-tree-box"
+                    title={`Duration: tree.duration}mins`}>
+                    <LuTrees className="mini-tree-icon" />
+                    <span className="tree-time">{tree.duration}m</span>
+                  </div>
+                ))
+              ) : (
+                <p className="no-trees-msg">
+                  No trees planted today. Start a session to grow your forest!
+                </p>
+              )}
+            </div>
+            <div className="forest-summary">
+              Total Focus Time Today:{" "}
+              <strong>
+                {dailyTrees.reduce((acc, curr) => acc + curr.duration, 0)} mins
+              </strong>
             </div>
           </div>
         </div>
