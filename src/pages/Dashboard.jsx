@@ -230,6 +230,35 @@ const Dashboard = () => {
             </small>
           </div>
         </div>
+
+        {/* Progress Section */}
+        <div className="daily-progress-container card">
+          <div className="progress-info">
+            <h3>Daily Progress 🎯</h3>
+            <span className="percentage">
+              {tasks.length > 0
+                ? Math.round(
+                    (tasks.filter((t) => t.completed).length / tasks.length) *
+                      100,
+                  )
+                : 0}
+              %
+            </span>
+          </div>
+
+          <div className="progress-bar-outer">
+            <div
+              className="progress-bar-inner"
+              style={{
+                width: `${tasks.length > 0 ? (tasks.filter((t) => t.completed).length / tasks.length) * 100 : 0}%`,
+              }}></div>
+          </div>
+
+          <p className="task-count">
+            {tasks.filter((t) => t.completed).length} of {tasks.length} tasks
+            completed
+          </p>
+        </div>
       </div>
     </div>
   );
