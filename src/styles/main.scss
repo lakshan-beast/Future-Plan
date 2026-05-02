@@ -37,7 +37,7 @@
 //       letter-spacing: 1px;
 //     }
 //   }
-
+// }
 //   .countdown-card {
 //     .timer-display {
 //       display: flex;
@@ -66,9 +66,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 2.5rem;
+    padding: 2rem 0;
     margin-bottom: 1rem;
-    background: $color-content;
+    // background: $color-content;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid $border;
@@ -313,9 +313,9 @@
 //   }
 // }
 
-// // .papers-page {
-// //   // background: rgba($color-white, 0.2);
-// //   // padding: 1rem 50px;
+// .papers-page {
+//   background: rgba($color-white, 0.2);
+//   padding: 1rem 50px;
 
 // //   // .card {
 // //   //   background: rgba($color-white, 0.4);
@@ -336,22 +336,6 @@
 // //   //     text-align: center;
 // //   //   }
 // //   // }
-// // }
-
-// .border-maths {
-//   border-left: 5px solid #2563eb !important;
-// }
-// .border-physics {
-//   border-left: 5px solid #ef4444 !important;
-// }
-// .border-chemistry {
-//   border-left: 5px solid #10b981 !important;
-// }
-
-// .stats-row {
-//   display: grid;
-//   grid-template-columns: repeat(3, 1fr);
-//   gap: 20px;
 // }
 
 // // }
