@@ -217,7 +217,7 @@ const Analysis = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const savedPapers = localStorage.getItem("papers");
+    const savedPapers = localStorage.getItem("past-papers");
     if (savedPapers) {
       try {
         const parsed = JSON.parse(savedPapers);
