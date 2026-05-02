@@ -212,6 +212,7 @@
 
 import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
+import Papers from "./pages/Papers";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
@@ -285,11 +286,7 @@ function App() {
 
         <section className="page-render">
           {activeTab === "dashboard" && <Dashboard />}
-          {activeTab === "papers" && (
-            <div className="placeholder-page">
-              Past Papers Tracking Coming Soon...
-            </div>
-          )}
+          {activeTab === "papers" && <Papers />}
           {activeTab === "formulas" && (
             <div className="placeholder-page">Formula Sheet Coming Soon...</div>
           )}
