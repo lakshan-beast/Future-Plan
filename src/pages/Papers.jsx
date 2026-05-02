@@ -43,15 +43,6 @@ const Papers = () => {
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
           />
-          {/* <select
-            value={formData.type}
-            onChange={(e) =>
-              setFormData({ ...formData, type: e.target.value })
-            }>
-            <option value="Pure">Pure Maths</option>
-            <option value="Applied">Applied Maths</option>
-          </select> */}
-
           <select
             value={formData.subject}
             onChange={(e) =>
@@ -103,8 +94,8 @@ const Papers = () => {
               <tr key={p.id}>
                 <td>{p.year}</td>
                 <td>
-                  <span className={`tag ${p.type.toLowerCase()}`}>
-                    {p.type}
+                  <span className={`tag ${p.subject.toLowerCase()}`}>
+                    {p.subject}
                   </span>
                 </td>
                 <td>
