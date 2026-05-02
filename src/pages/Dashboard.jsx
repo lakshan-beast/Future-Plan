@@ -853,7 +853,7 @@ const Dashboard = () => {
         <div className="welcome-section card">
                            {" "}
           <h1>
-            Hello, <span>Winahga!</span>
+            Hello, <span>Wihanga!</span>
           </h1>
                     <p>Ready to master your academic goals today?</p>
                  {" "}
