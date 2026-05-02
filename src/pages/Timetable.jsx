@@ -54,6 +54,72 @@ const Timetable = () => {
       : Math.round((completed / totalWithText) * 100);
   };
 
+  useEffect(() => {
+    const checkAndArchiveWeek = () => {
+      const lastArchiveDate = localStorage.getItem("last-archive-date");
+      const today = new Date();
+
+      // සතියේ ආරම්භක දිනය (Monday) ලබා ගැනීම
+      const currentMonday = new Date(today);
+      currentMonday.setDate(
+        today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1),
+      );
+      currentMonday.setHours(0, 0, 0, 0);
+
+      if (lastArchiveDate) {
+        const lastArchive = new Date(lastArchiveDate);
+
+        // සතිය මාරු වී ඇත්නම් (අන්තිමට archive කළ දිනය අද සතියේ සඳුදාට වඩා පරණ නම්)
+        if (lastArchive < currentMonday) {
+          const history = JSON.parse(
+            localStorage.getItem("weekly-history") || "[]",
+          );
+
+          // පරණ සතියේ ප්‍රගතිය ගණනය කිරීම
+          const progress = calculateWeeklyProgress();
+
+          const archivedWeek = {
+            weekId: Week`${calculateWeeksSinceStart(lastArchive)}`,
+            date: lastArchive.toLocaleDateString(),
+            progress: progress,
+            status: "Auto-Archived",
+          };
+
+          // History එකට දත්ත එක් කිරීම
+          localStorage.setItem(
+            "weekly-history",
+            JSON.stringify([...history, archivedWeek]),
+          );
+
+          // Timetable එක Reset කිරීම
+          const resetSchedule = {};
+          [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ].forEach((day) => {
+            resetSchedule[day] = Array(10).fill({ text: "", completed: false });
+          });
+
+          setSchedule(resetSchedule);
+          localStorage.setItem(
+            "last-archive-date",
+            currentMonday.toISOString(),
+          );
+        }
+      } else {
+        // පළමු වතාවට පාවිච්චි කරන විට අද දවස සටහන් කරගැනීම
+        localStorage.setItem("last-archive-date", currentMonday.toISOString());
+      }
+    };
+
+    checkAndArchiveWeek();
+  }, []);
+
   return (
     <div className="timetable-page">
       <div className="timetable-grid">
@@ -95,6 +161,41 @@ const Timetable = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="history-section card">
+        <h3>Academic History (Previous Weeks) 📜</h3>
+        <table className="history-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>Date Archived</th>
+              <th>Final Progress</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {JSON.parse(localStorage.getItem("weekly-history") || "[]").map(
+              (h, i) => (
+                <tr key={i}>
+                  <td>{h.weekId}</td>
+                  <td>{h.date}</td>
+                  <td>
+                    <div className="mini-progress-bar">
+                      <div
+                        className="fill"
+                        style={{ width: `${h.progress}%` }}></div>
+                      <span>{h.progress}%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span className="complete-tag">Archived</span>
+                  </td>
+                </tr>
+              ),
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
