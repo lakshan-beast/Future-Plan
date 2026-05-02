@@ -432,3 +432,112 @@ body {
     }
   }
 }
+
+.formulas-page {
+  .formula-header {
+    margin-bottom: 25px;
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      gap: 10px;
+      color: #64748b;
+      input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .add-formula-card {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      select,
+      input,
+      textarea {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        outline: none;
+      }
+      textarea {
+        height: 80px;
+        resize: none;
+      }
+      button {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        &:hover {
+          background: #1d4ed8;
+        }
+      }
+    }
+  }
+
+  .formula-item-card {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      .tag {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .trigonometry {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .calculus {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .algebra {
+        background: #e0f2fe;
+        color: #075985;
+      }
+      .mechanics {
+        background: #fce7f3;
+        color: #9d174d;
+      }
+      button {
+        background: none;
+        border: none;
+        color: #ef4444;
+        cursor: pointer;
+      }
+    }
+    h4 {
+      margin: 10px 0;
+      color: #1e293b;
+    }
+    .formula-content {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: 600;
+      color: #2563eb;
+    }
+  }
+}
