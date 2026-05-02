@@ -224,6 +224,8 @@ import { GiFlyingTarget } from "react-icons/gi";
 import { TbMathFunction } from "react-icons/tb";
 import { LuCalendarDays } from "react-icons/lu";
 
+import Logo from "../public/logo.jpg";
+
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -231,11 +233,9 @@ function App() {
     <div className="app-container">
       <aside className="sidebar">
         <div className="logo">
-          <GiFlyingTarget />
+          <GiFlyingTarget className="logo-icon" />
           Future<span>Plan</span>
-          {/* <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p> */}
         </div>
-
         <nav className="nav-menu">
           <button
             className={activeTab === "dashboard" ? "active" : ""}
@@ -282,9 +282,21 @@ function App() {
             Timetable
           </button>
         </nav>
-
+        {/* * User Profile Section */}
+        <div className="user-profile">
+          {" "}
+          <img src={Logo} alt="avatar" className="avatar" />{" "}
+          <div className="info">
+            {" "}
+            <h4>Wihanga</h4> <p>A/L Student</p>{" "}
+          </div>{" "}
+        </div>
         <div className="sidebar-footer">
-          <p>Combined Maths Edition</p>
+          <div className="footer-status">
+            <div className="status-dot"></div>
+            <span>System Operational</span>
+          </div>
+          <p>Precision Study Engine | Edition 2026 </p>
         </div>
       </aside>
 
@@ -292,6 +304,18 @@ function App() {
       <main className="main-content">
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
+          {/* <button
+            className="icon-btn-notify"
+            style={{
+              border: "none",
+              background: "#f8fafc",
+              padding: "10px",
+              borderRadius: "10px",
+              cursor: "pointer",
+              color: "#64748b",
+            }}>
+            <LuBell size={20} />
+          </button> */}
           <div className="user-info">
             A/L 2026 Target <GiFlyingTarget />
           </div>
