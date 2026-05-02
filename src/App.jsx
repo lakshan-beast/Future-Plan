@@ -213,6 +213,12 @@
 import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
 
+import { MdSpaceDashboard } from "react-icons/md";
+import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
+
+import { GiFlyingTarget } from "react-icons/gi";
+import { TbMathFunction } from "react-icons/tb";
+
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -220,32 +226,46 @@ function App() {
     <div className="app-container">
       <aside className="sidebar">
         <div className="logo">
-          Study<span>Flow</span>
+          <GiFlyingTarget />
+          Future<span>Plan</span>
+          {/* <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p> */}
         </div>
 
         <nav className="nav-menu">
           <button
             className={activeTab === "dashboard" ? "active" : ""}
             onClick={() => setActiveTab("dashboard")}>
-            <span className="icon">📊</span> Dashboard
+            <span className="icon">
+              <MdSpaceDashboard />
+            </span>{" "}
+            Dashboard
           </button>
 
           <button
             className={activeTab === "papers" ? "active" : ""}
             onClick={() => setActiveTab("papers")}>
-            <span className="icon">📝</span> Past Papers
+            <span className="icon">
+              <IoDocumentsSharp />
+            </span>{" "}
+            Past Papers
           </button>
 
           <button
             className={activeTab === "formulas" ? "active" : ""}
             onClick={() => setActiveTab("formulas")}>
-            <span className="icon">📐</span> Formulas
+            <span className="icon">
+              <TbMathFunction />
+            </span>{" "}
+            Formulas
           </button>
 
           <button
             className={activeTab === "analysis" ? "active" : ""}
             onClick={() => setActiveTab("analysis")}>
-            <span className="icon">📈</span> Analysis
+            <span className="icon">
+              <IoStatsChart />
+            </span>{" "}
+            Analysis
           </button>
         </nav>
 
@@ -258,7 +278,9 @@ function App() {
       <main className="main-content">
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
-          <div className="user-info">A/L 2025 Target 🎯</div>
+          <div className="user-info">
+            A/L 2026 Target <GiFlyingTarget />
+          </div>
         </header>
 
         <section className="page-render">
