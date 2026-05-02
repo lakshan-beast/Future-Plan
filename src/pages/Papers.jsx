@@ -7,9 +7,11 @@ const Papers = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  // state එක මේ විදිහට වෙනස් කරන්න
   const [formData, setFormData] = useState({
     year: "",
-    type: "Pure",
+    subject: "Maths", // අලුතින් එකතු කළා
+    type: "Theory/Full",
     marks: "",
     errors: "",
   });
@@ -48,6 +50,16 @@ const Papers = () => {
             }>
             <option value="Pure">Pure Maths</option>
             <option value="Applied">Applied Maths</option>
+          </select>
+
+          <select
+            value={formData.subject}
+            onChange={(e) =>
+              setFormData({ ...formData, subject: e.target.value })
+            }>
+            <option value="Maths">Combined Maths</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
           </select>
           <input
             type="number"
