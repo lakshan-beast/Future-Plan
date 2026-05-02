@@ -315,6 +315,48 @@ body {
       }
     }
   }
+  .daily-progress-container {
+    margin-bottom: 20px;
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        margin: 0;
+        font-size: 1rem;
+        color: #64748b;
+      }
+      .percentage {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #2563eb;
+      }
+    }
+
+    .progress-bar-outer {
+      height: 12px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      margin: 15px 0;
+      overflow: hidden;
+
+      .progress-bar-inner {
+        height: 100%;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        border-radius: 10px;
+        transition: width 0.5s ease-in-out; // මේකෙන් තමයි progress එක ලස්සනට පිරෙන්නේ
+      }
+    }
+
+    .task-count {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      text-align: right;
+    }
+  }
 
   // Right Column Styles
   .mini-card {
@@ -377,6 +419,21 @@ body {
         background: #1d4ed8;
       }
     }
+  }
+  .border-maths {
+    border-left: 5px solid #2563eb !important;
+  }
+  .border-physics {
+    border-left: 5px solid #ef4444 !important;
+  }
+  .border-chemistry {
+    border-left: 5px solid #10b981 !important;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
   }
 
   .papers-table {
@@ -538,6 +595,92 @@ body {
       font-family: "Courier New", Courier, monospace;
       font-weight: 600;
       color: #2563eb;
+    }
+  }
+}
+
+.timetable-page {
+  .timetable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: start;
+  }
+
+  .day-column {
+    padding: 15px !important;
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 10px;
+      h4 {
+        margin: 0;
+        color: #1e293b;
+      }
+      .day-percentage {
+        font-weight: 800;
+        color: #2563eb;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .slots {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .slot-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 5px;
+      border-radius: 6px;
+
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #94a3b8;
+        font-size: 1.1rem;
+        display: flex;
+      }
+      input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 0.85rem;
+        width: 100%;
+        color: #475569;
+      }
+      &.is-done {
+        background: #f0fdf4;
+        input {
+          text-decoration: line-through;
+          color: #94a3b8;
+        }
+        button {
+          color: #22c55e;
+        }
+      }
+    }
+  }
+
+  .day-footer-progress {
+    margin-top: 15px;
+    .bar-outer {
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+      .bar-inner {
+        height: 100%;
+        background: #2563eb;
+        transition: 0.3s;
+      }
     }
   }
 }
