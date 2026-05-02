@@ -214,6 +214,7 @@ import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Papers from "./pages/Papers";
 import Formulas from "./pages/Formulas";
+import Analysis from "./pages/Analysis";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
@@ -289,11 +290,7 @@ function App() {
           {activeTab === "dashboard" && <Dashboard />}
           {activeTab === "papers" && <Papers />}
           {activeTab === "formulas" && <Formulas />}
-          {activeTab === "analysis" && (
-            <div className="placeholder-page">
-              Marks Analysis Coming Soon...
-            </div>
-          )}
+          {activeTab === "analysis" && <Analysis />}
         </section>
       </main>
     </div>
