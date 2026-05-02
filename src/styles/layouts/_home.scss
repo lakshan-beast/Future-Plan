@@ -9,7 +9,8 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 0px 6px white;
+    box-shadow: 0px 0px 6px $color-text;
+    // border-right: 2px solid;
     transition: $transition;
     position: sticky;
     top: 0;
@@ -55,16 +56,17 @@
         margin-bottom: 8px;
         border: none;
         // background: transparent;
-        background: rgba($color-white, 0.1);
+        background: rgba($color-medium, 0.2);
         border-radius: 12px;
-        // color: #64748b;
-        color: $color-medium;
+        color: #64748b;
+        // color: $color-medium;
         font-weight: 500;
         cursor: pointer;
         transition: $transition;
 
         &:hover {
-          background: #f8fafc;
+          background: $color-bg;
+          border: 2px solid $border;
           color: #4f46e5;
           .icon {
             transform: translateX(3px);
@@ -89,7 +91,7 @@
 
     .sidebar-footer {
       padding: 1.5rem;
-      border-top: 1px solid #f1f5f9;
+      border-top: 1px solid $color-text;
 
       .footer-status {
         display: flex;
@@ -126,7 +128,7 @@
     .user-profile {
       margin: 20px;
       padding: 15px;
-      background: rgba($color-white, 0.2);
+      background: rgba($color-medium, 1);
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -151,13 +153,13 @@
         h4 {
           margin: 0;
           font-size: 0.9rem;
-          // color: #1e293b;
-          color: $color-white;
+          color: $text-dark;
+          //   color: $color-white;
         }
         p {
           margin: 0;
           font-size: 0.75rem;
-          color: #94a3b8;
+          color: #3e526e;
         }
       }
     }
@@ -172,7 +174,7 @@
     .top-bar {
       background: $color-bg;
       padding: 1rem 2.5rem;
-      // border-bottom: 1px solid $border;
+      border-bottom: 1px solid $border;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -196,7 +198,7 @@
 
     .page-render {
       padding: 2.5rem;
-      background-color: $color-content;
+      background-color: $color-bg;
       height: 100vh;
     }
   }
