@@ -215,12 +215,14 @@ import Dashboard from "./pages/Dashboard";
 import Papers from "./pages/Papers";
 import Formulas from "./pages/Formulas";
 import Analysis from "./pages/Analysis";
+import Timetable from "./pages/Timetable";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
 
 import { GiFlyingTarget } from "react-icons/gi";
 import { TbMathFunction } from "react-icons/tb";
+import { LuCalendarDays } from "react-icons/lu";
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -270,6 +272,15 @@ function App() {
             </span>{" "}
             Analysis
           </button>
+
+          <button
+            className={activeTab === "timetable" ? "active" : ""}
+            onClick={() => setActiveTab("timetable")}>
+            <span className="icon">
+              <LuCalendarDays />
+            </span>{" "}
+            Timetable
+          </button>
         </nav>
 
         <div className="sidebar-footer">
@@ -291,6 +302,7 @@ function App() {
           {activeTab === "papers" && <Papers />}
           {activeTab === "formulas" && <Formulas />}
           {activeTab === "analysis" && <Analysis />}
+          {activeTab === "timetable" && <Timetable />}
         </section>
       </main>
     </div>
