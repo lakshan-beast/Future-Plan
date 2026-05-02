@@ -36,6 +36,7 @@ const Papers = () => {
       {/* 1. Form එක - දත්ත ඇතුළත් කිරීමට */}
       <div className="card form-card">
         <h3>Add Past Paper Record 📝</h3>
+
         <form onSubmit={handleSubmit} className="paper-form">
           <input
             type="number"
