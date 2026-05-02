@@ -834,6 +834,12 @@ const Dashboard = () => {
     alert("Tree Planted Successfully! 🌳");
   };
 
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
   const formatTime = (s) =>
     `${Math.floor(s / 60)
       .toString()
@@ -841,20 +847,23 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-wrapper">
-            {/* Top Header */}
-           {" "}
+      {/* Top Header */}
       <header className="dashboard-main">
                {" "}
-        <div className="welcome-section">
+        <div className="welcome-section card">
                            {" "}
           <h1>
-            Hello, <span>Winahga!</span> 👋
+            Hello, <span>Winahga!</span>
           </h1>
                     <p>Ready to master your academic goals today?</p>
                  {" "}
         </div>
                {" "}
         <div className="dashboard-main-right">
+          <div className="date-box">
+            <h4>{today}</h4>
+            <p>Target: A/L 2026</p>{" "}
+          </div>
                    {" "}
           <div className="badge-status primary">
             <LuCalendar /> {weeksUntilExam} Weeks Remaining
@@ -867,23 +876,23 @@ const Dashboard = () => {
         </div>
              {" "}
       </header>
-           {" "}
       <div className="main-grid">
-                {/* Left Side: Focus Timer & Forest Display */}
-               {" "}
+        {/* Left Side: Focus Timer & Forest Display */}
         <div className="left-col">
-                   {" "}
           <div className="card focus-card-premium">
-                        <h3>Deep Work Session 🌳</h3>
+                       {" "}
+            <h3>
+              Deep Work Session <LuTrees />
+            </h3>
                        {" "}
             <div className="forest-visual">
                            {" "}
               {isOvertime || 1500 - seconds > 1200 ? (
                 <LuTrees className="tree grown" />
               ) : 1500 - seconds > 600 ? (
-                <LuFlower2 className="tree" />
+                <LuFlower2 className="tree growing" />
               ) : (
-                <LuSprout className="tree" />
+                <LuSprout className="tree seed" />
               )}
                          {" "}
             </div>
@@ -900,9 +909,8 @@ const Dashboard = () => {
               <button
                 onClick={() => setIsActive(!isActive)}
                 className="btn-start">
-                                {isActive ? <LuPause /> : <LuPlay />}{" "}
-                {isActive ? "Pause" : "Start"}
-                             {" "}
+                {isActive ? <LuPause /> : <LuPlay />}{" "}
+                {isActive ? "Pause" : "Start Again"}
               </button>
                            {" "}
               {isActive && (
@@ -914,7 +922,6 @@ const Dashboard = () => {
             </div>
                      {" "}
           </div>
-                   {" "}
           <div className="card forest-gallery">
                         <h3>Today's Forest Growth</h3>
                        {" "}
@@ -934,66 +941,48 @@ const Dashboard = () => {
             </div>
                      {" "}
           </div>
-                   {" "}
           <div className="card countdown-card-premium">
-                        <h3>Final Countdown ⏳</h3>
-                       {" "}
+            <h3>Final Countdown ⏳</h3>
             <div className="timer-grid">
-                           {" "}
-              <div>
+              <div className="time-item">
                 <span>{timeLeft.days}</span>
                 <small>Days</small>
               </div>
-                           {" "}
-              <div>
+              <div className="time-item">
                 <span>{timeLeft.hours}</span>
                 <small>Hours</small>
               </div>
-                           {" "}
-              <div>
+              <div className="time-item">
                 <span>{timeLeft.mins}</span>
                 <small>Mins</small>
               </div>
-                           {" "}
-              <div>
+              <div className="time-item">
                 <span className="secs">{timeLeft.seconds}</span>
                 <small>Secs</small>
               </div>
-                         {" "}
             </div>
-                     {" "}
           </div>
-                 {" "}
         </div>
-                {/* Right Side: Progress, Evaluation & Tasks */}
-               {" "}
+        {/* Right Side: Progress, Evaluation & Tasks */}
         <div className="right-col">
-                   {" "}
           <div className="card performance-card">
-                        <h3>Latest Evaluation 🎯</h3>
-                       {" "}
+            <h3>Latest Evaluation 🎯</h3>
+
             {lastPaper ? (
               <div className="performance-content">
-                               {" "}
                 <span className="sub-badge">{lastPaper.subject}</span>
-                               {" "}
                 <div className="score-box">
                   <span className="score-num">{lastPaper.marks}</span>
                   <span className="percent-sign">%</span>
                 </div>
-                               {" "}
                 <p className="paper-type">{lastPaper.type} Paper</p>
-                             {" "}
               </div>
             ) : (
               <p className="no-data">No records found.</p>
             )}
-                     {" "}
           </div>
-                   {" "}
           <div className="card todo-card">
-                        <h3>Daily Objectives 📚</h3>
-                       {" "}
+            <h3>Daily Objectives 📚</h3>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -1007,36 +996,26 @@ const Dashboard = () => {
                 setNewTask("");
               }}
               className="task-form">
-                           {" "}
               <input
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
                 placeholder="Next milestone..."
               />
-                         {" "}
             </form>
-                       {" "}
             <div className="task-list">
-                           {" "}
               {tasks.map((t) => (
                 <div
                   key={t.id}
                   className={`task-item ${t.completed ? "done" : ""}`}
                   onClick={() => handleTaskToggle(t.id)}>
-                                    {t.completed ? <LuCheck /> : <LuCircle />}{" "}
+                  {t.completed ? <LuCheck /> : <LuCircle />}{" "}
                   <span>{t.text}</span>
-                                 {" "}
                 </div>
               ))}
-                         {" "}
             </div>
-                     {" "}
           </div>
-                 {" "}
         </div>
-             {" "}
       </div>
-         {" "}
     </div>
   );
 };
