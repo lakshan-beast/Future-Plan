@@ -1,0 +1,68 @@
+.paper-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr auto;
+  gap: 10px;
+  margin-top: 15px;
+
+  input,
+  select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    outline: none;
+
+    &:focus {
+      border-color: $color-content;
+    }
+  }
+
+  button {
+    background: $color-bg;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+      background: #1d4ed8;
+    }
+  }
+}
+
+.add-formula-card {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    select,
+    input,
+    textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid $border;
+      outline: none;
+    }
+
+    textarea {
+      height: 80px;
+      resize: none;
+    }
+    button {
+      background: $color-bg;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background: #1d4ed8;
+      }
+    }
+  }
+}
