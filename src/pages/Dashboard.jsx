@@ -203,7 +203,7 @@ const Dashboard = () => {
       <div className="dashboard-main">
         <div className="welcome-section">
           <h1>
-            Hello, <span>Malli!</span> 👋
+            Hello, <span>Winahga!</span>
           </h1>
           <p>Ready to achieve your objectives today?</p>
         </div>
@@ -212,11 +212,6 @@ const Dashboard = () => {
           <div className="date-box">
             <h4>{today}</h4>
             <p>Target: A/L 2026</p>
-          </div>
-
-          <div className="badge-status">
-            <LuCalendar />
-            {/* Week {calculateCurrentWeek()} */}
           </div>
           <div className="badge-status">
             <LuCalendar />
@@ -230,8 +225,39 @@ const Dashboard = () => {
       </div>
 
       <div className="main-grid">
-        {/* Left Column: Focus & Tasks */}
         <div className="left-col">
+          <div className="card mini-card count-card">
+            <p>Exam Countdown</p>
+            <div className="mini-timer">
+              <span>{timeLeft?.days}d</span> : <span>{timeLeft?.hours}h</span> :{" "}
+              <span>{timeLeft?.mins}m</span> :{" "}
+              <span style={{ color: "#eb4d25" }}>{timeLeft?.seconds}s</span>
+            </div>
+          </div>
+
+          <div className="card performance-card">
+            <h3>Recent Evaluation 🎯</h3>
+            {lastPaper ? (
+              <div className="performance-content">
+                <div className="sub-tag">
+                  {lastPaper.subject} - {lastPaper.type}
+                </div>
+                <div className="score-display">
+                  <span className="score">{lastPaper.marks}%</span>
+                  <p className="label">Performance Score</p>
+                </div>
+                <div className="remarks-box">
+                  <strong>Notes:</strong>{" "}
+                  {lastPaper.errors || "No remarks recorded."}
+                </div>
+              </div>
+            ) : (
+              <p className="no-data-msg">
+                Complete your first past paper to see analysis.
+              </p>
+            )}
+          </div>
+
           <div className="card focus-card">
             <h3>Focus Timer ⏱️</h3>
             <div className="timer-display">{formatTime(seconds)}</div>
@@ -248,7 +274,10 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
+        </div>
 
+        {/* Right Column: Info & Stats */}
+        <div className="right-col">
           <div className="card todo-card">
             <h3>Study Planner 📚</h3>
             <form onSubmit={addTask}>
@@ -274,85 +303,35 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Right Column: Info & Stats */}
-        <div className="right-col">
-          <div className="card mini-card count-card">
-            <p>Exam Countdown</p>
-            <div className="mini-timer">
-              <span>{timeLeft?.days}d</span> : <span>{timeLeft?.hours}h</span> :{" "}
-              <span>{timeLeft?.mins}m</span> :{" "}
-              <span style={{ color: "#eb4d25" }}>{timeLeft?.seconds}s</span>
+          {/* Progress Section */}
+          <div className="daily-progress-container card">
+            <div className="progress-info">
+              <h3>Daily Progress 🎯</h3>
+              <span className="percentage">
+                {tasks.length > 0
+                  ? Math.round(
+                      (tasks.filter((t) => t.completed).length / tasks.length) *
+                        100,
+                    )
+                  : 0}
+                %
+              </span>
             </div>
-          </div>
 
-          {/* <div className="card mini-card progress-summary">
-            <p>Daily Progress</p>
-            <div className="progress-bar-bg">
+            <div className="progress-bar-outer">
               <div
-                className="progress-bar-fill"
+                className="progress-bar-inner"
                 style={{
-                  width: `${(tasks.filter((t) => t.completed).length / tasks.length) * 100}%`,
+                  width: `${tasks.length > 0 ? (tasks.filter((t) => t.completed).length / tasks.length) * 100 : 0}%`,
                 }}></div>
             </div>
-            <small>
+
+            <p className="task-count">
               {tasks.filter((t) => t.completed).length} of {tasks.length} tasks
               completed
-            </small>
-          </div> */}
-        </div>
-
-        {/* Progress Section */}
-        <div className="daily-progress-container card">
-          <div className="progress-info">
-            <h3>Daily Progress 🎯</h3>
-            <span className="percentage">
-              {tasks.length > 0
-                ? Math.round(
-                    (tasks.filter((t) => t.completed).length / tasks.length) *
-                      100,
-                  )
-                : 0}
-              %
-            </span>
-          </div>
-
-          <div className="progress-bar-outer">
-            <div
-              className="progress-bar-inner"
-              style={{
-                width: `${tasks.length > 0 ? (tasks.filter((t) => t.completed).length / tasks.length) * 100 : 0}%`,
-              }}></div>
-          </div>
-
-          <p className="task-count">
-            {tasks.filter((t) => t.completed).length} of {tasks.length} tasks
-            completed
-          </p>
-        </div>
-
-        <div className="card performance-card">
-          <h3>Recent Evaluation 🎯</h3>
-          {lastPaper ? (
-            <div className="performance-content">
-              <div className="sub-tag">
-                {lastPaper.subject} - {lastPaper.type}
-              </div>
-              <div className="score-display">
-                <span className="score">{lastPaper.marks}%</span>
-                <p className="label">Performance Score</p>
-              </div>
-              <div className="remarks-box">
-                <strong>Notes:</strong>{" "}
-                {lastPaper.errors || "No remarks recorded."}
-              </div>
-            </div>
-          ) : (
-            <p className="no-data-msg">
-              Complete your first past paper to see analysis.
             </p>
-          )}
+          </div>
         </div>
       </div>
     </div>
