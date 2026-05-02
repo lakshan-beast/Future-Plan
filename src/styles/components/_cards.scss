@@ -1,0 +1,16 @@
+.card {
+  background: rgba($color-white, 0.3);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 6px;
+  border: 1px solid $border;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  h3 {
+    margin-top: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
