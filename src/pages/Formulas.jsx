@@ -50,42 +50,42 @@ const Formulas = () => {
         </div>
       </div>
 
-      <div className="formula-grid">
-        {/* Add New Formula Card */}
-        <div className="card add-formula-card">
-          <h3>
-            Add New Formula <LuPlus />
-          </h3>
-          <form onSubmit={addFormula}>
-            <select
-              value={newFormula.category}
-              onChange={(e) =>
-                setNewFormula({ ...newFormula, category: e.target.value })
-              }>
-              <option value="Trigonometry">Trigonometry</option>
-              <option value="Calculus">Calculus</option>
-              <option value="Algebra">Algebra</option>
-              <option value="Mechanics">Mechanics</option>
-            </select>
-            <input
-              placeholder="Title (e.g. Sin(A+B))"
-              value={newFormula.title}
-              onChange={(e) =>
-                setNewFormula({ ...newFormula, title: e.target.value })
-              }
-            />
-            <textarea
-              placeholder="Formula (e.g. sinAcosB + cosAsinB)"
-              value={newFormula.content}
-              onChange={(e) =>
-                setNewFormula({ ...newFormula, content: e.target.value })
-              }
-            />
-            <button type="submit">Save Formula</button>
-          </form>
-        </div>
+      {/* Add New Formula Card */}
+      <div className="card add-formula-card">
+        <h3>
+          Add New Formula <LuPlus />
+        </h3>
+        <form onSubmit={addFormula}>
+          <select
+            value={newFormula.category}
+            onChange={(e) =>
+              setNewFormula({ ...newFormula, category: e.target.value })
+            }>
+            <option value="Maths">Combined Maths</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+          </select>
+          <input
+            placeholder="Title (e.g. Sin(A+B))"
+            value={newFormula.title}
+            onChange={(e) =>
+              setNewFormula({ ...newFormula, title: e.target.value })
+            }
+          />
+          <textarea
+            placeholder="Formula (e.g. sinAcosB + cosAsinB)"
+            value={newFormula.content}
+            onChange={(e) =>
+              setNewFormula({ ...newFormula, content: e.target.value })
+            }
+          />
+          <button type="submit">Save Formula</button>
+        </form>
+      </div>
 
-        {/* Display Formulas */}
+      {/* Display Formulas */}
+      <h3>All Formulas</h3>
+      <div className="formula-grid">
         {filteredFormulas.map((f) => (
           <div key={f.id} className="card formula-item-card">
             <div className="card-header">
