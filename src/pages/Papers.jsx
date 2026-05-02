@@ -43,14 +43,14 @@ const Papers = () => {
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
           />
-          <select
+          {/* <select
             value={formData.type}
             onChange={(e) =>
               setFormData({ ...formData, type: e.target.value })
             }>
             <option value="Pure">Pure Maths</option>
             <option value="Applied">Applied Maths</option>
-          </select>
+          </select> */}
 
           <select
             value={formData.subject}
