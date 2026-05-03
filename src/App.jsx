@@ -217,6 +217,7 @@ import Papers from "./pages/Papers";
 import Formulas from "./pages/Formulas";
 import Analysis from "./pages/Analysis";
 import Timetable from "./pages/Timetable";
+import FinalPapers from "./pages/FinalPapers";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
@@ -262,6 +263,15 @@ function App() {
               <IoDocumentsSharp />
             </span>{" "}
             Past Papers
+          </button>
+
+          <button
+            className={activeTab === "finalpapers" ? "active" : ""}
+            onClick={() => setActiveTab("finalpapers")}>
+            <span className="icon">
+              <IoDocumentsSharp />
+            </span>{" "}
+            Final Papers
           </button>
 
           <button
@@ -325,6 +335,7 @@ function App() {
           {activeTab === "formulas" && <Formulas />}
           {activeTab === "analysis" && <Analysis />}
           {activeTab === "timetable" && <Timetable />}
+          {activeTab === "finalpapers" && <FinalPapers />}
         </section>
       </main>
     </div>
