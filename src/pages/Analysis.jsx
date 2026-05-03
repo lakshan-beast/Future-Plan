@@ -372,7 +372,7 @@ const Analysis = () => {
       <div className="analysis-grid">
         {/* ප්‍රධාන ප්‍රස්තාරය - විෂයයන් 3ම එකට */}
         <div className="card chart-card">
-          <h3>Overall Performance (Maths, Physics, Chemistry) 📈</h3>
+          <h3>Overall Performance (Maths, Physics, Chemistry) </h3>
           <div
             className="chart-container"
             style={{ width: "100%", height: "400px" }}>
