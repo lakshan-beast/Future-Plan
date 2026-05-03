@@ -257,12 +257,12 @@ function App() {
           </button>
 
           <button
-            className={activeTab === "papers" ? "active" : ""}
-            onClick={() => setActiveTab("papers")}>
+            className={activeTab === "formulas" ? "active" : ""}
+            onClick={() => setActiveTab("formulas")}>
             <span className="icon">
-              <IoDocumentsSharp />
+              <PiMathOperationsFill />
             </span>{" "}
-            Past Papers
+            Formulas
           </button>
 
           <button
@@ -275,12 +275,12 @@ function App() {
           </button>
 
           <button
-            className={activeTab === "formulas" ? "active" : ""}
-            onClick={() => setActiveTab("formulas")}>
+            className={activeTab === "papers" ? "active" : ""}
+            onClick={() => setActiveTab("papers")}>
             <span className="icon">
-              <PiMathOperationsFill />
+              <IoDocumentsSharp />
             </span>{" "}
-            Formulas
+            Past Papers
           </button>
 
           <button
@@ -289,7 +289,7 @@ function App() {
             <span className="icon">
               <IoStatsChart />
             </span>{" "}
-            Analysis
+            Past Paper Analysis
           </button>
         </nav>
         {/* * User Profile Section */}
