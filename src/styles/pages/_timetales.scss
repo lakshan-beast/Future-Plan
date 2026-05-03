@@ -31,11 +31,12 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+
     .slot-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #f8fafc;
+      background: #f7fbff;
       padding: 5px;
       border-radius: 6px;
 
@@ -49,20 +50,21 @@
       }
       input {
         border: none;
-        background: transparent;
+        background: rgb(185, 217, 255);
         outline: none;
         font-size: 0.85rem;
         width: 100%;
         color: #475569;
+        padding: 0 2px;
       }
       &.is-done {
-        background: #f0fdf4;
+        background: #42f578;
         input {
           text-decoration: line-through;
-          color: #94a3b8;
+          color: #ebf4ff;
         }
         button {
-          color: #22c55e;
+          color: #00471a;
         }
       }
     }
