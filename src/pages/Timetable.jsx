@@ -79,7 +79,8 @@ const Timetable = () => {
           const progress = calculateWeeklyProgress();
 
           const archivedWeek = {
-            weekId: Week`${calculateWeeksSinceStart(lastArchive)}`,
+            weekId: `Week ${calculateWeeklyProgress(lastArchive)}`,
+            // weekId: `Week ${calculateWeeksSinceStart(lastArchive)}`,
             date: lastArchive.toLocaleDateString(),
             progress: progress,
             status: "Auto-Archived",
