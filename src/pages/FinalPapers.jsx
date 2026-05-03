@@ -470,7 +470,7 @@ const FinalPaperTracker = () => {
             value={form.paper}
             onChange={(e) => setForm({ ...form, paper: e.target.value })}>
             {[...Array(20)].map((_, i) => {
-              const pName = `Paper ${i + 1 < 10 ? "0" + (i + 1) : i + 1}`;
+              const pName = `Final Paper ${i + 1 < 10 ? "0" + (i + 1) : i + 1}`;
               return (
                 <option key={i} value={pName}>
                   {pName}
@@ -516,7 +516,7 @@ const FinalPaperTracker = () => {
             <Line
               type="monotone"
               dataKey="maths"
-              stroke="#3498db"
+              stroke="#e9415d"
               name="Maths"
               strokeWidth={3}
               connectNulls
@@ -524,7 +524,7 @@ const FinalPaperTracker = () => {
             <Line
               type="monotone"
               dataKey="physics"
-              stroke="#e74c3c"
+              stroke="#6d3be2"
               name="Physics"
               strokeWidth={3}
               connectNulls
@@ -532,7 +532,7 @@ const FinalPaperTracker = () => {
             <Line
               type="monotone"
               dataKey="chemistry"
-              stroke="#2ecc71"
+              stroke="#47facd"
               name="Chemistry"
               strokeWidth={3}
               connectNulls
