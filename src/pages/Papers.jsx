@@ -34,7 +34,9 @@ const Papers = () => {
   return (
     <div className="papers-page">
       {/* 1. Form එක - දත්ත ඇතුළත් කිරීමට */}
-      <div className="card form-card">
+      {/* <div className="card form-card"> */}
+      <div className="card add-formula-card">
+        {/* <div className="card form-card"> */}
         <h3>Add Past Paper Record 📝</h3>
 
         <form onSubmit={handleSubmit} className="paper-form">
