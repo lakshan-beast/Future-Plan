@@ -144,7 +144,7 @@ function App() {
             <p>Target: A/L 2026</p>
           </div>
 
-          <div className="user-info">2026 A/L Target</div>
+          {/* <div className="user-info">2026 A/L Target</div> */}
         </header>
 
         <section className="page-render">
