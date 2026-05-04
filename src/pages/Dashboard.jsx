@@ -181,6 +181,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
           <div className="card focus-card-premium">
             <h3>
               Deep Work Session <LuTrees />
@@ -194,10 +195,12 @@ const Dashboard = () => {
                 <LuSprout className="tree seed" />
               )}
             </div>
+
             <div className={`timer-display ${isOvertime ? "emergency" : ""}`}>
               {isOvertime && <span className="ot-label">OVERTIME</span>}
               <h2>{formatTime(seconds)}</h2>
             </div>
+
             <div className="timer-controls">
               <button
                 onClick={() => setIsActive(!isActive)}
@@ -211,26 +214,27 @@ const Dashboard = () => {
                 </button>
               )}
             </div>
-          </div>
+            {/* </div> */}
 
-          <div className="card forest-gallery">
-            <h3>Weekly Forest Growth 🌲</h3>
-            <div className="calendar-grid">
-              {weeklyForest.map(([date, count], i) => (
-                <div key={i} className="day-growth">
-                  <div className="tree-stack">
-                    {[...Array(Math.min(count, 3))].map((_, idx) => (
-                      <LuTrees key={idx} />
-                    ))}
-                    {count === 0 && <span className="seed-dot">.</span>}
+            <div className="forest-gallery">
+              <h3>Weekly Forest Growth </h3>
+              <div className="calendar-grid">
+                {weeklyForest.map(([date, count], i) => (
+                  <div key={i} className="day-growth">
+                    <div className="tree-stack">
+                      {[...Array(Math.min(count, 3))].map((_, idx) => (
+                        <LuTrees key={idx} />
+                      ))}
+                      {count === 0 && <span className="seed-dot">.</span>}
+                    </div>
+                    <span className="day-label">
+                      {date === new Date().toLocaleDateString()
+                        ? "Today"
+                        : date.split("/")[1] + "/" + date.split("/")[0]}
+                    </span>
                   </div>
-                  <span className="day-label">
-                    {date === new Date().toLocaleDateString()
-                      ? "Today"
-                      : date.split("/")[1] + "/" + date.split("/")[0]}
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
