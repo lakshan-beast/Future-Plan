@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom"; // Page එක මාරු ක�
 import { GiFlyingTarget } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 
+import Dashboard from "./Dashboard";
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -38,7 +40,7 @@ const Login = () => {
       if (isRegistering) {
         await createUserWithEmailAndPassword(auth, email, password);
         alert("Account Created Successfully!");
-        navigate("/dashboard");
+        navigate("/Dashboard");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
@@ -51,7 +53,7 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/dashboard");
+      navigate("/Dashboard");
     } catch (error) {
       console.error(error.message);
     }
