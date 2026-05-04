@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { LuPlus, LuTrash2, LuSearch } from "react-icons/lu";
+import { LuTrash2, LuSearch } from "react-icons/lu";
+import { FiPlus } from "react-icons/fi";
 
 const Formulas = () => {
   const [formulas, setFormulas] = useState(() => {
@@ -54,7 +55,7 @@ const Formulas = () => {
       {/* <div className="card add-formula-card"> */}
       <div className="card tracker-container">
         <h2>
-          Add New Formula <LuPlus />
+          Add New Formula <FiPlus />
         </h2>
 
         <form className="input-section" onSubmit={addFormula}>
