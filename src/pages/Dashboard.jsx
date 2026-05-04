@@ -13,6 +13,10 @@ import {
 } from "react-icons/lu";
 import { MdOutlineTimer } from "react-icons/md";
 
+import { FaUserGraduate } from "react-icons/fa";
+
+import { CiLogout } from "react-icons/ci";
+
 import {
   FiActivity,
   FiTrendingUp,
@@ -307,17 +311,25 @@ const Dashboard = ({ user }) => {
       <header className="dashboard-main">
         <div className="welcome-section card">
           <h1>
-            Hello, <span>{user?.displayName.split(" ")[0]}!</span>
+            Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
           <p>Ready to master your academic goals today?</p>
         </div>
 
         <div className="user-profile">
-          <img src={user?.photoURL} alt="profile" className="avatar" />
+          <img
+            src={user.photoURL || <FaUserGraduate />}
+            alt="profile"
+            className="avatar"
+            referrerPolicy="no-referrer"
+          />
           <div className="info">
-            <h4>{user?.displayName}</h4>
+            <h4>{user?.displayName || "Student"}</h4>
             <p>A/L Student</p>
-            <button onClick={() => auth.signOut()}>LogOut</button>
+
+            <button className="logout-btn" onClick={() => auth.signOut()}>
+              <CiLogout /> Logut
+            </button>
           </div>
         </div>
 
