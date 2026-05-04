@@ -130,7 +130,7 @@ const Timetable = () => {
                   </button>
                   <input
                     type="text"
-                    placeholder={`Slot ${idx + 1}`}
+                    placeholder={`Task ${idx + 1}`}
                     value={slot.text}
                     onChange={(e) => handleTextChange(day, idx, e.target.value)}
                   />
