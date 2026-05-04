@@ -1,28 +1,37 @@
 .timetable-page {
+  h2 {
+    text-align: center;
+    color: $black-color;
+    margin-bottom: 2rem;
+  }
+
   .timetable-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
     align-items: start;
   }
 
   .day-column {
     padding: 15px !important;
+
     .day-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 15px;
-      border-bottom: 2px solid #f1f5f9;
+      border-bottom: 2px solid #cfe7ff;
       padding-bottom: 10px;
       h4 {
         margin: 0;
-        color: #12223b;
+        color: $black-color;
+        font-size: 1.2rem;
       }
       .day-percentage {
         font-weight: 800;
-        color: #2563eb;
+        color: $primary;
         font-size: 0.9rem;
+        font-size: 1.2rem;
       }
     }
   }
@@ -30,15 +39,14 @@
   .slots {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 
     .slot-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: #f7fbff;
-      padding: 5px;
+      gap: 3px;
       border-radius: 6px;
+      height: 40px;
+      padding: 0 3px;
 
       button {
         background: none;
@@ -47,24 +55,29 @@
         color: #94a3b8;
         font-size: 1.1rem;
         display: flex;
+        padding-left: 3px;
       }
       input {
         border: none;
-        background: rgb(185, 217, 255);
+        background: rgba(69, 70, 71, 0.151);
         outline: none;
         font-size: 0.85rem;
         width: 100%;
-        color: #475569;
-        padding: 0 2px;
+        color: #6e7e94;
+        padding: 8px;
+        margin: 0 6px;
+        border-radius: 5px;
       }
       &.is-done {
         background: #42f578;
+
         input {
           text-decoration: line-through;
-          color: #ebf4ff;
+          color: #85888b;
+          background: #73ff9d;
         }
         button {
-          color: #00471a;
+          color: #003f17;
         }
       }
     }
@@ -72,53 +85,17 @@
 
   .day-footer-progress {
     margin-top: 15px;
+
     .bar-outer {
-      height: 6px;
-      background: #f1f5f9;
+      height: 10px;
+      background: #e7e7e7;
       border-radius: 10px;
       overflow: hidden;
+
       .bar-inner {
         height: 100%;
-        background: #2563eb;
+        background: $chemistry-color;
         transition: $transition;
-      }
-    }
-  }
-
-  .history-section {
-    margin-top: 30px;
-    .history-table {
-      width: 100%;
-      border-collapse: collapse;
-      th {
-        text-align: left;
-        color: #132949;
-        padding: 12px;
-        font-size: 0.85rem;
-      }
-      td {
-        padding: 12px;
-        border-top: 1px solid #f1f5f9;
-        font-size: 0.9rem;
-      }
-
-      .mini-progress-bar {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        .fill {
-          height: 6px;
-          background: #2563eb;
-          border-radius: 5px;
-        }
-      }
-      .complete-tag {
-        background: #dcfce7;
-        color: #166534;
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 700;
       }
     }
   }
