@@ -10,6 +10,14 @@ import {
   LuSprout,
   LuFlower2,
 } from "react-icons/lu";
+import { MdOutlineTimer } from "react-icons/md";
+
+import {
+  FiActivity,
+  FiTrendingUp,
+  FiBarChart2,
+  FiTarget,
+} from "react-icons/fi";
 
 const Dashboard = () => {
   // --- 1. States ---
@@ -140,7 +148,161 @@ const Dashboard = () => {
       .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
   return (
+    // <div className="dashboard-wrapper">
+    //   <header className="dashboard-main">
+    //     <div className="welcome-section card">
+    //       <h1>
+    //         Hello, <span>Wihanga!</span>
+    //       </h1>
+    //       <p>Ready to master your academic goals today?</p>
+    //     </div>
+    //     <div className="dashboard-main-right">
+    //       <div className="badge-status primary">
+    //         <LuCalendar /> {weeksUntilExam} Weeks Remaining
+    //       </div>
+    //       <div className="badge-status success">
+    //         <LuCheck /> {weeklyProgress}% Progress
+    //       </div>
+    //     </div>
+    //   </header>
+
+    //   <div className="main-grid">
+    //     <div className="left-col">
+    //       <div className="card countdown-card-premium">
+    //         <h3>Final Countdown ⏳</h3>
+    //         <div className="timer-grid">
+    //           <div className="time-item">
+    //             <span>{timeLeft.days}</span>
+    //             <small>Days</small>
+    //           </div>
+    //           <div className="time-item">
+    //             <span>{timeLeft.hours}</span>
+    //             <small>Hours</small>
+    //           </div>
+    //           <div className="time-item">
+    //             <span>{timeLeft.mins}</span>
+    //             <small>Mins</small>
+    //           </div>
+    //           <div className="time-item">
+    //             <span className="secs">{timeLeft.seconds}</span>
+    //             <small>Secs</small>
+    //           </div>
+    //         </div>
+    //       </div>
+
+    //       <div className="card focus-card-premium">
+    //         <h3>
+    //           Deep Work Session <LuTrees />
+    //         </h3>
+    //         <div className="forest-visual">
+    //           {isOvertime || 1500 - seconds > 1200 ? (
+    //             <LuTrees className="tree grown" />
+    //           ) : 1500 - seconds > 600 ? (
+    //             <LuFlower2 className="tree growing" />
+    //           ) : (
+    //             <LuSprout className="tree seed" />
+    //           )}
+    //         </div>
+
+    //         <div className={`timer-display ${isOvertime ? "emergency" : ""}`}>
+    //           {isOvertime && <span className="ot-label">OVERTIME</span>}
+    //           <h2>{formatTime(seconds)}</h2>
+    //         </div>
+
+    //         <div className="timer-controls">
+    //           <button
+    //             onClick={() => setIsActive(!isActive)}
+    //             className="btn-start">
+    //             {isActive ? <LuPause /> : <LuPlay />}{" "}
+    //             {isActive ? "Pause" : "Start Again"}
+    //           </button>
+    //           {(isActive || isOvertime) && (
+    //             <button onClick={finishFocusSession} className="btn-complete">
+    //               Finish & Plant
+    //             </button>
+    //           )}
+    //         </div>
+    //         {/* </div> */}
+
+    //         <div className="forest-gallery">
+    //           <h3>Weekly Forest Growth </h3>
+    //           <div className="calendar-grid">
+    //             {weeklyForest.map(([date, count], i) => (
+    //               <div key={i} className="day-growth">
+    //                 <div className="tree-stack">
+    //                   {[...Array(Math.min(count, 3))].map((_, idx) => (
+    //                     <LuTrees key={idx} />
+    //                   ))}
+    //                   {count === 0 && <span className="seed-dot">.</span>}
+    //                 </div>
+    //                 <span className="day-label">
+    //                   {date === new Date().toLocaleDateString()
+    //                     ? "Today"
+    //                     : date.split("/")[1] + "/" + date.split("/")[0]}
+    //                 </span>
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+
+    //     <div className="right-col">
+    //       <div className="card performance-card">
+    //         <h3>Latest Evaluation 🎯</h3>
+    //         {lastPaper ? (
+    //           <div className="performance-content">
+    //             <span className="sub-badge">{lastPaper.subject}</span>
+    //             <div className="score-box">
+    //               <span className="score-num">{lastPaper.marks}</span>
+    //               <span className="percent-sign">%</span>
+    //             </div>
+    //             <p className="paper-type">{lastPaper.type} Paper</p>
+    //           </div>
+    //         ) : (
+    //           <p className="no-data">No records found.</p>
+    //         )}
+    //       </div>
+
+    //       <div className="card todo-card">
+    //         <h3>Daily Objectives 📚</h3>
+    //         <form
+    //           onSubmit={(e) => {
+    //             e.preventDefault();
+    //             if (!newTask.trim()) return;
+    //             const updated = [
+    //               ...tasks,
+    //               { id: Date.now(), text: newTask, completed: false },
+    //             ];
+    //             setTasks(updated);
+    //             localStorage.setItem("tasks", JSON.stringify(updated));
+    //             setNewTask("");
+    //           }}
+    //           className="task-form">
+    //           <input
+    //             value={newTask}
+    //             onChange={(e) => setNewTask(e.target.value)}
+    //             placeholder="Next milestone..."
+    //           />
+    //         </form>
+    //         <div className="task-list">
+    //           {tasks.map((t) => (
+    //             <div
+    //               key={t.id}
+    //               className={`task-item ${t.completed ? "done" : ""}`}
+    //               onClick={() => handleTaskToggle(t.id)}>
+    //               {t.completed ? <LuCheck /> : <LuCircle />}{" "}
+    //               <span>{t.text}</span>
+    //             </div>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+
     <div className="dashboard-wrapper">
+      {/* Header Section */}
       <header className="dashboard-main">
         <div className="welcome-section card">
           <h1>
@@ -159,9 +321,12 @@ const Dashboard = () => {
       </header>
 
       <div className="main-grid">
+        {/* Left Column: Focus & Countdown */}
         <div className="left-col">
           <div className="card countdown-card-premium">
-            <h3>Final Countdown ⏳</h3>
+            <h3>
+              Final Countdown <MdOutlineTimer />
+            </h3>
             <div className="timer-grid">
               <div className="time-item">
                 <span>{timeLeft.days}</span>
@@ -184,7 +349,7 @@ const Dashboard = () => {
 
           <div className="card focus-card-premium">
             <h3>
-              Deep Work Session <LuTrees />
+              Deep Work Session <FiActivity />
             </h3>
             <div className="forest-visual">
               {isOvertime || 1500 - seconds > 1200 ? (
@@ -214,50 +379,67 @@ const Dashboard = () => {
                 </button>
               )}
             </div>
-            {/* </div> */}
+          </div>
 
-            <div className="forest-gallery">
-              <h3>Weekly Forest Growth </h3>
-              <div className="calendar-grid">
-                {weeklyForest.map(([date, count], i) => (
-                  <div key={i} className="day-growth">
-                    <div className="tree-stack">
-                      {[...Array(Math.min(count, 3))].map((_, idx) => (
-                        <LuTrees key={idx} />
-                      ))}
-                      {count === 0 && <span className="seed-dot">.</span>}
-                    </div>
-                    <span className="day-label">
-                      {date === new Date().toLocaleDateString()
-                        ? "Today"
-                        : date.split("/")[1] + "/" + date.split("/")[0]}
-                    </span>
+          {/* Forest Gallery - separate card for better layout */}
+          <div className="card forest-gallery-premium">
+            <h3>
+              Weekly Forest Growth <FiTrendingUp />
+            </h3>
+            <div className="calendar-grid">
+              {weeklyForest.map(([date, count], i) => (
+                <div key={i} className="day-growth">
+                  <div className="tree-stack">
+                    {[...Array(Math.min(count, 3))].map((_, idx) => (
+                      <LuTrees key={idx} />
+                    ))}
+                    {count === 0 && <span className="seed-dot">.</span>}
                   </div>
-                ))}
-              </div>
+                  <span className="day-label">
+                    {date === new Date().toLocaleDateString()
+                      ? "Today"
+                      : date.split("/")[1] + "/" + date.split("/")[0]}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
+        {/* Right Column: Performance & Tasks */}
         <div className="right-col">
-          <div className="card performance-card">
-            <h3>Latest Evaluation 🎯</h3>
+          <div className="card performance-card-premium">
+            <div className="card-header">
+              <h3>
+                Latest Evaluation <FiBarChart2 />
+              </h3>
+              <span className="live-tag">Live Data</span>
+            </div>
             {lastPaper ? (
               <div className="performance-content">
-                <span className="sub-badge">{lastPaper.subject}</span>
-                <div className="score-box">
+                <div className="score-ring">
                   <span className="score-num">{lastPaper.marks}</span>
                   <span className="percent-sign">%</span>
                 </div>
-                <p className="paper-type">{lastPaper.type} Paper</p>
+                <div className="paper-info">
+                  <span className="sub-badge">{lastPaper.subject}</span>
+                  <p>{lastPaper.type} Paper Result</p>
+                </div>
               </div>
             ) : (
               <p className="no-data">No records found.</p>
             )}
           </div>
 
-          <div className="card todo-card">
-            <h3>Daily Objectives 📚</h3>
+          <div className="card todo-card-premium">
+            <div className="card-header">
+              <h3>
+                Daily Objectives <FiTarget />
+              </h3>
+              <span className="task-count">
+                {tasks.filter((t) => !t.completed).length} Left
+              </span>
+            </div>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -270,20 +452,23 @@ const Dashboard = () => {
                 localStorage.setItem("tasks", JSON.stringify(updated));
                 setNewTask("");
               }}
-              className="task-form">
+              className="task-input-box">
               <input
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
-                placeholder="Next milestone..."
+                placeholder="Add next goal..."
               />
+              <button type="submit">+</button>
             </form>
-            <div className="task-list">
+            <div className="task-scroll-area">
               {tasks.map((t) => (
                 <div
                   key={t.id}
-                  className={`task-item ${t.completed ? "done" : ""}`}
+                  className={`task-item-premium ${t.completed ? "is-done" : ""}`}
                   onClick={() => handleTaskToggle(t.id)}>
-                  {t.completed ? <LuCheck /> : <LuCircle />}{" "}
+                  <div className="check-box">
+                    {t.completed ? <LuCheck /> : <LuCircle />}
+                  </div>
                   <span>{t.text}</span>
                 </div>
               ))}
