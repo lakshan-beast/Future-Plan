@@ -69,7 +69,7 @@ function App() {
       <div className="loader-wrapper">
         <div className="loader-content">
           <div className="spinner"></div>
-          <h3>Future Plan</h3>
+          <h3>Dream Track</h3>
           <p>Syncing your academic progress...</p>
         </div>
       </div>
