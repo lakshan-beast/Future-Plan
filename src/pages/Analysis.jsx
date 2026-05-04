@@ -70,10 +70,8 @@ const Analysis = () => {
       <div className="analysis-grid">
         <div className="card tracker-container">
           <h3>Overall Performance (Maths, Physics, Chemistry)</h3>
-          <div
-            className="chart-wrapper"
-            style={{ width: "100%", height: "400px" }}>
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="chart-wrapper">
+            <ResponsiveContainer width="99%" aspect={2}>
               <LineChart data={data.chartData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="year" />
