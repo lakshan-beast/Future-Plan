@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Dashboard from "./pages/Dashboard";
 import Papers from "./pages/Papers";
@@ -6,6 +6,7 @@ import Formulas from "./pages/Formulas";
 import Analysis from "./pages/Analysis";
 import Timetable from "./pages/Timetable";
 import FinalPapers from "./pages/FinalPapers";
+// import DesktopOnlyView from "./pages/DesktopOnlyView";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
@@ -14,10 +15,38 @@ import { LuCalendarDays } from "react-icons/lu";
 import { PiMathOperationsFill } from "react-icons/pi";
 import { GiPapers } from "react-icons/gi";
 
+import { LuMonitorOff } from "react-icons/lu";
+
 // import Logo from "../public/logo.jpg";
+
+const DesktopOnlyView = () => (
+  <div className="mobile-blocker">
+    <div className="device-animation">
+      <LuMonitorOff />
+    </div>
+    <h2>Desktop Experience Only</h2>
+    <p>
+      This dashboard is optimized for Large Screens. Please switch to a Desktop
+      or Laptop.
+    </p>
+  </div>
+);
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
+
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 800);
+
+  useEffect(() => {
+    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
+    window.addEventListener("resize", handleResize); // Screen එකේ වෙනස්කම් ගැන අවධානයෙන් ඉන්නවා
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 2. Screen එක පොඩි නම් Dashboard එක පෙන්වන්නේ නැතුව Message එක පෙන්වනවා
+  if (!isLargeScreen) {
+    return <DesktopOnlyView />;
+  }
 
   return (
     <div className="app-container">
@@ -114,6 +143,8 @@ function App() {
           {activeTab === "analysis" && <Analysis />}
           {activeTab === "timetable" && <Timetable />}
           {activeTab === "finalpapers" && <FinalPapers />}
+
+          {activeTab === "desktop-warning" && <DesktopOnlyView />}
         </section>
       </main>
     </div>
