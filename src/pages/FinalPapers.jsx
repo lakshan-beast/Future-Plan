@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { MdOutlineRocketLaunch } from "react-icons/md";
 
 const FinalPaperTracker = () => {
   // LocalStorage පාවිච්චි කරලා දත්ත ටික ස්ථිරවම තියාගන්නවා
@@ -52,7 +53,9 @@ const FinalPaperTracker = () => {
 
   return (
     <div className="tracker-container">
-      <h2>Final Paper Progress Tracker 🚀</h2>
+      <h2>
+        Final Paper Progress Tracker <MdOutlineRocketLaunch />
+      </h2>
 
       {/* 1. ලකුණු ඇතුළත් කරන Form එක */}
       <form className="input-section" onSubmit={handleAdd}>
