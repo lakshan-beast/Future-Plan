@@ -386,6 +386,9 @@ $shadow:
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
 
     .welcome-section {
       h1 {
@@ -461,15 +464,52 @@ $shadow:
           color: #3e526e;
         }
       }
+
+      .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        margin-top: 6px; // Sidebar එකේ පහළටම තල්ලු කිරීමට
+        background: transparent;
+        border: 1px solid #fee2e2; // පොඩි රතු පාටක් (Light Red)
+        border-radius: 12px;
+        color: #ef4444; // Red color for logout
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        .icon {
+          display: flex;
+          font-size: 1.2rem;
+        }
+
+        &:hover {
+          background: #fef2f2; // බොහොම ලා රතු පාටක්
+          border-color: #f87171;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
     }
   }
 }
 
 // --- 3. Grid System ---
 .main-grid {
-  display: grid;
-  grid-template-columns: 1fr 350px; // Left side wider, Right side fixed
+  // display: grid;
+  // grid-template-columns: 1fr 350px; // Left side wider, Right side fixed
   gap: 2rem;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 // --- 4. Left Column Styles ---
