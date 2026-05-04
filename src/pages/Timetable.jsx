@@ -109,6 +109,8 @@ const Timetable = () => {
 
   return (
     <div className="timetable-page">
+      <h2>This Week Schedule</h2>
+
       <div className="timetable-grid">
         {days.map((day) => (
           <div key={day} className="day-column card">
@@ -148,7 +150,8 @@ const Timetable = () => {
         ))}
       </div>
 
-      <div className="history-section card">
+      {/* <div className="history-section card"> */}
+      <div className="table-section">
         <h3>Academic History (Previous Weeks) 📜</h3>
         <table className="history-table">
           <thead>
