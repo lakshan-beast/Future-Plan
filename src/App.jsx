@@ -18,24 +18,107 @@ import { GiFlyingTarget } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { PiMathOperationsFill } from "react-icons/pi";
 import { GiPapers } from "react-icons/gi";
-import { LuMonitorOff } from "react-icons/lu";
+// import { LuMonitorOff } from "react-icons/lu";
 
-const DesktopOnlyView = () => (
-  <div className="mobile-blocker">
-    <div className="device-animation">
-      <LuMonitorOff />
-    </div>
-    <h2>Desktop Experience Only</h2>
-    <p>
-      This dashboard is optimized for Large Screens. Please switch to a Desktop
-      or Laptop.
-    </p>
-  </div>
+// const DesktopOnlyView = () => (
+//   <div className="mobile-blocker">
+//     <div className="device-animation">
+//       <LuMonitorOff />
+//     </div>
+//     <h2>Desktop Experience Only</h2>
+//     <p>
+//       This dashboard is optimized for Large Screens. Please switch to a Desktop
+//       or Laptop.
+//     </p>
+//   </div>
+// );
+
+// bottom
+const BottomNav = ({ activeTab, setActiveTab }) => (
+  <nav className="bottom-nav" id="bottom-nav">
+    {/* <button
+      className={activeTab === "dashboard" ? "active" : ""}
+      onClick={() => setActiveTab("dashboard")}>
+      <MdSpaceDashboard />
+      <span>Home</span>
+    </button>
+    <button
+      className={activeTab === "timetable" ? "active" : ""}
+      onClick={() => setActiveTab("timetable")}>
+      <LuCalendarDays />
+      <span>Plan</span>
+    </button>
+    <button
+      className={activeTab === "analysis" ? "active" : ""}
+      onClick={() => setActiveTab("analysis")}>
+      <IoStatsChart />
+      <span>Stats</span>
+    </button>
+    <button
+      className={activeTab === "formulas" ? "active" : ""}
+      onClick={() => setActiveTab("formulas")}>
+      <PiMathOperationsFill />
+      <span>Vault</span>
+    </button> */}
+    <button
+      className={activeTab === "dashboard" ? "active" : ""}
+      onClick={() => setActiveTab("dashboard")}>
+      <span className="icon">
+        <MdSpaceDashboard />
+      </span>{" "}
+      {/* Dashboard */}
+    </button>
+
+    <button
+      className={activeTab === "timetable" ? "active" : ""}
+      onClick={() => setActiveTab("timetable")}>
+      <span className="icon">
+        <LuCalendarDays />
+      </span>{" "}
+      {/* Master Schedule */}
+    </button>
+
+    <button
+      className={activeTab === "formulas" ? "active" : ""}
+      onClick={() => setActiveTab("formulas")}>
+      <span className="icon">
+        <PiMathOperationsFill />
+      </span>{" "}
+      {/* Formulas Vault */}
+    </button>
+
+    <button
+      className={activeTab === "finalpapers" ? "active" : ""}
+      onClick={() => setActiveTab("finalpapers")}>
+      <span className="icon">
+        <GiPapers />
+      </span>{" "}
+      {/* Final Papers */}
+    </button>
+
+    <button
+      className={activeTab === "papers" ? "active" : ""}
+      onClick={() => setActiveTab("papers")}>
+      <span className="icon">
+        <IoDocumentsSharp />
+      </span>{" "}
+      {/* Past Papers */}
+    </button>
+
+    <button
+      className={activeTab === "analysis" ? "active" : ""}
+      onClick={() => setActiveTab("analysis")}>
+      <span className="icon">
+        <IoStatsChart />
+      </span>{" "}
+      {/* Past Paper Analysis */}
+    </button>
+  </nav>
 );
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 800);
+  // const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 800);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Login එක check කරනකම් පොඩි වෙලාවක් යනවා
 
@@ -47,8 +130,8 @@ function App() {
 
   useEffect(() => {
     // 1. Screen size එක check කිරීම
-    const handleResize = () => setIsLargeScreen(window.innerWidth >= 800);
-    window.addEventListener("resize", handleResize);
+    // const handleResize = () => setIsLargeScreen(window.innerWidth >= 300);
+    // window.addEventListener("resize", handleResize);
 
     // 2. Firebase User check කිරීම
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -58,7 +141,7 @@ function App() {
 
     return () => {
       unsubscribe();
-      window.removeEventListener("resize", handleResize);
+      // window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -77,14 +160,14 @@ function App() {
   }
 
   // Screen එක පොඩි නම් මුලින්ම ඒක පෙන්වමු (Login වෙලා හිටියත් නැතත්)
-  if (!isLargeScreen) {
-    return (
-      <div className="mobile-blocker">
-        <h2>Desktop Experience Only</h2>
-        <p>Please use a computer to access your study plan.</p>
-      </div>
-    );
-  }
+  // if (!isLargeScreen) {
+  //   return (
+  //     <div className="mobile-blocker">
+  //       <h2>Desktop Experience Only</h2>
+  //       <p>Please use a computer to access your study plan.</p>
+  //     </div>
+  //   );
+  // }
 
   if (!user) {
     return <Login />;
@@ -92,7 +175,9 @@ function App() {
 
   return (
     <div className="app-container">
-      <aside className="sidebar">
+      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      <aside className="sidebar" id="sidebar">
         <div className="logo">
           <GiFlyingTarget className="logo-icon" />
           <span className="logo-name">Dream</span>
@@ -175,14 +260,15 @@ function App() {
         </header>
 
         <section className="page-render">
-          {activeTab === "dashboard" && <Dashboard />}
+          {activeTab === "dashboard" && <Dashboard user={user} />}
           {activeTab === "papers" && <Papers />}
           {activeTab === "formulas" && <Formulas />}
           {activeTab === "analysis" && <Analysis />}
           {activeTab === "timetable" && <Timetable />}
           {activeTab === "finalpapers" && <FinalPapers />}
 
-          {activeTab === "desktop-warning" && <DesktopOnlyView />}
+          {/* {activeTab === "desktop-warning" && <DesktopOnlyView />} */}
+          {/* {activeTab === "bottom-nav" && <BottomNav />} */}
         </section>
       </main>
     </div>
