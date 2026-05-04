@@ -2789,7 +2789,149 @@ export default Dashboard;
 //               dataKey="chemistry"
 //               stroke="#2ecc71"
 //               name="Chemistry"
-//               strokeWidth={3}
+//               strokeWidth={3}/   .daily-progress-container {
+//     margin-bottom: 20px;
+
+//     .progress-info {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
+
+//       h3 {
+//         margin: 0;
+//         font-size: 1rem;
+//         color: #64748b;
+//       }
+//       .percentage {
+//         font-size: 1.5rem;
+//         font-weight: 800;
+//         color: #2563eb;
+//       }
+//     }
+
+//     .progress-bar-outer {
+//       height: 12px;
+//       background: #f1f5f9;
+//       border-radius: 10px;
+//       margin: 15px 0;
+//       overflow: hidden;
+
+//       .progress-bar-inner {
+//         height: 100%;
+//         background: linear-gradient(90deg, #2563eb, #3b82f6);
+//         border-radius: 10px;
+//         transition: width 0.5s ease-in-out; // මේකෙන් තමයි progress එක ලස්සනට පිරෙන්නේ
+//       }
+//     }
+
+//     .task-count {
+//       margin: 0;
+//       font-size: 0.85rem;
+//       color: #94a3b8;
+//       text-align: right;
+//     }
+//   }
+
+//   .performance-card {
+//     .performance-content {
+//       text-align: center;
+
+//       .sub-tag {
+//         display: inline-block;
+//         padding: 5px 12px;
+//         background: #eef2ff;
+//         color: #4f46e5;
+//         border-radius: 8px;
+//         font-size: 0.8rem;
+//         font-weight: 700;
+//         text-transform: uppercase;
+//       }
+
+//       .score-display {
+//         margin: 20px 0;
+//         .score {
+//           font-family: $font-exo;
+//           font-size: 3.5rem;
+//           font-weight: 800;
+//           color: #1e293b;
+//           line-height: 1;
+//         }
+//         .label {
+//           margin: 0;
+//           font-size: 0.85rem;
+//           color: #94a3b8;
+//           font-weight: 600;
+//         }
+//       }
+
+//       .remarks-box {
+//         background: #f8fafc;
+//         padding: 12px;
+//         border-radius: 10px;
+//         font-size: 0.85rem;
+//         color: #64748b;
+//         border-left: 4px solid #cbd5e1;
+//         text-align: left;
+//       }
+//     }
+//   }
+
+//   // Right Column Styles
+//   .mini-card {
+//     p {
+//       margin: 0;
+//       color: #64748b;
+//       font-size: 0.85rem;
+//       font-weight: 600;
+//     }
+//     .mini-timer {
+//       font-size: 1.4rem;
+//       font-weight: 700;
+//       margin-top: 10px;
+//       color: #1e293b;
+//     }
+//     .progress-bar-bg {
+//       height: 8px;
+//       background: #f1f5f9;
+//       border-radius: 10px;
+//       margin: 10px 0;
+//       .progress-bar-fill {
+//         height: 100%;
+//         background: #2563eb;
+//         border-radius: 10px;
+//         transition: $transition;
+//       }
+//     }
+//   }
+// }
+
+// .papers-page {
+//   background: rgba($color-white, 0.2);
+//   padding: 1rem 50px;
+
+// //   // .card {
+// //   //   background: rgba($color-white, 0.4);
+// //   //   // background-color: white;
+// //   //   padding: 1.5rem;
+// //   //   margin-bottom: 6px;
+// //   //   border-radius: 15px;
+// //   //   border: 1px solid $border;
+// //   //   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+// //   //   h3 {
+// //   //     margin-top: 0;
+// //   //     margin-bottom: 25px;
+// //   //     color: #495b74;
+// //   //     font-size: 1.2rem;
+// //   //     text-transform: uppercase;
+// //   //     letter-spacing: 1px;
+// //   //     text-align: center;
+// //   //   }
+// //   // }
+// }
+
+// // }
+
 //               connectNulls
 //             />
 //           </LineChart>
@@ -2800,3 +2942,41 @@ export default Dashboard;
 // };
 
 // export default FinalPaperTracker;
+
+/ .progress-card-premium {
+//   text-align: center;
+//   .progress-content {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     .circular-chart {
+//       width: 120px;
+//       height: 120px;
+//       margin: 10px 0;
+//     }
+//     .circle-bg {
+//       fill: none;
+//       stroke: #f1f5f9;
+//       stroke-width: 3.8;
+//     }
+//     .circle {
+//       fill: none;
+//       stroke: #4f46e5;
+//       stroke-width: 3.8;
+//       stroke-linecap: round;
+//       transition: stroke-dasharray 0.5s ease;
+//     }
+//     .percentage {
+//       font-family: $font-exo;
+//       font-size: 0.5rem;
+//       font-weight: 800;
+//       text-anchor: middle;
+//       fill: #1e293b;
+//     }
+//     p {
+//       font-size: 0.85rem;
+//       color: #64748b;
+//       font-weight: 600;
+//     }
+//   }
+// }
