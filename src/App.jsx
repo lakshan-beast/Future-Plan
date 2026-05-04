@@ -58,7 +58,8 @@ function App() {
       <aside className="sidebar">
         <div className="logo">
           <GiFlyingTarget className="logo-icon" />
-          Dream<span>Track</span>
+          <span className="logo-name">Dream</span>
+          <span>Track</span>
         </div>
         <nav className="nav-menu">
           <button
