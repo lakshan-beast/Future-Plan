@@ -424,6 +424,44 @@ $shadow:
         }
       }
     }
+
+    .user-profile {
+      margin: 20px;
+      padding: 15px;
+      background: rgba($color-medium, 1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: $transition;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+        background: #ddd;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .info {
+        text-align: end;
+        h4 {
+          margin: 0;
+          font-size: 0.9rem;
+          color: $text-dark;
+        }
+        p {
+          margin: 0;
+          font-size: 0.75rem;
+          color: #3e526e;
+        }
+      }
+    }
   }
 }
 
