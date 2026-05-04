@@ -13,42 +13,13 @@ $desktop: 800px;
   }
 }
 
-// පද්ධතියේ ප්‍රධාන Wrapper එක
 .dashboard-wrapper {
   display: block;
+
   @include mobile-only {
-    display: none; // Mobile වලදී Dashboard එක සම්පූර්ණයෙන් හංගනවා
+    display: none;
   }
 }
-
-// Warning Message එක
-// .desktop-only-warning {
-//   display: none;
-//   height: 100vh;
-//   text-align: center;
-//   padding: 40px;
-//   background: #f8fafc;
-
-//   @include mobile-only {
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//   }
-
-//   img {
-//     width: 150px;
-//     margin-bottom: 20px;
-//   }
-//   h2 {
-//     color: #1e293b;
-//     font-size: 1.5rem;
-//   }
-//   p {
-//     color: #64748b;
-//     margin-top: 10px;
-//   }
-// }
 
 .mobile-blocker {
   display: flex;
@@ -57,23 +28,23 @@ $desktop: 800px;
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background: #f8fafc;
+  background: $color-bg;
 
   h2 {
     font-size: 1.8rem;
-    color: #1e293b;
+    color: $color-content;
     margin: 15px 0;
   }
   p {
-    color: #64748b;
+    color: $color-text;
     max-width: 300px;
     line-height: 1.5;
   }
 
   .device-animation {
     font-size: 4rem;
-    color: #2563eb;
-    animation: bounce 2s infinite; // පොඩි animation එකක්
+    color: $primary;
+    animation: bounce 2s infinite;
   }
 }
 
