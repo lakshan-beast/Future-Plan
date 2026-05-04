@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { LuPlus, LuTrash2, LuFileText } from "react-icons/lu";
+import { FiFileText } from "react-icons/fi";
 
 const Papers = () => {
   const [papers, setPapers] = useState(() => {
@@ -35,7 +36,9 @@ const Papers = () => {
     <div className="papers-page">
       {/* <div className=" paper-form"> */}
       <div className="card tracker-container">
-        <h2>Add Past Paper Record 📝</h2>
+        <h2>
+          Add Past Paper Record <FiFileText />
+        </h2>
 
         <form
           className="paper-form"
