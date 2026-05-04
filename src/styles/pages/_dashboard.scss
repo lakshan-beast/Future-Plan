@@ -1,354 +1,735 @@
+// .dashboard-wrapper {
+//   //   max-width: 600px;
+//   //   display: flex;
+//   //   flex-direction: column;
+//   //   justify-content: center;
+//   //   align-items: center;
+
+//   .dashboard-main {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     gap: 20px;
+//     padding: 2rem 0;
+//     margin-bottom: 1rem;
+//     -webkit-backdrop-filter: blur(10px);
+//     backdrop-filter: blur(10px);
+//     border-bottom: 1px solid $border;
+
+//     .welcome-section {
+//       h1 {
+//         font-size: 1.8rem;
+//         color: $text-dark;
+
+//         span {
+//           color: $primary;
+//         }
+//       }
+//       p {
+//         margin: 5px 0 0 0;
+//         color: $color-content;
+//         font-size: 1.1rem;
+//         font-weight: 500;
+//       }
+//     }
+
+//     .dashboard-main-right {
+//       display: flex;
+//       align-items: center;
+//       flex-direction: column;
+//       justify-content: space-between;
+//       gap: 10px;
+
+//       .badge-status {
+//         background: $color-white;
+//         color: $primary;
+//         padding: 8px 15px;
+//         border-radius: 12px;
+//         font-weight: 700;
+//         font-family: $font-exo;
+//         font-size: 0.85rem;
+//         display: flex;
+//         align-items: center;
+//         gap: 8px;
+//         border: 1px solid $border;
+//       }
+//     }
+//   }
+
+//   .main-grid {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+//     gap: 15px;
+//   }
+// }
+
+// //   // To-Do Styles
+// .todo-card {
+//   display: none;
+//   input {
+//     width: 100%;
+//     padding: 12px;
+//     border-radius: 10px;
+//     border: 1px solid #e2e8f0;
+//     margin-bottom: 15px;
+//     outline: none;
+//     &:focus {
+//       border-color: #2563eb;
+//     }
+//   }
+//   .task-list {
+//     .task-item {
+//       display: flex;
+//       align-items: center;
+//       gap: 12px;
+//       padding: 10px;
+//       cursor: pointer;
+//       border-radius: 8px;
+//       transition: $transition;
+//       &:hover {
+//         background: #f8fafc;
+//       }
+//       &.done {
+//         color: #94a3b8;
+//         text-decoration: line-through;
+//         .check {
+//           color: #22c55e;
+//         }
+//       }
+//     }
+//   }
+// }
+// // }
+// .focus-card-premium {
+//   text-align: center;
+
+//   h3 {
+//     font-size: 1.2rem;
+//     color: $black-color;
+//   }
+
+//   .forest-visual {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     margin: 20px 0;
+
+//     .tree {
+//       font-size: 5rem;
+//       transition: $transition;
+
+//       &.seed {
+//         color: #aaecc3;
+//       }
+//       &.growing {
+//         color: #22c55e;
+//       }
+//       &.grown {
+//         color: #019138;
+//         filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4));
+//       }
+//     }
+
+//     .pulsing {
+//       animation: pulse 2s infinite;
+//     }
+
+//     .timer-display {
+//       margin-top: 15px;
+
+//       .display-time {
+//         font-size: 4rem;
+//         font-weight: 800;
+//         font-family: $font-exo;
+//         color: #1e293b;
+//       }
+//       &.overtime {
+//         .display-time {
+//           color: #ef4444;
+//           text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+//         }
+//         .ot-label {
+//           color: #ef4444;
+//           font-weight: 800;
+//           font-size: 0.8rem;
+//           letter-spacing: 2px;
+//         }
+//       }
+//     }
+//   }
+
+//   .timer-controls {
+//     margin-top: 8px;
+//     display: flex;
+//     gap: 10px;
+//     justify-content: center;
+
+//     button {
+//       padding: 12px 25px;
+//       border-radius: 12px;
+//       border: none;
+//       cursor: pointer;
+//       display: flex;
+//       align-items: center;
+//       gap: 8px;
+//       font-weight: 600;
+//       font-family: $font-exo;
+//     }
+//     .btn-start {
+//       background: #258beb;
+//       color: white;
+//     }
+//     .btn-complete {
+//       background: #0ce017;
+//       color: white;
+//     }
+//     .btn-pause {
+//       background: #f1f5f9;
+//       color: #596a81;
+//     }
+//   }
+// }
+
+// @keyframes pulse {
+//   0% {
+//     transform: scale(1);
+//   }
+//   50% {
+//     transform: scale(1.1);
+//   }
+//   100% {
+//     transform: scale(1);
+//   }
+// }
+
+// .forest-gallery {
+//   margin-top: 1rem;
+//   border-top: 2px solid $color-text;
+//   padding-top: 16px;
+
+//   .calendar-grid {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 15px;
+//     margin: 20px 0;
+//     min-height: 80px;
+//     padding: 15px;
+//     background: #eceef0;
+//     border-radius: 12px;
+
+//     .day-growth {
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//       background: white;
+//       padding: 12px 8px;
+//       border-radius: 10px;
+//       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+//       animation: growIn 0.5s ease-out;
+
+//       .tree-stack {
+//         //   color: #166534;
+//         color: #0ce017;
+//         font-size: 1.3rem;
+//       }
+//       .seed-dot {
+//         font-size: 0.7rem;
+//         font-weight: 700;
+//         color: #84b0ee;
+//         margin-top: 4px;
+//       }
+//     }
+
+//     .day-label {
+//       color: #94a3b8;
+//       font-size: 0.85rem;
+//       font-style: italic;
+//       width: 100%;
+//       text-align: center;
+//     }
+//   }
+// }
+
+// @keyframes growIn {
+//   from {
+//     transform: scale(0);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: scale(1);
+//     opacity: 1;
+//   }
+// }
+
+// .performance-card {
+//   text-align: center;
+//   h3 {
+//     text-align: center;
+//     color: $black-color;
+//     font-size: 1.3rem;
+//   }
+
+//   .sub-badge {
+//     display: inline-block;
+//     padding: 4px 20px;
+//     background: #cbced6;
+//     color: $primary;
+//     border-radius: 20px;
+//     font-size: 0.75rem;
+//     font-weight: 700;
+//     margin-top: 12px;
+//   }
+//   .score-box {
+//     margin: 15px 0 6px 0;
+
+//     .score-num {
+//       font-family: $font-exo;
+//       font-size: 3rem;
+//       font-weight: 800;
+//       color: $text-dark;
+//     }
+//     .percent-sign {
+//       font-size: 1.2rem;
+//       color: #4f555f;
+//       font-weight: 700;
+//     }
+//   }
+
+//   .paper-type {
+//     font-size: 0.8rem;
+//     color: $color-content;
+//     text-transform: uppercase;
+//     letter-spacing: 2px;
+//     border-left: 5px solid;
+//     background-color: rgba($black-color, 0.2);
+//     padding: 6px 0;
+//     border-radius: 0 6px 6px 0;
+//     transition: $transition;
+
+//     &:hover {
+//       background-color: rgba($black-color, 1);
+//       color: $color-white;
+//     }
+//   }
+// }
+
+// .countdown-card-premium {
+//   background: rgba($black-color, 0.7);
+//   color: $color-white;
+//   text-align: center;
+
+//   h3 {
+//     color: $color-white;
+//     font-size: 1.3rem;
+//   }
+
+//   .timer-grid {
+//     display: flex;
+//     justify-content: center;
+//     gap: 30px;
+//     margin-top: 15px;
+
+//     .time-item {
+//       span {
+//         display: block;
+//         font-size: 3rem;
+//         font-weight: 800;
+//         font-family: $font-exo;
+
+//         padding-right: 16px;
+//         border-right: 2px solid;
+//       }
+//       .secs {
+//         color: rgb(255, 61, 61);
+//         border: none;
+//       }
+
+//       small {
+//         font-size: 0.7rem;
+//         opacity: 0.8;
+//         text-transform: uppercase;
+//       }
+//     }
+//   }
+// }
+
+//new version
+// --- 1. Variables & Mixins ---
+$primary: #2563eb;
+$success: #10b981;
+$danger: #ef4444;
+$background: #f8fafc;
+$card-bg: #ffffff;
+$text-main: #1e293b;
+$text-muted: #64748b;
+$shadow:
+  0 4px 6px -1px rgb(0 0 0 / 0.1),
+  0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+@mixin card-style {
+  background: $card-bg;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: $shadow;
+  border: 1px solid #f1f5f9;
+}
+
+// --- 2. Main Wrapper Layout ---
 .dashboard-wrapper {
-  //   max-width: 600px;
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: center;
+  background-color: $background;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: "Inter", sans-serif;
 
   .dashboard-main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    padding: 2rem 0;
-    margin-bottom: 1rem;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid $border;
+    margin-bottom: 2rem;
 
     .welcome-section {
       h1 {
         font-size: 1.8rem;
-        color: $text-dark;
-
+        color: $text-main;
         span {
           color: $primary;
+          font-weight: 800;
         }
       }
       p {
-        margin: 5px 0 0 0;
-        color: $color-content;
-        font-size: 1.1rem;
-        font-weight: 500;
+        color: $text-muted;
       }
     }
 
     .dashboard-main-right {
       display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 1rem;
 
       .badge-status {
-        background: $color-white;
-        color: $primary;
-        padding: 8px 15px;
-        border-radius: 12px;
-        font-weight: 700;
-        font-family: $font-exo;
-        font-size: 0.85rem;
         display: flex;
         align-items: center;
         gap: 8px;
-        border: 1px solid $border;
-      }
-    }
-  }
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
 
-  .main-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
-  }
-}
-
-//   // To-Do Styles
-.todo-card {
-  display: none;
-  input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 15px;
-    outline: none;
-    &:focus {
-      border-color: #2563eb;
-    }
-  }
-  .task-list {
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: $transition;
-      &:hover {
-        background: #f8fafc;
-      }
-      &.done {
-        color: #94a3b8;
-        text-decoration: line-through;
-        .check {
-          color: #22c55e;
+        &.primary {
+          background: #dbeafe;
+          color: $primary;
+        }
+        &.success {
+          background: #dcfce7;
+          color: $success;
         }
       }
     }
   }
 }
-// }
-.focus-card-premium {
-  text-align: center;
 
-  h3 {
-    font-size: 1.2rem;
-    color: $black-color;
-  }
+// --- 3. Grid System ---
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px; // Left side wider, Right side fixed
+  gap: 2rem;
+}
 
-  .forest-visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
+// --- 4. Left Column Styles ---
+.left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
-    .tree {
-      font-size: 5rem;
-      transition: $transition;
+  .countdown-card-premium {
+    @include card-style;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
 
-      &.seed {
-        color: #aaecc3;
-      }
-      &.growing {
-        color: #22c55e;
-      }
-      &.grown {
-        color: #019138;
-        filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4));
-      }
+    h3 {
+      margin-bottom: 1rem;
+      //   opacity: 0;
+      color: white;
+      text-align: center;
     }
 
-    .pulsing {
-      animation: pulse 2s infinite;
+    .timer-grid {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      gap: 2rem;
+
+      .time-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        span {
+          font-size: 2.2rem;
+          font-weight: 800;
+        }
+        small {
+          text-transform: uppercase;
+          font-size: 0.7rem;
+          opacity: 0.7;
+        }
+        .secs {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .focus-card-premium {
+    @include card-style;
+    text-align: center;
+
+    .forest-visual {
+      font-size: 5rem;
+      margin: 2rem 0;
+      .tree {
+        &.seed {
+          color: #b45309;
+        }
+        &.growing {
+          color: #fbbf24;
+        }
+        &.grown {
+          color: $success;
+        }
+      }
     }
 
     .timer-display {
-      margin-top: 15px;
-
-      .display-time {
+      margin-bottom: 2rem;
+      h2 {
         font-size: 4rem;
         font-weight: 800;
-        font-family: $font-exo;
-        color: #1e293b;
+        letter-spacing: -2px;
       }
-      &.overtime {
-        .display-time {
-          color: #ef4444;
-          text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+      &.emergency {
+        color: $danger;
+        animation: pulse 1s infinite;
+      }
+      .ot-label {
+        font-size: 0.8rem;
+        font-weight: 800;
+        background: $danger;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      .btn-start {
+        background: $primary;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+          transform: scale(1.05);
+          background: darken($primary, 10%);
         }
-        .ot-label {
-          color: #ef4444;
-          font-weight: 800;
-          font-size: 0.8rem;
-          letter-spacing: 2px;
-        }
+      }
+      .btn-complete {
+        background: $success;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
       }
     }
   }
 
-  .timer-controls {
-    margin-top: 8px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-
-    button {
-      padding: 12px 25px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
+  .forest-gallery-premium {
+    @include card-style;
+    .calendar-grid {
       display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-      font-family: $font-exo;
-    }
-    .btn-start {
-      background: #258beb;
-      color: white;
-    }
-    .btn-complete {
-      background: #0ce017;
-      color: white;
-    }
-    .btn-pause {
-      background: #f1f5f9;
-      color: #596a81;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+
+      .day-growth {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .tree-stack {
+          height: 60px;
+          display: flex;
+          flex-direction: column-reverse;
+          color: $success;
+          font-size: 1.2rem;
+          .seed-dot {
+            color: #cbd5e1;
+          }
+        }
+        .day-label {
+          font-size: 0.75rem;
+          color: $text-muted;
+          font-weight: 600;
+        }
+      }
     }
   }
 }
 
+// --- 5. Right Column Styles ---
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .performance-card-premium {
+    @include card-style;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+
+      .live-tag {
+        font-size: 0.6rem;
+        background: #fee2e2;
+        color: $danger;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 800;
+      }
+      .task-count {
+        text-align: center;
+        color: red;
+      }
+    }
+
+    .performance-content {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+
+      .score-ring {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 5px solid $primary;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .score-num {
+          font-size: 1.8rem;
+          font-weight: 800;
+          line-height: 1;
+        }
+        .percent-sign {
+          font-size: 0.8rem;
+          color: $primary;
+          font-weight: 700;
+        }
+      }
+
+      .paper-info {
+        .sub-badge {
+          background: #eff6ff;
+          color: $primary;
+          padding: 4px 10px;
+          border-radius: 6px;
+          font-size: 0.8rem;
+          font-weight: 700;
+        }
+        p {
+          font-size: 0.85rem;
+          color: $text-muted;
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+
+  .todo-card-premium {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+
+      .task-count {
+        text-align: center;
+        color: $black-color;
+      }
+    }
+    @include card-style;
+    .task-input-box {
+      display: flex;
+      gap: 10px;
+      margin: 1.5rem 0;
+      input {
+        flex: 1;
+        border: 1px solid #e2e8f0;
+        padding: 12px;
+        border-radius: 10px;
+        outline: none;
+        &:focus {
+          border-color: $primary;
+        }
+      }
+      button {
+        background: $primary;
+        color: white;
+        border: none;
+        padding: 0 15px;
+        border-radius: 10px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+    }
+
+    .task-scroll-area {
+      max-height: 300px;
+      overflow-y: auto;
+      .task-item-premium {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: #f8fafc;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover {
+          background: #f1f5f9;
+          transform: translateX(4px);
+        }
+        &.is-done {
+          opacity: 0.5;
+          span {
+            text-decoration: line-through;
+          }
+          .check-box {
+            color: $success;
+          }
+        }
+      }
+    }
+  }
+}
+
+// --- 6. Animations ---
 @keyframes pulse {
   0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.forest-gallery {
-  margin-top: 1rem;
-  border-top: 2px solid $color-text;
-  padding-top: 16px;
-
-  .calendar-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin: 20px 0;
-    min-height: 80px;
-    padding: 15px;
-    background: #eceef0;
-    border-radius: 12px;
-
-    .day-growth {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: white;
-      padding: 12px 8px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      animation: growIn 0.5s ease-out;
-
-      .tree-stack {
-        //   color: #166534;
-        color: #0ce017;
-        font-size: 1.3rem;
-      }
-      .seed-dot {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #84b0ee;
-        margin-top: 4px;
-      }
-    }
-
-    .day-label {
-      color: #94a3b8;
-      font-size: 0.85rem;
-      font-style: italic;
-      width: 100%;
-      text-align: center;
-    }
-  }
-}
-
-@keyframes growIn {
-  from {
-    transform: scale(0);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
     opacity: 1;
   }
-}
-
-.performance-card {
-  text-align: center;
-  h3 {
-    text-align: center;
-    color: $black-color;
-    font-size: 1.3rem;
+  50% {
+    opacity: 0.7;
   }
-
-  .sub-badge {
-    display: inline-block;
-    padding: 4px 20px;
-    background: #cbced6;
-    color: $primary;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-top: 12px;
-  }
-  .score-box {
-    margin: 15px 0 6px 0;
-
-    .score-num {
-      font-family: $font-exo;
-      font-size: 3rem;
-      font-weight: 800;
-      color: $text-dark;
-    }
-    .percent-sign {
-      font-size: 1.2rem;
-      color: #4f555f;
-      font-weight: 700;
-    }
-  }
-
-  .paper-type {
-    font-size: 0.8rem;
-    color: $color-content;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-left: 5px solid;
-    background-color: rgba($black-color, 0.2);
-    padding: 6px 0;
-    border-radius: 0 6px 6px 0;
-    transition: $transition;
-
-    &:hover {
-      background-color: rgba($black-color, 1);
-      color: $color-white;
-    }
-  }
-}
-
-.countdown-card-premium {
-  background: rgba($black-color, 0.7);
-  color: $color-white;
-  text-align: center;
-
-  h3 {
-    color: $color-white;
-    font-size: 1.3rem;
-  }
-
-  .timer-grid {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 15px;
-
-    .time-item {
-      span {
-        display: block;
-        font-size: 3rem;
-        font-weight: 800;
-        font-family: $font-exo;
-
-        padding-right: 16px;
-        border-right: 2px solid;
-      }
-      .secs {
-        color: rgb(255, 61, 61);
-        border: none;
-      }
-
-      small {
-        font-size: 0.7rem;
-        opacity: 0.8;
-        text-transform: uppercase;
-      }
-    }
+  100% {
+    opacity: 1;
   }
 }
