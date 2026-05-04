@@ -63,7 +63,18 @@ function App() {
   }, []);
 
   // Loading වෙලාවට හිස් screen එකක් පේනවා වෙනුවට මොනවා හරි දාන්න පුළුවන්
-  if (loading) return <div className="loader">Loading...</div>;
+  // if (loading) return <div className="loader">Loading...</div>;
+  if (loading) {
+    return (
+      <div className="loader-wrapper">
+        <div className="loader-content">
+          <div className="spinner"></div>
+          <h3>Future Plan</h3>
+          <p>Syncing your academic progress...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Screen එක පොඩි නම් මුලින්ම ඒක පෙන්වමු (Login වෙලා හිටියත් නැතත්)
   if (!isLargeScreen) {
