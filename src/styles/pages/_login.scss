@@ -1,0 +1,153 @@
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+
+  .login-card {
+    max-width: 400px;
+    width: 90%;
+    padding: 2.5rem;
+    text-align: center;
+    @include card-style; // අපි කලින් හදපු mixin එක
+
+    .login-header {
+      margin-bottom: 2rem;
+      .app-logo {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+      h1 {
+        font-size: 2rem;
+        color: #1e293b;
+      }
+      p {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin-top: 10px;
+      }
+    }
+
+    .logo {
+      padding: 2rem 1rem;
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+
+      span {
+        color: $primary;
+        margin-left: 1px;
+      }
+      .logo-name {
+        background-color: $primary;
+        color: $color-white;
+        border-radius: 5px;
+        padding: 0 5px;
+      }
+
+      .logo-icon {
+        margin-right: 3px;
+        width: 40px;
+        height: 40px;
+        background: $active-gradient;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        display: block;
+      }
+    }
+
+    .google-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: white;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background: #f1f5f9;
+        transform: translateY(-2px);
+      }
+
+      .google-logo {
+        width: 20px;
+        font-size: 1.2rem;
+      }
+    }
+
+    .footer-text {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+
+    input {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      outline: none;
+      &:focus {
+        border-color: #2563eb;
+      }
+    }
+
+    .auth-btn {
+      background: #1e293b;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      &:hover {
+        background: #0f172a;
+      }
+    }
+  }
+
+  .divider {
+    margin: 20px 0;
+    border-bottom: 1px solid #e2e8f0;
+    line-height: 0.1em;
+    span {
+      background: #fff;
+      padding: 0 10px;
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+  }
+
+  .toggle-text {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #64748b;
+    span {
+      color: #2563eb;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+}
