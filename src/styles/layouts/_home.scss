@@ -10,26 +10,31 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0px 0px 6px $color-text;
-    // border-right: 2px solid;
     transition: $transition;
     position: sticky;
     top: 0;
 
     .logo {
-      padding: 2rem;
+      padding: 2rem 1rem;
       font-size: 1.8rem;
       font-weight: 800;
-      // color: #425166;
-      color: $color-text;
       display: flex;
       align-items: center;
+      margin: 1rem 0;
 
       span {
         color: $primary;
+        margin-left: 1px;
+      }
+      .logo-name {
+        background-color: $primary;
+        color: $color-white;
+        border-radius: 5px;
+        padding: 0 5px;
       }
 
       .logo-icon {
-        margin-right: 12px;
+        margin-right: 3px;
         width: 40px;
         height: 40px;
         background: $active-gradient;
@@ -40,12 +45,13 @@
         color: white;
         font-size: 1.5rem;
         box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+        display: block;
       }
     }
 
     .nav-menu {
       flex: 1;
-      padding: 0 1rem;
+      padding: 0 0.3rem;
 
       button {
         width: 100%;
@@ -59,7 +65,6 @@
         background: rgba($color-medium, 0.2);
         border-radius: 12px;
         color: #64748b;
-        // color: $color-medium;
         font-weight: 500;
         cursor: pointer;
         transition: $transition;
@@ -67,13 +72,13 @@
         &:hover {
           background: $color-bg;
           border: 2px solid $border;
-          color: #4f46e5;
+          color: $black-color;
           .icon {
             transform: translateX(3px);
           }
         }
         &.active {
-          background: $active-gradient;
+          background: $black-color;
           color: white;
           box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2);
 
@@ -91,6 +96,7 @@
 
     .sidebar-footer {
       padding: 1.5rem;
+      margin: 2rem 1rem;
       border-top: 1px solid $color-text;
 
       .footer-status {
@@ -100,11 +106,20 @@
         margin-bottom: 5px;
 
         .status-dot {
-          width: 8px;
-          height: 8px;
-          background: #22c55e; // Green color
+          width: 12px;
+          height: 12px;
+          background: #08e659;
           border-radius: 50%;
           box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+          border: 1px solid rgb(0, 0, 180);
+          cursor: pointer;
+          transition: $transition;
+
+          &:hover {
+            border: none;
+            width: 15px;
+            height: 15px;
+          }
         }
 
         span {
@@ -154,7 +169,6 @@
           margin: 0;
           font-size: 0.9rem;
           color: $text-dark;
-          //   color: $color-white;
         }
         p {
           margin: 0;
@@ -179,12 +193,11 @@
       justify-content: space-between;
       align-items: center;
       height: 100px;
-      // border-radius: 0 0 1rem 1rem;
+      border-radius: 0 0 1rem 1rem;
 
       h1 {
         font-size: 1.9rem;
         margin: 0;
-        // color: #1e293b;
         color: $color-text;
       }
       .user-info {
@@ -196,8 +209,34 @@
       }
     }
 
+    .date-box {
+      text-align: right;
+      padding-right: 20px;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: rgba($color-medium, 0.2);
+      padding: 6px 16px;
+      border-radius: 6px;
+
+      h4 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: $text-dark;
+        padding-right: 6px;
+      }
+      p {
+        border-left: 2px solid $color-content;
+        margin: 0;
+        font-size: 0.8rem;
+        color: $color-content;
+        padding-left: 6px;
+      }
+    }
+
     .page-render {
-      padding: 2.5rem;
+      padding: 1rem 2.5rem;
       background-color: $color-bg;
       height: 100vh;
     }
