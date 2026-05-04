@@ -2187,3 +2187,616 @@ export default Dashboard;
 // };
 
 // export default Analysis;
+
+// import { useState, useEffect } from "react";
+// import { LuCheck, LuSquare } from "react-icons/lu";
+
+// const Timetable = () => {
+//   const days = [
+//     "Monday",
+//     "Tuesday",
+//     "Wednesday",
+//     "Thursday",
+//     "Friday",
+//     "Saturday",
+//     "Sunday",
+//   ];
+
+//   // දත්ත ගබඩා කිරීම (සතියේ දින 7 සඳහා slots 10 බැගින්)
+//   const [schedule, setSchedule] = useState(() => {
+//     const saved = localStorage.getItem("weekly-schedule");
+//     if (saved) return JSON.parse(saved);
+
+//     // මුලින්ම හිස් schedule එකක් හදමු
+//     const initialSchedule = {};
+//     days.forEach((day) => {
+//       initialSchedule[day] = Array(10).fill({ text: "", completed: false });
+//     });
+//     return initialSchedule;
+//   });
+
+//   useEffect(() => {
+//     localStorage.setItem("weekly-schedule", JSON.stringify(schedule));
+//   }, [schedule]);
+
+//   const handleTextChange = (day, index, val) => {
+//     const newDayTasks = [...schedule[day]];
+//     newDayTasks[index] = { ...newDayTasks[index], text: val };
+//     setSchedule({ ...schedule, [day]: newDayTasks });
+//   };
+
+//   const toggleComplete = (day, index) => {
+//     const newDayTasks = [...schedule[day]];
+//     newDayTasks[index] = {
+//       ...newDayTasks[index],
+//       completed: !newDayTasks[index].completed,
+//     };
+//     setSchedule({ ...schedule, [day]: newDayTasks });
+//   };
+
+//   const calculateProgress = (dayTasks) => {
+//     const totalWithText = dayTasks.filter((t) => t.text.trim() !== "").length;
+//     const completed = dayTasks.filter(
+//       (t) => t.text.trim() !== "" && t.completed,
+//     ).length;
+//     return totalWithText === 0
+//       ? 0
+//       : Math.round((completed / totalWithText) * 100);
+//   };
+
+//   useEffect(() => {
+//     const checkAndArchiveWeek = () => {
+//       const lastArchiveDate = localStorage.getItem("last-archive-date");
+//       const today = new Date();
+
+//       // සතියේ ආරම්භක දිනය (Monday) ලබා ගැනීම
+//       const currentMonday = new Date(today);
+//       currentMonday.setDate(
+//         today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1),
+//       );
+//       currentMonday.setHours(0, 0, 0, 0);
+
+//       if (lastArchiveDate) {
+//         const lastArchive = new Date(lastArchiveDate);
+
+//         // සතිය මාරු වී ඇත්නම් (අන්තිමට archive කළ දිනය අද සතියේ සඳුදාට වඩා පරණ නම්)
+//         if (lastArchive < currentMonday) {
+//           const history = JSON.parse(
+//             localStorage.getItem("weekly-history") || "[]",
+//           );
+
+//           // පරණ සතියේ ප්‍රගතිය ගණනය කිරීම
+//           const progress = calculateWeeklyProgress();
+
+//           const archivedWeek = {
+//             // weekId: `Week ${calculateWeeklyProgress(lastArchive)}`,
+//             weekId: `Week ${calculateWeeksSinceStart(lastArchive)}`,
+//             date: lastArchive.toLocaleDateString(),
+//             progress: progress,
+//             status: "Auto-Archived",
+//           };
+
+//           // History එකට දත්ත එක් කිරීම
+//           localStorage.setItem(
+//             "weekly-history",
+//             JSON.stringify([...history, archivedWeek]),
+//           );
+
+//           // Timetable එක Reset කිරීම
+//           const resetSchedule = {};
+//           [
+//             "Monday",
+//             "Tuesday",
+//             "Wednesday",
+//             "Thursday",
+//             "Friday",
+//             "Saturday",
+//             "Sunday",
+//           ].forEach((day) => {
+//             resetSchedule[day] = Array(10).fill({ text: "", completed: false });
+//           });
+
+//           setSchedule(resetSchedule);
+//           localStorage.setItem(
+//             "last-archive-date",
+//             currentMonday.toISOString(),
+//           );
+//         }
+//       } else {
+//         // පළමු වතාවට පාවිච්චි කරන විට අද දවස සටහන් කරගැනීම
+//         localStorage.setItem("last-archive-date", currentMonday.toISOString());
+//       }
+//     };
+
+//     checkAndArchiveWeek();
+//   }, []);
+
+//   return (
+//     <div className="timetable-page">
+//       <div className="timetable-grid">
+//         {days.map((day) => (
+//           <div key={day} className="day-column card">
+//             <div className="day-header">
+//               <h4>{day}</h4>
+//               <span className="day-percentage">
+//                 {calculateProgress(schedule[day])}%
+//               </span>
+//             </div>
+
+//             <div className="slots">
+//               {schedule[day].map((slot, idx) => (
+//                 <div
+//                   key={idx}
+//                   className={`slot-item ${slot.completed ? "is-done" : ""}`}>
+//                   <button onClick={() => toggleComplete(day, idx)}>
+//                     {slot.completed ? <LuCheck /> : <LuSquare />}
+//                   </button>
+//                   <input
+//                     type="text"
+//                     placeholder={`Slot ${idx + 1}`}
+//                     value={slot.text}
+//                     onChange={(e) => handleTextChange(day, idx, e.target.value)}
+//                   />
+//                 </div>
+//               ))}
+//             </div>
+
+//             <div className="day-footer-progress">
+//               <div className="bar-outer">
+//                 <div
+//                   className="bar-inner"
+//                   style={{
+//                     width: `${calculateProgress(schedule[day])}% `,
+//                   }}></div>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       <div className="history-section card">
+//         <h3>Academic History (Previous Weeks) 📜</h3>
+//         <table className="history-table">
+//           <thead>
+//             <tr>
+//               <th>Week</th>
+//               <th>Date Archived</th>
+//               <th>Final Progress</th>
+//               <th>Status</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {JSON.parse(localStorage.getItem("weekly-history") || "[]").map(
+//               (h, i) => (
+//                 <tr key={i}>
+//                   <td>{h.weekId}</td>
+//                   <td>{h.date}</td>
+//                   <td>
+//                     <div className="mini-progress-bar">
+//                       <div
+//                         className="fill"
+//                         style={{ width: `${h.progress}%` }}></div>
+//                       <span>{h.progress}%</span>
+//                     </div>
+//                   </td>
+//                   <td>
+//                     <span className="complete-tag">Archived</span>
+//                   </td>
+//                 </tr>
+//               ),
+//             )}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Timetable;
+
+// import { useState } from "react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
+
+// const FinalPaperTracker = () => {
+//   const [papers, setPapers] = useState([]);
+//   const [formData, setFormData] = useState({ name: "", marks: "", error: "" });
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     const newPaper = {
+//       ...formData,
+//       id: Date.now(),
+//       marks: Number(formData.marks),
+//     };
+//     setPapers([...papers, newPaper]);
+//     setFormData({ name: "", marks: "", error: "" });
+//   };
+
+//   return (
+//     <div className="p-6 bg-gray-100 min-h-screen">
+//       <h2 className="text-2xl font-bold mb-4">Final Paper Tracker 📝</h2>
+
+//       {/* 1. Add Paper Form */}
+//       <form
+//         onSubmit={handleSubmit}
+//         className="bg-white p-4 rounded shadow mb-6 flex gap-4 items-end">
+//         <div>
+//           <label className="block text-sm">Paper Name</label>
+//           <input
+//             type="text"
+//             value={formData.name}
+//             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+//             className="border p-2 rounded"
+//             required
+//           />
+//         </div>
+//         <div>
+//           <label className="block text-sm">Marks</label>
+//           <input
+//             type="number"
+//             value={formData.marks}
+//             onChange={(e) =>
+//               setFormData({ ...formData, marks: e.target.value })
+//             }
+//             className="border p-2 rounded"
+//             required
+//           />
+//         </div>
+//         <div>
+//           <label className="block text-sm">Error/Comment</label>
+//           <input
+//             type="text"
+//             value={formData.error}
+//             onChange={(e) =>
+//               setFormData({ ...formData, error: e.target.value })
+//             }
+//             className="border p-2 rounded"
+//           />
+//         </div>
+//         <button
+//           type="submit"
+//           className="bg-blue-600 text-white px-4 py-2 rounded">
+//           Add
+//         </button>
+//       </form>
+
+//       {/* 2. Marks Graph */}
+//       <div className="bg-white p-4 rounded shadow mb-6 h-64">
+//         <h3 className="font-bold mb-2">Marks Progress Chart 📈</h3>
+//         <ResponsiveContainer width="100%" height="100%">
+//           <LineChart data={papers}>
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="name" />
+//             <YAxis domain={[0, 100]} />
+//             <Tooltip />
+//             <Line
+//               type="monotone"
+//               dataKey="marks"
+//               stroke="#2563eb"
+//               strokeWidth={2}
+//             />
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </div>
+
+//       {/* 3. Error Log Table */}
+//       <div className="bg-white p-4 rounded shadow text-black">
+//         <h3 className="font-bold mb-2">Error Log ⚠️</h3>
+//         <table className="w-full text-left">
+//           <thead>
+//             <tr className="border-b">
+//               <th className="p-2">Paper</th>
+//               <th className="p-2">Marks</th>
+//               <th className="p-2">Error Reason</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {papers.map((p) => (
+//               <tr key={p.id} className="border-b">
+//                 <td className="p-2">{p.name}</td>
+//                 <td className="p-2 font-bold text-blue-600">{p.marks}%</td>
+//                 <td className="p-2 text-red-500">{p.error}</td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FinalPaperTracker;
+
+// import { useState } from "react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
+// // import "./FinalPaperTracker.scss";
+
+// const FinalPaperTracker = () => {
+//   const [papers, setPapers] = useState([]);
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     marks: "",
+//     error: "",
+//     category: "Maths I",
+//   });
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     setPapers([
+//       ...papers,
+//       { ...formData, id: Date.now(), marks: Number(formData.marks) },
+//     ]);
+//     setFormData({ name: "", marks: "", error: "", category: "Maths I" });
+//   };
+
+//   return (
+//     <div className="tracker-container">
+//       <header className="tracker-header">
+//         <h1>Final Paper Manager 🎓</h1>
+//         <p>ඔබේ ප්‍රගතිය මෙතැනින් නිරීක්ෂණය කරන්න</p>
+//       </header>
+
+//       <section className="form-section">
+//         <form onSubmit={handleSubmit} className="paper-form">
+//           <div className="input-group">
+//             <label>Paper Name</label>
+//             <input
+//               type="text"
+//               value={formData.name}
+//               onChange={(e) =>
+//                 setFormData({ ...formData, name: e.target.value })
+//               }
+//               required
+//               placeholder="e.g. Model Paper 01"
+//             />
+//           </div>
+//           <div className="input-group">
+//             <label>Category</label>
+//             <select
+//               value={formData.category}
+//               onChange={(e) =>
+//                 setFormData({ ...formData, category: e.target.value })
+//               }>
+//               <option>Maths I</option>
+//               <option>Maths II</option>
+//             </select>
+//           </div>
+//           <div className="input-group">
+//             <label>Marks (%)</label>
+//             <input
+//               type="number"
+//               value={formData.marks}
+//               onChange={(e) =>
+//                 setFormData({ ...formData, marks: e.target.value })
+//               }
+//               required
+//             />
+//           </div>
+//           <div className="input-group full-width">
+//             <label>Error Log / Remarks</label>
+//             <textarea
+//               value={formData.error}
+//               onChange={(e) =>
+//                 setFormData({ ...formData, error: e.target.value })
+//               }
+//               placeholder="වැරදුණු හේතු මෙහි සටහන් කරන්න..."
+//             />
+//           </div>
+//           <button type="submit" className="btn-submit">
+//             Add Record
+//           </button>
+//         </form>
+//       </section>
+
+//       <section className="visuals-section">
+//         <div className="chart-card">
+//           <h3>Marks Analysis Graph</h3>
+//           <div className="chart-wrapper">
+//             <ResponsiveContainer width="100%" height={300}>
+//               <LineChart data={papers}>
+//                 <CartesianGrid
+//                   strokeDasharray="3 3"
+//                   vertical={false}
+//                   stroke="#eee"
+//                 />
+//                 <XAxis dataKey="name" stroke="#888" />
+//                 <YAxis domain={[0, 100]} stroke="#888" />
+//                 <Tooltip />
+//                 <Line
+//                   type="monotone"
+//                   dataKey="marks"
+//                   stroke="#3498db"
+//                   strokeWidth={3}
+//                   dot={{ r: 6 }}
+//                   activeDot={{ r: 8 }}
+//                 />
+//               </LineChart>
+//             </ResponsiveContainer>
+//           </div>
+//         </div>
+//       </section>
+
+//       <section className="log-section">
+//         <div className="table-card">
+//           <h3>Error Log & History</h3>
+//           <table>
+//             <thead>
+//               <tr>
+//                 <th>Paper</th>
+//                 <th>Category</th>
+//                 <th>Marks</th>
+//                 <th>Errors/Remarks</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {papers.map((p) => (
+//                 <tr key={p.id}>
+//                   <td>{p.name}</td>
+//                   <td>
+//                     <span
+//                       className={`badge ${p.category.replace(" ", "").toLowerCase()}`}>
+//                       {p.category}
+//                     </span>
+//                   </td>
+//                   <td className="marks-cell">{p.marks}%</td>
+//                   <td className="error-cell">{p.error}</td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// };
+
+// export default FinalPaperTracker;
+
+// import { useState } from "react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   ResponsiveContainer,
+// } from "recharts";
+// // import "./FinalPaperTracker.scss";
+
+// const FinalPaperTracker = () => {
+//   const [data, setData] = useState([]);
+//   const [form, setForm] = useState({
+//     paper: "Paper 01",
+//     subject: "maths",
+//     marks: "",
+//   });
+
+//   const handleAdd = (e) => {
+//     e.preventDefault();
+//     if (!form.marks) return;
+
+//     let newData = [...data];
+//     const index = newData.findIndex((item) => item.paper === form.paper);
+
+//     if (index > -1) {
+//       // පේපර් එක දැනටමත් තිබේ නම්, අදාළ විෂයට ලකුණු එකතු කරයි
+//       newData[index] = {
+//         ...newData[index],
+//         [form.subject]: Number(form.marks),
+//       };
+//     } else {
+//       // අලුත් පේපර් එකක් නම් අලුතින් සාදයි
+//       newData.push({ paper: form.paper, [form.subject]: Number(form.marks) });
+//     }
+
+//     // පේපර් අංකය අනුව දත්ත පිළිවෙළට සකසයි (Sorting)
+//     newData.sort((a, b) =>
+//       a.paper.localeCompare(b.paper, undefined, { numeric: true }),
+//     );
+
+//     setData(newData);
+//     setForm({ ...form, marks: "" }); // ලකුණු ඇතුළත් කරන තැන හිස් කරයි
+//   };
+
+//   return (
+//     <div className="tracker-container">
+//       <h2>Final Paper Progress Tracker 🚀</h2>
+
+//       <form className="input-section" onSubmit={handleAdd}>
+//         <div className="field">
+//           <label>Select Paper</label>
+//           <select
+//             value={form.paper}
+//             onChange={(e) => setForm({ ...form, paper: e.target.value })}>
+//             {[...Array(20)].map((_, i) => (
+//               <option
+//                 key={i}
+//                 value={`Paper ${i + 1 < 10 ? "0" + (i + 1) : i + 1}`}>
+//                 Paper {i + 1 < 10 ? "0" + (i + 1) : i + 1}
+//               </option>
+//             ))}
+//           </select>
+//         </div>
+
+//         <div className="field">
+//           <label>Subject</label>
+//           <select
+//             value={form.subject}
+//             onChange={(e) => setForm({ ...form, subject: e.target.value })}>
+//             <option value="maths">Combined Maths</option>
+//             <option value="physics">Physics</option>
+//             <option value="chemistry">Chemistry</option>
+//           </select>
+//         </div>
+
+//         <div className="field">
+//           <label>Marks (%)</label>
+//           <input
+//             type="number"
+//             value={form.marks}
+//             onChange={(e) => setForm({ ...form, marks: e.target.value })}
+//             placeholder="0-100"
+//           />
+//         </div>
+
+//         <button type="submit">Update Graph</button>
+//       </form>
+
+//       <div className="chart-wrapper">
+//         <ResponsiveContainer width="100%" height="100%">
+//           <LineChart data={data}>
+//             <CartesianGrid strokeDasharray="3 3" vertical={false} />
+//             <XAxis dataKey="paper" />
+//             <YAxis domain={[0, 100]} />
+//             <Tooltip />
+//             <Legend />
+//             <Line
+//               type="monotone"
+//               dataKey="maths"
+//               stroke="#3498db"
+//               name="Maths"
+//               strokeWidth={3}
+//               connectNulls
+//             />
+//             <Line
+//               type="monotone"
+//               dataKey="physics"
+//               stroke="#e74c3c"
+//               name="Physics"
+//               strokeWidth={3}
+//               connectNulls
+//             />
+//             <Line
+//               type="monotone"
+//               dataKey="chemistry"
+//               stroke="#2ecc71"
+//               name="Chemistry"
+//               strokeWidth={3}
+//               connectNulls
+//             />
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default FinalPaperTracker;
