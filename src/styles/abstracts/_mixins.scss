@@ -1,0 +1,88 @@
+// _mixins.scss හෝ styles.scss ඇතුළේ
+$desktop: 800px;
+
+@mixin mobile-only {
+  @media (max-width: #{$desktop - 1}) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
+}
+
+// පද්ධතියේ ප්‍රධාන Wrapper එක
+.dashboard-wrapper {
+  display: block;
+  @include mobile-only {
+    display: none; // Mobile වලදී Dashboard එක සම්පූර්ණයෙන් හංගනවා
+  }
+}
+
+// Warning Message එක
+// .desktop-only-warning {
+//   display: none;
+//   height: 100vh;
+//   text-align: center;
+//   padding: 40px;
+//   background: #f8fafc;
+
+//   @include mobile-only {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   img {
+//     width: 150px;
+//     margin-bottom: 20px;
+//   }
+//   h2 {
+//     color: #1e293b;
+//     font-size: 1.5rem;
+//   }
+//   p {
+//     color: #64748b;
+//     margin-top: 10px;
+//   }
+// }
+
+.mobile-blocker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background: #f8fafc;
+
+  h2 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin: 15px 0;
+  }
+  p {
+    color: #64748b;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  .device-animation {
+    font-size: 4rem;
+    color: #2563eb;
+    animation: bounce 2s infinite; // පොඩි animation එකක්
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
