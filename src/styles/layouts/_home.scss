@@ -14,6 +14,12 @@
     position: sticky;
     top: 0;
 
+    @media (max-width: 800px) {
+      // .sidebar {
+      display: none;
+      // }
+    }
+
     .logo {
       padding: 2rem 1rem;
       font-size: 1.8rem;
@@ -246,5 +252,104 @@
       background-color: $color-bg;
       height: 100vh;
     }
+  }
+}
+
+.bottom-nav {
+  display: none;
+}
+
+// bottom nav
+@media (max-width: 800px) {
+  .sidebar {
+    display: none;
+  } // Mobile වලදී sidebar එක හංගනවා
+
+  aside {
+    display: none;
+  }
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 95%;
+    height: 90px;
+    background: #ad8383;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    border-radius: 1rem;
+    margin: 1rem;
+
+    button {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #94a3b8;
+      font-size: 1rem;
+      gap: 4px;
+
+      .icon {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      &.active {
+        color: #2563eb;
+      } // තෝරාගෙන ඇති ටැබ් එක නිල් පාටින්
+    }
+  }
+
+  .main-content {
+    margin-left: 0 !important; // Sidebar එකේ ඉඩ අයින් කරනවා
+    padding-bottom: 80px; // Bottom nav එකට යට නොවෙන්න පල්ලෙහයින් ඉඩ තියනවා
+  }
+}
+
+.main-grid {
+  gap: 2rem;
+  /* display: flex; */
+  /* justify-content: space-evenly; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Mobile Styles (Max 800px) */
+@media (max-width: 800px) {
+  // 1. Grid එක Column එකක් කරන්න
+  .main-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem;
+    padding: 10px;
+  }
+
+  // 2. වම සහ දකුණු පැති වල පළල 100% කරන්න
+  .left-col,
+  .right-col {
+    width: 100% !important;
+  }
+
+  // 3. Header එකේ දත්ත එක යට එක වැටෙන්න
+  .dashboard-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .dashboard-main-right {
+      width: 100%;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+
+  // 4. Timer එක පොඩි කරන්න (Mobile screen එකට ගැලපෙන්න)
+  .timer-display h2 {
+    font-size: 3rem !important;
   }
 }
