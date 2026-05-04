@@ -51,40 +51,53 @@ const Formulas = () => {
       </div>
 
       {/* Add New Formula Card */}
-      <div className="card add-formula-card">
-        <h3>
+      {/* <div className="card add-formula-card"> */}
+      <div className="card tracker-container">
+        <h2>
           Add New Formula <LuPlus />
-        </h3>
-        <form onSubmit={addFormula}>
-          <select
-            value={newFormula.category}
-            onChange={(e) =>
-              setNewFormula({ ...newFormula, category: e.target.value })
-            }>
-            <option value="Maths">Combined Maths</option>
-            <option value="Physics">Physics</option>
-            <option value="Chemistry">Chemistry</option>
-          </select>
-          <input
-            placeholder="Title (e.g. Sin(A+B))"
-            value={newFormula.title}
-            onChange={(e) =>
-              setNewFormula({ ...newFormula, title: e.target.value })
-            }
-          />
-          <textarea
-            placeholder="Formula (e.g. sinAcosB + cosAsinB)"
-            value={newFormula.content}
-            onChange={(e) =>
-              setNewFormula({ ...newFormula, content: e.target.value })
-            }
-          />
+        </h2>
+
+        <form className="input-section" onSubmit={addFormula}>
+          <div className="field">
+            <label>Select Subject</label>
+            <select
+              value={newFormula.category}
+              onChange={(e) =>
+                setNewFormula({ ...newFormula, category: e.target.value })
+              }>
+              <option value="Maths">Combined Maths</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Title</label>
+            <input
+              placeholder="(e.g. Sin(A+B))"
+              value={newFormula.title}
+              onChange={(e) =>
+                setNewFormula({ ...newFormula, title: e.target.value })
+              }
+            />
+          </div>
+          <div className="field">
+            <label>Formula</label>
+            {/* <textarea */}
+            <input
+              type="text"
+              placeholder="(e.g. sinAcosB + cosAsinB)"
+              value={newFormula.content}
+              onChange={(e) =>
+                setNewFormula({ ...newFormula, content: e.target.value })
+              }
+            />
+          </div>
           <button type="submit">Save Formula</button>
         </form>
       </div>
 
       {/* Display Formulas */}
-      <h3>All Formulas</h3>
+      <h2>All Formulas</h2>
       <div className="formula-grid">
         {filteredFormulas.map((f) => (
           <div key={f.id} className="card formula-item-card">
@@ -92,7 +105,9 @@ const Formulas = () => {
               <span className={`tag ${f.category.toLowerCase()}`}>
                 {f.category}
               </span>
-              <button onClick={() => deleteFormula(f.id)}>
+              <button
+                className="delete-btn"
+                onClick={() => deleteFormula(f.id)}>
                 <LuTrash2 />
               </button>
             </div>
