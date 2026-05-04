@@ -1,8 +1,11 @@
 .paper-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 2fr auto;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 35px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 1rem;
 
   input,
   select {
@@ -17,7 +20,7 @@
   }
 
   button {
-    background: $color-content;
+    background: #2c3e50;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -28,41 +31,54 @@
     gap: 5px;
 
     &:hover {
-      background: #1d4ed8;
+      background: #34495e;
     }
   }
 }
 
-.add-formula-card {
-  form {
+.input-section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 10px;
+  background: $color-bg;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 30px 0;
+  align-items: flex-end;
+
+  .field {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    flex: 1;
+    min-width: 150px;
+
+    label {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #7f8c8d;
+    }
 
     select,
-    input,
-    textarea {
+    input {
       padding: 10px;
-      border-radius: 8px;
-      border: 1px solid $border;
+      border: 1px solid #ddd;
+      border-radius: 5px;
       outline: none;
+      width: 200px;
     }
+  }
 
-    textarea {
-      height: 80px;
-      resize: none;
-    }
-    button {
-      background: $color-content;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-
-      &:hover {
-        background: #1d4ed8;
-      }
+  button {
+    padding: 10px 20px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background: #34495e;
     }
   }
 }
