@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { LuCheck, LuSquare } from "react-icons/lu";
+import { MdHistory } from "react-icons/md";
 
 const Timetable = () => {
   const days = [
@@ -152,7 +153,9 @@ const Timetable = () => {
 
       {/* <div className="history-section card"> */}
       <div className="table-section">
-        <h3>Academic History (Previous Weeks) 📜</h3>
+        <h3>
+          Academic History (Previous Weeks) <MdHistory />
+        </h3>
         <table className="history-table">
           <thead>
             <tr>
