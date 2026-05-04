@@ -1,0 +1,531 @@
+.dashboard-wrapper {
+  .dashboard-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 2rem 0;
+    margin-bottom: 1rem;
+    // background: $color-content;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid $border;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    .welcome-section {
+      h1 {
+        font-size: 1.8rem;
+        color: $text-dark;
+
+        span {
+          color: $primary;
+        }
+      }
+      p {
+        margin: 5px 0 0 0;
+        color: $color-content;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+    }
+
+    .dashboard-main-right {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+
+      .badge-status {
+        background: $color-white;
+        color: $primary;
+        padding: 8px 15px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-family: $font-exo;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid $border;
+      }
+    }
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  // Focus Timer Styles
+  // .focus-card-premium {
+  //   text-align: center;
+  //   .timer-display {
+  //     font-size: 3.5rem;
+  //     font-weight: 800;
+  //     color: #2563eb;
+  //     margin: 10px 0;
+  //   }
+  //   .timer-controls button {
+  //     background: #f1f5f9;
+  //     border: none;
+  //     padding: 10px 20px;
+  //     border-radius: 10px;
+  //     margin: 0 5px;
+  //     cursor: pointer;
+  //     font-size: 1.2rem;
+  //     &:hover {
+  //       background: #e2e8f0;
+  //     }
+  //   }
+  // }
+
+  //   // To-Do Styles
+  .todo-card {
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 15px;
+      outline: none;
+      &:focus {
+        border-color: #2563eb;
+      }
+    }
+    .task-list {
+      .task-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: $transition;
+        &:hover {
+          background: #f8fafc;
+        }
+        &.done {
+          color: #94a3b8;
+          text-decoration: line-through;
+          .check {
+            color: #22c55e;
+          }
+        }
+      }
+    }
+  }
+}
+//   .daily-progress-container {
+//     margin-bottom: 20px;
+
+//     .progress-info {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
+
+//       h3 {
+//         margin: 0;
+//         font-size: 1rem;
+//         color: #64748b;
+//       }
+//       .percentage {
+//         font-size: 1.5rem;
+//         font-weight: 800;
+//         color: #2563eb;
+//       }
+//     }
+
+//     .progress-bar-outer {
+//       height: 12px;
+//       background: #f1f5f9;
+//       border-radius: 10px;
+//       margin: 15px 0;
+//       overflow: hidden;
+
+//       .progress-bar-inner {
+//         height: 100%;
+//         background: linear-gradient(90deg, #2563eb, #3b82f6);
+//         border-radius: 10px;
+//         transition: width 0.5s ease-in-out; // මේකෙන් තමයි progress එක ලස්සනට පිරෙන්නේ
+//       }
+//     }
+
+//     .task-count {
+//       margin: 0;
+//       font-size: 0.85rem;
+//       color: #94a3b8;
+//       text-align: right;
+//     }
+//   }
+
+//   .performance-card {
+//     .performance-content {
+//       text-align: center;
+
+//       .sub-tag {
+//         display: inline-block;
+//         padding: 5px 12px;
+//         background: #eef2ff;
+//         color: #4f46e5;
+//         border-radius: 8px;
+//         font-size: 0.8rem;
+//         font-weight: 700;
+//         text-transform: uppercase;
+//       }
+
+//       .score-display {
+//         margin: 20px 0;
+//         .score {
+//           font-family: $font-exo;
+//           font-size: 3.5rem;
+//           font-weight: 800;
+//           color: #1e293b;
+//           line-height: 1;
+//         }
+//         .label {
+//           margin: 0;
+//           font-size: 0.85rem;
+//           color: #94a3b8;
+//           font-weight: 600;
+//         }
+//       }
+
+//       .remarks-box {
+//         background: #f8fafc;
+//         padding: 12px;
+//         border-radius: 10px;
+//         font-size: 0.85rem;
+//         color: #64748b;
+//         border-left: 4px solid #cbd5e1;
+//         text-align: left;
+//       }
+//     }
+//   }
+
+//   // Right Column Styles
+//   .mini-card {
+//     p {
+//       margin: 0;
+//       color: #64748b;
+//       font-size: 0.85rem;
+//       font-weight: 600;
+//     }
+//     .mini-timer {
+//       font-size: 1.4rem;
+//       font-weight: 700;
+//       margin-top: 10px;
+//       color: #1e293b;
+//     }
+//     .progress-bar-bg {
+//       height: 8px;
+//       background: #f1f5f9;
+//       border-radius: 10px;
+//       margin: 10px 0;
+//       .progress-bar-fill {
+//         height: 100%;
+//         background: #2563eb;
+//         border-radius: 10px;
+//         transition: $transition;
+//       }
+//     }
+//   }
+// }
+
+// .papers-page {
+//   background: rgba($color-white, 0.2);
+//   padding: 1rem 50px;
+
+// //   // .card {
+// //   //   background: rgba($color-white, 0.4);
+// //   //   // background-color: white;
+// //   //   padding: 1.5rem;
+// //   //   margin-bottom: 6px;
+// //   //   border-radius: 15px;
+// //   //   border: 1px solid $border;
+// //   //   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+// //   //   h3 {
+// //   //     margin-top: 0;
+// //   //     margin-bottom: 25px;
+// //   //     color: #495b74;
+// //   //     font-size: 1.2rem;
+// //   //     text-transform: uppercase;
+// //   //     letter-spacing: 1px;
+// //   //     text-align: center;
+// //   //   }
+// //   // }
+// }
+
+// // }
+
+.focus-card-premium {
+  text-align: center;
+
+  .forest-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+
+    .tree {
+      font-size: 5rem;
+      transition: $transition;
+
+      &.seed {
+        color: #aaecc3;
+      }
+      &.growing {
+        color: #22c55e;
+      }
+      &.grown {
+        color: #04692b;
+        filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4));
+      }
+    }
+
+    .pulsing {
+      animation: pulse 2s infinite;
+    }
+
+    .timer-display {
+      margin-top: 15px;
+      .display-time {
+        font-size: 3.5rem;
+        font-weight: 800;
+        font-family: $font-exo;
+        color: #1e293b;
+      }
+      &.overtime {
+        .display-time {
+          color: #ef4444;
+          text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+        }
+        .ot-label {
+          color: #ef4444;
+          font-weight: 800;
+          font-size: 0.8rem;
+          letter-spacing: 2px;
+        }
+      }
+    }
+  }
+
+  .timer-controls {
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+
+    button {
+      padding: 12px 25px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-family: $font-exo;
+    }
+    .btn-start {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-complete {
+      background: #22c55e;
+      color: white;
+    }
+    .btn-pause {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.forest-gallery {
+  .tree-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    min-height: 80px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+
+    .mini-tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      padding: 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      animation: growIn 0.5s ease-out;
+
+      .mini-tree-icon {
+        color: #166534;
+        font-size: 2rem;
+      }
+      .tree-time {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #64748b;
+        margin-top: 4px;
+      }
+    }
+
+    .empty-msg {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      font-style: italic;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  // .forest-summary {
+  //   font-size: 0.9rem;
+  //   color: #1e293b;
+  //   border-top: 1px solid #f1f5f9;
+  //   padding-top: 10px;
+  //   strong {
+  //     color: #2563eb;
+  //   }
+  // }
+}
+
+@keyframes growIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// .progress-card-premium {
+//   text-align: center;
+//   .progress-content {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     .circular-chart {
+//       width: 120px;
+//       height: 120px;
+//       margin: 10px 0;
+//     }
+//     .circle-bg {
+//       fill: none;
+//       stroke: #f1f5f9;
+//       stroke-width: 3.8;
+//     }
+//     .circle {
+//       fill: none;
+//       stroke: #4f46e5;
+//       stroke-width: 3.8;
+//       stroke-linecap: round;
+//       transition: stroke-dasharray 0.5s ease;
+//     }
+//     .percentage {
+//       font-family: $font-exo;
+//       font-size: 0.5rem;
+//       font-weight: 800;
+//       text-anchor: middle;
+//       fill: #1e293b;
+//     }
+//     p {
+//       font-size: 0.85rem;
+//       color: #64748b;
+//       font-weight: 600;
+//     }
+//   }
+// }
+
+.performance-card {
+  text-align: center;
+
+  .sub-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #eef2ff;
+    color: $primary;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .score-box {
+    margin: 15px 0;
+
+    .score-num {
+      font-family: $font-exo;
+      font-size: 3rem;
+      font-weight: 800;
+      color: $text-dark;
+    }
+    .percent-sign {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+  }
+
+  .paper-type {
+    font-size: 0.8rem;
+    color: $color-content;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+.countdown-card-premium {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: $color-white;
+  text-align: center;
+
+  h3 {
+    color: $color-white;
+    font-size: 1rem;
+  }
+
+  .timer-grid {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+
+    .time-item {
+      span {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        font-family: $font-exo;
+      }
+      .secs {
+        color: #fc844d;
+      }
+
+      small {
+        font-size: 0.7rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
