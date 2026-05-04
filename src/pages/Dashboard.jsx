@@ -1,5 +1,6 @@
 // export default Dashboard;
 import { useState, useEffect, useMemo } from "react";
+import { auth } from "../firebase";
 import {
   LuCheck,
   LuCircle,
@@ -19,7 +20,7 @@ import {
   FiTarget,
 } from "react-icons/fi";
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
   // --- 1. States ---
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -306,10 +307,20 @@ const Dashboard = () => {
       <header className="dashboard-main">
         <div className="welcome-section card">
           <h1>
-            Hello, <span>Wihanga!</span>
+            Hello, <span>{user.displayName.split(" ")[0]}!</span>
           </h1>
           <p>Ready to master your academic goals today?</p>
         </div>
+
+        <div className="user-profile">
+          <img src={user.photoURL} alt="profile" className="avatar" />
+          <div className="info">
+            <h4>{user?.displayName}</h4>
+            <p>A/L Student</p>
+            <button onClick={() => auth.signOut()}>LogOut</button>
+          </div>
+        </div>
+
         <div className="dashboard-main-right">
           <div className="badge-status primary">
             <LuCalendar /> {weeksUntilExam} Weeks Remaining
