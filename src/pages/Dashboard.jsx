@@ -139,11 +139,6 @@ const Dashboard = () => {
       .toString()
       .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
-  const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
   return (
     <div className="dashboard-wrapper">
       <header className="dashboard-main">
@@ -154,10 +149,6 @@ const Dashboard = () => {
           <p>Ready to master your academic goals today?</p>
         </div>
         <div className="dashboard-main-right">
-          <div className="date-box">
-            <h4>{today}</h4>
-            <p>Target: A/L 2026</p>
-          </div>
           <div className="badge-status primary">
             <LuCalendar /> {weeksUntilExam} Weeks Remaining
           </div>
@@ -169,6 +160,27 @@ const Dashboard = () => {
 
       <div className="main-grid">
         <div className="left-col">
+          <div className="card countdown-card-premium">
+            <h3>Final Countdown ⏳</h3>
+            <div className="timer-grid">
+              <div className="time-item">
+                <span>{timeLeft.days}</span>
+                <small>Days</small>
+              </div>
+              <div className="time-item">
+                <span>{timeLeft.hours}</span>
+                <small>Hours</small>
+              </div>
+              <div className="time-item">
+                <span>{timeLeft.mins}</span>
+                <small>Mins</small>
+              </div>
+              <div className="time-item">
+                <span className="secs">{timeLeft.seconds}</span>
+                <small>Secs</small>
+              </div>
+            </div>
+          </div>
           <div className="card focus-card-premium">
             <h3>
               Deep Work Session <LuTrees />
@@ -219,28 +231,6 @@ const Dashboard = () => {
                   </span>
                 </div>
               ))}
-            </div>
-          </div>
-
-          <div className="card countdown-card-premium">
-            <h3>Final Countdown ⏳</h3>
-            <div className="timer-grid">
-              <div className="time-item">
-                <span>{timeLeft.days}</span>
-                <small>Days</small>
-              </div>
-              <div className="time-item">
-                <span>{timeLeft.hours}</span>
-                <small>Hours</small>
-              </div>
-              <div className="time-item">
-                <span>{timeLeft.mins}</span>
-                <small>Mins</small>
-              </div>
-              <div className="time-item">
-                <span className="secs">{timeLeft.seconds}</span>
-                <small>Secs</small>
-              </div>
             </div>
           </div>
         </div>
