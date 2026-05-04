@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
+import Login from "./pages/Login";
+
 import Dashboard from "./pages/Dashboard";
 import Papers from "./pages/Papers";
 import Formulas from "./pages/Formulas";
@@ -13,10 +18,7 @@ import { GiFlyingTarget } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { PiMathOperationsFill } from "react-icons/pi";
 import { GiPapers } from "react-icons/gi";
-
 import { LuMonitorOff } from "react-icons/lu";
-
-// import Logo from "../public/logo.jpg";
 
 const DesktopOnlyView = () => (
   <div className="mobile-blocker">
@@ -33,25 +35,49 @@ const DesktopOnlyView = () => (
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
-
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 800);
-
-  useEffect(() => {
-    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1024);
-    window.addEventListener("resize", handleResize); // Screen එකේ වෙනස්කම් ගැන අවධානයෙන් ඉන්නවා
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // 2. Screen එක පොඩි නම් Dashboard එක පෙන්වන්නේ නැතුව Message එක පෙන්වනවා
-  if (!isLargeScreen) {
-    return <DesktopOnlyView />;
-  }
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Login එක check කරනකම් පොඩි වෙලාවක් යනවා
 
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
   });
+
+  useEffect(() => {
+    // 1. Screen size එක check කිරීම
+    const handleResize = () => setIsLargeScreen(window.innerWidth >= 800);
+    window.addEventListener("resize", handleResize);
+
+    // 2. Firebase User check කිරීම
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Loading වෙලාවට හිස් screen එකක් පේනවා වෙනුවට මොනවා හරි දාන්න පුළුවන්
+  if (loading) return <div className="loader">Loading...</div>;
+
+  // Screen එක පොඩි නම් මුලින්ම ඒක පෙන්වමු (Login වෙලා හිටියත් නැතත්)
+  if (!isLargeScreen) {
+    return (
+      <div className="mobile-blocker">
+        <h2>Desktop Experience Only</h2>
+        <p>Please use a computer to access your study plan.</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Login />;
+  }
 
   return (
     <div className="app-container">
@@ -116,15 +142,7 @@ function App() {
             Past Paper Analysis
           </button>
         </nav>
-        {/* * User Profile Section */}
-        {/* <div className="user-profile"> */}
-        {/* {" "}
-          <img src={Logo} alt="avatar" className="avatar" />{" "}
-          <div className="info">
-            {" "}
-            <h4>Wihanga Nimsara</h4> <p>A/L Student</p>{" "}
-          </div>{" "}
-        </div> */}
+
         <div className="sidebar-footer">
           <div className="footer-status">
             <div className="status-dot"></div>
@@ -143,8 +161,6 @@ function App() {
             <h4>{today}</h4>
             <p>Target: A/L 2026</p>
           </div>
-
-          {/* <div className="user-info">2026 A/L Target</div> */}
         </header>
 
         <section className="page-render">
