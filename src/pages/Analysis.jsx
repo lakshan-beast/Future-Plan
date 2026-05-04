@@ -68,10 +68,10 @@ const Analysis = () => {
   return (
     <div className="analysis-page">
       <div className="analysis-grid">
-        <div className="card chart-card">
+        <div className="card tracker-container">
           <h3>Overall Performance (Maths, Physics, Chemistry)</h3>
           <div
-            className="chart-container"
+            className="chart-wrapper"
             style={{ width: "100%", height: "400px" }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data.chartData}>
@@ -109,18 +109,18 @@ const Analysis = () => {
           </div>
         </div>
 
-        <div className="stats-row">
-          <div className="card mini-stat border-maths">
+        <div className="stats-row tracker-container">
+          <div className=" mini-stat border-chemistry">
+            <h4>Chemistry Avg</h4>
+            <p className="stat-val">{data.stats.chemistry}%</p>
+          </div>
+          <div className=" mini-stat border-maths">
             <h4>Maths Avg</h4>
             <p className="stat-val">{data.stats.maths}%</p>
           </div>
-          <div className="card mini-stat border-physics">
+          <div className=" mini-stat border-physics">
             <h4>Physics Avg</h4>
             <p className="stat-val">{data.stats.physics}%</p>
-          </div>
-          <div className="card mini-stat border-chemistry">
-            <h4>Chemistry Avg</h4>
-            <p className="stat-val">{data.stats.chemistry}%</p>
           </div>
         </div>
       </div>
