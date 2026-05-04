@@ -33,16 +33,23 @@ const Papers = () => {
 
   return (
     <div className="papers-page">
-      <div className="card add-formula-card">
-        <h3>Add Past Paper Record 📝</h3>
+      {/* <div className=" paper-form"> */}
+      <div className="card tracker-container">
+        <h2>Add Past Paper Record 📝</h2>
 
-        <form onSubmit={handleSubmit} className="paper-form">
+        <form
+          className="paper-form"
+          onSubmit={handleSubmit}
+          className="paper-form">
+          {/* <div className="field"> */}
           <input
             type="number"
             placeholder="Year (e.g. 2022)"
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
           />
+          {/* </div> */}
+          {/* <div className="field"> */}
           <select
             value={formData.subject}
             onChange={(e) =>
@@ -52,6 +59,8 @@ const Papers = () => {
             <option value="Physics">Physics</option>
             <option value="Chemistry">Chemistry</option>
           </select>
+          {/* </div> */}
+          {/* <div className="field"> */}
           <input
             type="number"
             placeholder="Marks"
@@ -60,6 +69,8 @@ const Papers = () => {
               setFormData({ ...formData, marks: e.target.value })
             }
           />
+          {/* </div> */}
+          {/* <div className="field"> */}
           <input
             type="text"
             placeholder="Errors / Remarks"
@@ -68,51 +79,55 @@ const Papers = () => {
               setFormData({ ...formData, errors: e.target.value })
             }
           />
+          {/* </div> */}
+
           <button type="submit">
             <LuPlus /> Add
           </button>
         </form>
-      </div>
+        {/* </div> */}
 
-      {/* 2. Table එක - ඇතුළත් කළ දත්ත පෙන්වීමට */}
-      <div className="card table-card">
-        <h3>
-          Results History <LuFileText />
-        </h3>
-        <table className="papers-table">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Type</th>
-              <th>Marks</th>
-              <th>Errors/Remarks</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {papers.map((p) => (
-              <tr key={p.id}>
-                <td>{p.year}</td>
-                <td>
-                  <span className={`tag ${p.subject.toLowerCase()}`}>
-                    {p.subject}
-                  </span>
-                </td>
-                <td>
-                  <span className="mark-badge">{p.marks}%</span>
-                </td>
-                <td className="error-cell">{p.errors || "-"}</td>
-                <td>
-                  <button
-                    onClick={() => deletePaper(p.id)}
-                    className="delete-btn">
-                    <LuTrash2 />
-                  </button>
-                </td>
+        {/* 2. Table එක - ඇතුළත් කළ දත්ත පෙන්වීමට */}
+        {/* <div className="card table-card"> */}
+        <div className=" table-section">
+          <h3>
+            Results History <LuFileText />
+          </h3>
+          <table className="papers-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Type</th>
+                <th>Marks</th>
+                <th>Errors/Remarks</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {papers.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.year}</td>
+                  <td>
+                    <span className={`tag ${p.subject.toLowerCase()}`}>
+                      {p.subject}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="mark-badge">{p.marks}%</span>
+                  </td>
+                  <td className="error-cell">{p.errors || "-"}</td>
+                  <td>
+                    <button
+                      onClick={() => deletePaper(p.id)}
+                      className="delete-btn">
+                      <LuTrash2 />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
