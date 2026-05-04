@@ -1,60 +1,183 @@
-.papers-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+// .papers-table {
+//   width: 100%;
+//   border-collapse: collapse;
+//   margin-top: 15px;
 
-  th,
-  td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid $color-text;
-  }
-  th {
-    color: #64748b;
-    // color: $color-white;
-    font-weight: 600;
-    font-size: 1.2rem;
+//   th,
+//   td {
+//     padding: 15px;
+//     text-align: left;
+//     border-bottom: 1px solid $color-text;
+//   }
+//   th {
+//     color: #64748b;
+//     // color: $color-white;
+//     font-weight: 600;
+//     font-size: 1.2rem;
+//   }
+
+//   .tag {
+//     padding: 4px 10px;
+//     border-radius: 20px;
+//     font-size: 0.8rem;
+//     font-weight: 600;
+//   }
+//   .maths {
+//     background: #dbeafe;
+//     color: #2563eb;
+//   }
+//   .physics {
+//     background: #fef3c7;
+//     color: #ef4444;
+//   }
+//   .chemistry {
+//     background-color: #ddfcf2;
+//     color: #10b981;
+//   }
+
+//   .mark-badge {
+//     font-weight: 700;
+//     color: #1e293b;
+//     background: #f1f5f9;
+//     padding: 4px 8px;
+//     border-radius: 6px;
+//   }
+//   .error-cell {
+//     color: $color-content;
+//     font-style: italic;
+//     max-width: 250px;
+//   }
+
+//   .delete-btn {
+//     color: #ef4444;
+//     background: transparent;
+//     // padding: 3px;
+//     border: none;
+//     border-radius: 3px;
+//     cursor: pointer;
+//     font-size: 1.5rem;
+//   }
+// }
+
+.table-section {
+  margin-top: 40px;
+  overflow-x: auto;
+  border-top: 2px solid $border;
+  padding-top: 12px;
+
+  h3 {
+    color: #2c3e50;
+    border-left: 5px solid #3498db;
+    padding-left: 10px;
+    margin-bottom: 20px;
   }
 
-  .tag {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-  .maths {
-    background: #dbeafe;
-    color: #2563eb;
-  }
-  .physics {
-    background: #fef3c7;
-    color: #ef4444;
-  }
-  .chemistry {
-    background-color: #ddfcf2;
-    color: #10b981;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgb(255, 255, 255);
+
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f3f3f3;
+      color: #616161;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+
+      &.maths {
+        color: #3498db;
+      }
+      &.physics {
+        color: #e74c3c;
+      }
+      &.chemistry {
+        color: #2ecc71;
+      }
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    td {
+      font-weight: 500;
+    }
   }
 
-  .mark-badge {
-    font-weight: 700;
-    color: #1e293b;
-    background: #f1f5f9;
-    padding: 4px 8px;
-    border-radius: 6px;
+  .no-data {
+    text-align: center;
+    color: #bdc3c7;
+    margin-top: 20px;
   }
-  .error-cell {
-    color: $color-content;
-    font-style: italic;
-    max-width: 250px;
-  }
+}
 
-  .delete-btn {
-    color: #ef4444;
-    background: transparent;
-    // padding: 3px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 1.5rem;
+// tags
+.tag {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.maths {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.physics {
+  background: #fef3c7;
+  color: #ef4444;
+}
+.chemistry {
+  background-color: #ddfcf2;
+  color: #10b981;
+}
+
+//badges
+.mark-badge {
+  font-weight: 700;
+  color: #1e293b;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.error-cell {
+  color: $color-content;
+  font-style: italic;
+  max-width: 250px;
+}
+
+.delete-btn {
+  color: #ef4444;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+// progress bars
+.mini-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .fill {
+    height: 6px;
+    background: #2563eb;
+    border-radius: 5px;
+    text-align: center;
   }
+}
+.complete-tag {
+  background: #dcfce7;
+  color: #166534;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
