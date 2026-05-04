@@ -6,7 +6,6 @@ import Formulas from "./pages/Formulas";
 import Analysis from "./pages/Analysis";
 import Timetable from "./pages/Timetable";
 import FinalPapers from "./pages/FinalPapers";
-// import DesktopOnlyView from "./pages/DesktopOnlyView";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
@@ -47,6 +46,12 @@ function App() {
   if (!isLargeScreen) {
     return <DesktopOnlyView />;
   }
+
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div className="app-container">
@@ -132,6 +137,11 @@ function App() {
       <main className="main-content">
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
+
+          <div className="date-box">
+            <h4>{today}</h4>
+            <p>Target: A/L 2026</p>
+          </div>
 
           <div className="user-info">2026 A/L Target</div>
         </header>
