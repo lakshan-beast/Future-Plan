@@ -307,13 +307,13 @@ const Dashboard = ({ user }) => {
       <header className="dashboard-main">
         <div className="welcome-section card">
           <h1>
-            Hello, <span>{user.displayName.split(" ")[0]}!</span>
+            Hello, <span>{user?.displayName.split(" ")[0]}!</span>
           </h1>
           <p>Ready to master your academic goals today?</p>
         </div>
 
         <div className="user-profile">
-          <img src={user.photoURL} alt="profile" className="avatar" />
+          <img src={user?.photoURL} alt="profile" className="avatar" />
           <div className="info">
             <h4>{user?.displayName}</h4>
             <p>A/L Student</p>
