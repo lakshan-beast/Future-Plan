@@ -5,15 +5,9 @@ import { auth } from "../firebase";
 import { MdOutlineTimer } from "react-icons/md";
 import { FaUserGraduate } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
-import {
-  FiActivity,
-  FiTrendingUp,
-  FiBarChart2,
-  // FiTarget,
-} from "react-icons/fi";
+import { FiActivity, FiTrendingUp, FiBarChart2 } from "react-icons/fi";
 import {
   LuCheck,
-  // LuCircle,
   LuPlay,
   LuPause,
   LuCalendar,
@@ -22,23 +16,12 @@ import {
   LuFlower2,
 } from "react-icons/lu";
 
-// let audio = null;
-
 const Dashboard = ({ user }) => {
-  // const [newTask, setNewTask] = useState("");
   const [seconds, setSeconds] = useState(15);
   const [isActive, setIsActive] = useState(false);
   const [isOvertime, setIsOvertime] = useState(false);
-  // const [alarmInstance, setAlarmInstance] = useState(null);
-  // const [bgInstance, setBgInstance] = useState(null);
 
   const bgMusicRef = useRef(null);
-
-  // const today = new Date().toLocaleDateString("en-US", {
-  //   weekday: "long",
-  //   month: "long",
-  //   day: "numeric",
-  // });
 
   // --- 1. States ---
   const [timeLeft, setTimeLeft] = useState({
@@ -47,10 +30,6 @@ const Dashboard = ({ user }) => {
     mins: 0,
     seconds: 0,
   });
-
-  // const [tasks, setTasks] = useState(() =>
-  //   JSON.parse(localStorage.getItem("tasks") || "[]"),
-  // );
 
   // --- 2. Exam Countdown Logic (Target: Aug 10, 2026) ---
   useEffect(() => {
@@ -70,163 +49,14 @@ const Dashboard = ({ user }) => {
   }, []);
 
   // --- 3. Focus Timer & Overtime Logic ---
-  // useEffect(() => {
-  //   let interval = null;
-
-  //   if (!bgInstance && !isOvertime) {
-  //     // if (!bgMusic) {
-  //     bgMusic = new Audio("/bg-music.wav");
-  //     bgMusic.loop = true;
-  //     bgMusic.volume = 0.5;
-  //     bgMusic.play().catch(() => console.log("Bg Audio play Blocked"));
-  //     setBgInstance(bgMusic);
-  //     // }
-
-  //     interval = setInterval(() => {
-  //       if (!isOvertime) {
-  //         if (seconds > 0) setSeconds((s) => s - 1);
-  //         else {
-  //           setIsOvertime(true);
-
-  //           if (bgInstance) {
-  //             bgInstance.pause();
-  //             setBgInstance(null);
-  //           }
-  //         }
-  //       } else {
-  //         setSeconds((s) => s + 1);
-  //       }
-  //     }, 1000);
-  //   } else {
-  //     if (bgInstance) {
-  //       bgInstance.pause();
-  //       setBgInstance(null);
-  //     }
-  //   }
-
-  //   return () => {
-  //     clearInterval(interval);
-  //     if (bgInstance) {
-  //       bgInstance.pause();
-  //       setBgInstance(null);
-  //     }
-  //   };
-  // }, [isActive, seconds, isOvertime, bgInstance]);
-
-  // useEffect(() => {
-  //   let interval = null;
-
-  //   if (isActive) {
-  //     // 1. විනාඩි 25 පාඩම් කරන වෙලාවේ සද්දේ පටන් ගන්නවා
-  //     if (!isOvertime && !bgInstance) {
-  //       const audio = new Audio("/nature-sound.mp3");
-  //       audio.loop = true;
-  //       audio.volume = 0.3;
-  //       audio.play().catch(() => {
-  //         console.log("Bg Audio play Blocked");
-  //       });
-  //       setBgInstance(audio);
-  //     }
-
-  //     interval = setInterval(() => {
-  //       if (!isOvertime) {
-  //         if (seconds > 0) {
-  //           setSeconds((s) => s - 1);
-  //         } else {
-  //           // 2. විනාඩි 25 ඉවර වුණාම සද්දේ නවත්තලා Overtime එක පටන් ගන්නවා
-  //           setIsOvertime(true);
-  //           if (bgInstance) {
-  //             bgInstance.pause();
-  //             setBgInstance(null);
-  //           }
-  //         }
-  //       } else {
-  //         // Overtime එකේදී තත්පර වැඩි වෙනවා (සද්දයක් නැහැ)
-  //         setSeconds((s) => s + 1);
-  //       }
-  //     }, 1000);
-  //   } else {
-  //     // Pause කරොත් සද්දේ නවත්තනවා
-  //     if (bgInstance) {
-  //       bgInstance.pause();
-  //       setBgInstance(null);
-  //     }
-  //   }
-
-  //   return () => {
-  //     clearInterval(interval);
-  //     if (bgInstance) bgInstance.pause();
-  //   };
-  // }, [isActive, seconds, isOvertime, bgInstance]);
-
-  // useEffect(() => {
-  //   let interval = null;
-
-  //   if (isActive && !isOvertime) {
-  //     // 1. සද්දය පටන් ගැනීම (එක සැරයක් විතරයි පටන් ගන්නේ)
-  //     if (!bgMusicRef.current) {
-  //       const audio = new Audio("/nature-sound.mp3");
-  //       audio.loop = true;
-  //       audio.volume = 0.8;
-  //       audio.play().catch(() => {});
-  //       bgMusicRef.current = audio;
-  //     }
-
-  //     interval = setInterval(() => {
-  //       if (seconds > 0) {
-  //         setSeconds((s) => s - 1);
-  //       } else {
-  //         // 2. විනාඩි 25 ඉවර වුණාම සද්දය නතර කිරීම
-  //         setIsOvertime(true);
-  //         if (bgMusicRef.current) {
-  //           bgMusicRef.current.pause();
-  //           bgMusicRef.current = null;
-  //         }
-  //       }
-  //       else {
-  //         setSeconds((s) => s + 1);
-  //       }
-  //     }, 1000);
-  //   } else {
-  //     // 3. Pause කළොත් හෝ Overtime වෙලාවේ සද්දය නැවතීම
-  //     if (bgMusicRef.current) {
-  //       bgMusicRef.current.pause();
-  //       bgMusicRef.current = null;
-  //     }
-  //   }
-
-  //   return () => {
-  //     clearInterval(interval);
-  //     if (bgMusicRef.current) bgMusicRef.current.pause();
-  //   };
-  // }, [isActive, seconds, isOvertime]); // Dependency එකෙන් අර අවුල් සහගත state එක අයින් කළා
-
   useEffect(() => {
-    let interval = null;
-
-    if (isActive) {
-      if (!isOvertime && !bgMusicRef.current) {
+    if (isActive && !isOvertime) {
+      if (!bgMusicRef.current) {
         bgMusicRef.current = new Audio("/bg-music.wav");
         bgMusicRef.current.loop = true;
-        bgMusicRef.current.volume = 1;
+        bgMusicRef.current.volume = 0.3;
         bgMusicRef.current.play().catch(() => {});
       }
-
-      interval = setInterval(() => {
-        if (!isOvertime) {
-          if (seconds > 0) {
-            setSeconds((s) => s - 1);
-          } else {
-            setIsOvertime(true);
-            if (bgMusicRef.current) {
-              bgMusicRef.current.pause();
-              bgMusicRef.current = null;
-            }
-          }
-        } else {
-          setSeconds((s) => s + 1);
-        }
-      }, 1000);
     } else {
       if (bgMusicRef.current) {
         bgMusicRef.current.pause();
@@ -235,9 +65,30 @@ const Dashboard = ({ user }) => {
     }
 
     return () => {
-      clearInterval(interval);
-      if (bgMusicRef.current) bgMusicRef.current.pause();
+      if (bgMusicRef.current) {
+        bgMusicRef.current.pause();
+        bgMusicRef.current = null;
+      }
     };
+  }, [isActive, isOvertime]);
+
+  // --- Logic B:  (Countdown & Overtime) ---
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        if (!isOvertime) {
+          if (seconds > 0) {
+            setSeconds((s) => s - 1);
+          } else {
+            setIsOvertime(true);
+          }
+        } else {
+          setSeconds((s) => s + 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval);
   }, [isActive, seconds, isOvertime]);
 
   // --- 4. Data Calculations (Memoized) ---
@@ -349,11 +200,6 @@ const Dashboard = ({ user }) => {
           {/* <p>Ready to master your academic goals today?</p> */}
           <p>Target: A/L 2026 | 2026 August 10</p>
 
-          {/* <div className="date-box">
-            <h4>{today}</h4>
-            <p>Target: A/L 2026</p>
-          </div> */}
-
           <div className="dashboard-main-right">
             <div className="badge-status primary">
               <LuCalendar className="badge-icon" /> {weeksUntilExam} Weeks
@@ -422,50 +268,6 @@ const Dashboard = ({ user }) => {
           </div>
         </div>
 
-        {/* <div className="card todo-card-premium">
-          <div className="card-header">
-            <h3>
-              Daily Objectives <FiTarget />
-            </h3>
-            <span className="task-count">
-              {tasks.filter((t) => !t.completed).length} Left
-            </span>
-          </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!newTask.trim()) return;
-              const updated = [
-                ...tasks,
-                { id: Date.now(), text: newTask, completed: false },
-              ];
-              setTasks(updated);
-              localStorage.setItem("tasks", JSON.stringify(updated));
-              setNewTask("");
-            }}
-            className="task-input-box">
-            <input
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-              placeholder="Add next goal..."
-            />
-            <button type="submit">+</button>
-          </form>
-          <div className="task-scroll-area">
-            {tasks.map((t) => (
-              <div
-                key={t.id}
-                className={`task-item-premium ${t.completed ? "is-done" : ""}`}
-                onClick={() => handleTaskToggle(t.id)}>
-                <div className="check-box">
-                  {t.completed ? <LuCheck /> : <LuCircle />}
-                </div>
-                <span>{t.text}</span>
-              </div>
-            ))}
-          </div>
-        </div> */}
-
         {/* Right Column: Performance & Tasks */}
         <div className="right-col">
           <div className="card focus-card-premium">
@@ -525,73 +327,6 @@ const Dashboard = ({ user }) => {
               ))}
             </div>
           </div>
-
-          {/* <div className=" performance-card-premium">
-            <div className="card-header">
-              <h3>
-                Latest Evaluation <FiBarChart2 />
-              </h3>
-              <span className="live-tag">Live Data</span>
-            </div>
-            {lastPaper ? (
-              <div className="performance-content">
-                <div className="score-ring">
-                  <span className="score-num">{lastPaper.marks}</span>
-                  <span className="percent-sign">%</span>
-                </div>
-                <div className="paper-info">
-                  <span className="sub-badge">{lastPaper.subject}</span>
-                  <p>{lastPaper.type} Paper Result</p>
-                </div>
-              </div>
-            ) : (
-              <p className="no-data">No records found.</p>
-            )}
-          </div> */}
-
-          {/* <div className="card todo-card-premium">
-            <div className="card-header">
-              <h3>
-                Daily Objectives <FiTarget />
-              </h3>
-              <span className="task-count">
-                {tasks.filter((t) => !t.completed).length} Left
-              </span>
-            </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!newTask.trim()) return;
-                const updated = [
-                  ...tasks,
-                  { id: Date.now(), text: newTask, completed: false },
-                ];
-                setTasks(updated);
-                localStorage.setItem("tasks", JSON.stringify(updated));
-                setNewTask("");
-              }}
-              className="task-input-box">
-              <input
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-                placeholder="Add next goal..."
-              />
-              <button type="submit">+</button>
-            </form>
-            <div className="task-scroll-area">
-              {tasks.map((t) => (
-                <div
-                  key={t.id}
-                  className={`task-item-premium ${t.completed ? "is-done" : ""}`}
-                  onClick={() => handleTaskToggle(t.id)}>
-                  <div className="check-box">
-                    {t.completed ? <LuCheck /> : <LuCircle />}
-                  </div>
-                  <span>{t.text}</span>
-                </div>
-              ))}
-            </div>
-          </div> */}
         </div>
       </div>
     </div>
