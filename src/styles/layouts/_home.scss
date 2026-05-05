@@ -15,9 +15,7 @@
     top: 0;
 
     @media (max-width: 800px) {
-      // .sidebar {
       display: none;
-      // }
     }
 
     .logo {
@@ -269,13 +267,13 @@
     display: none;
   }
 
-  .bottom-nav {
+  #bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 95%;
     height: 90px;
-    background: #ad8383;
+    background: #dfd7d7;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -295,13 +293,19 @@
       font-size: 1rem;
       gap: 4px;
 
-      .icon {
+      .icon,
+      span {
         font-size: 1.5rem;
         font-weight: 600;
       }
       &.active {
         color: #2563eb;
-      } // තෝරාගෙන ඇති ටැබ් එක නිල් පාටින්
+      }
+
+      // .link-name {
+      //   font-size: 0.8rerm;
+      //   color: red;
+      // }
     }
   }
 
