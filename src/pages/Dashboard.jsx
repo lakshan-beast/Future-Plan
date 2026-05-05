@@ -1,5 +1,5 @@
 // export default Dashboard;
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { auth } from "../firebase";
 
 import { MdOutlineTimer } from "react-icons/md";
@@ -22,7 +22,18 @@ import {
   LuFlower2,
 } from "react-icons/lu";
 
+// let audio = null;
+
 const Dashboard = ({ user }) => {
+  // const [newTask, setNewTask] = useState("");
+  const [seconds, setSeconds] = useState(15);
+  const [isActive, setIsActive] = useState(false);
+  const [isOvertime, setIsOvertime] = useState(false);
+  // const [alarmInstance, setAlarmInstance] = useState(null);
+  // const [bgInstance, setBgInstance] = useState(null);
+
+  const bgMusicRef = useRef(null);
+
   // const today = new Date().toLocaleDateString("en-US", {
   //   weekday: "long",
   //   month: "long",
@@ -40,11 +51,6 @@ const Dashboard = ({ user }) => {
   // const [tasks, setTasks] = useState(() =>
   //   JSON.parse(localStorage.getItem("tasks") || "[]"),
   // );
-
-  // const [newTask, setNewTask] = useState("");
-  const [seconds, setSeconds] = useState(1500);
-  const [isActive, setIsActive] = useState(false);
-  const [isOvertime, setIsOvertime] = useState(false);
 
   // --- 2. Exam Countdown Logic (Target: Aug 10, 2026) ---
   useEffect(() => {
@@ -64,24 +70,174 @@ const Dashboard = ({ user }) => {
   }, []);
 
   // --- 3. Focus Timer & Overtime Logic ---
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (!bgInstance && !isOvertime) {
+  //     // if (!bgMusic) {
+  //     bgMusic = new Audio("/bg-music.wav");
+  //     bgMusic.loop = true;
+  //     bgMusic.volume = 0.5;
+  //     bgMusic.play().catch(() => console.log("Bg Audio play Blocked"));
+  //     setBgInstance(bgMusic);
+  //     // }
+
+  //     interval = setInterval(() => {
+  //       if (!isOvertime) {
+  //         if (seconds > 0) setSeconds((s) => s - 1);
+  //         else {
+  //           setIsOvertime(true);
+
+  //           if (bgInstance) {
+  //             bgInstance.pause();
+  //             setBgInstance(null);
+  //           }
+  //         }
+  //       } else {
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     if (bgInstance) {
+  //       bgInstance.pause();
+  //       setBgInstance(null);
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgInstance) {
+  //       bgInstance.pause();
+  //       setBgInstance(null);
+  //     }
+  //   };
+  // }, [isActive, seconds, isOvertime, bgInstance]);
+
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (isActive) {
+  //     // 1. විනාඩි 25 පාඩම් කරන වෙලාවේ සද්දේ පටන් ගන්නවා
+  //     if (!isOvertime && !bgInstance) {
+  //       const audio = new Audio("/nature-sound.mp3");
+  //       audio.loop = true;
+  //       audio.volume = 0.3;
+  //       audio.play().catch(() => {
+  //         console.log("Bg Audio play Blocked");
+  //       });
+  //       setBgInstance(audio);
+  //     }
+
+  //     interval = setInterval(() => {
+  //       if (!isOvertime) {
+  //         if (seconds > 0) {
+  //           setSeconds((s) => s - 1);
+  //         } else {
+  //           // 2. විනාඩි 25 ඉවර වුණාම සද්දේ නවත්තලා Overtime එක පටන් ගන්නවා
+  //           setIsOvertime(true);
+  //           if (bgInstance) {
+  //             bgInstance.pause();
+  //             setBgInstance(null);
+  //           }
+  //         }
+  //       } else {
+  //         // Overtime එකේදී තත්පර වැඩි වෙනවා (සද්දයක් නැහැ)
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     // Pause කරොත් සද්දේ නවත්තනවා
+  //     if (bgInstance) {
+  //       bgInstance.pause();
+  //       setBgInstance(null);
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgInstance) bgInstance.pause();
+  //   };
+  // }, [isActive, seconds, isOvertime, bgInstance]);
+
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (isActive && !isOvertime) {
+  //     // 1. සද්දය පටන් ගැනීම (එක සැරයක් විතරයි පටන් ගන්නේ)
+  //     if (!bgMusicRef.current) {
+  //       const audio = new Audio("/nature-sound.mp3");
+  //       audio.loop = true;
+  //       audio.volume = 0.8;
+  //       audio.play().catch(() => {});
+  //       bgMusicRef.current = audio;
+  //     }
+
+  //     interval = setInterval(() => {
+  //       if (seconds > 0) {
+  //         setSeconds((s) => s - 1);
+  //       } else {
+  //         // 2. විනාඩි 25 ඉවර වුණාම සද්දය නතර කිරීම
+  //         setIsOvertime(true);
+  //         if (bgMusicRef.current) {
+  //           bgMusicRef.current.pause();
+  //           bgMusicRef.current = null;
+  //         }
+  //       }
+  //       else {
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     // 3. Pause කළොත් හෝ Overtime වෙලාවේ සද්දය නැවතීම
+  //     if (bgMusicRef.current) {
+  //       bgMusicRef.current.pause();
+  //       bgMusicRef.current = null;
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgMusicRef.current) bgMusicRef.current.pause();
+  //   };
+  // }, [isActive, seconds, isOvertime]); // Dependency එකෙන් අර අවුල් සහගත state එක අයින් කළා
+
   useEffect(() => {
     let interval = null;
 
     if (isActive) {
+      if (!isOvertime && !bgMusicRef.current) {
+        bgMusicRef.current = new Audio("/bg-music.wav");
+        bgMusicRef.current.loop = true;
+        bgMusicRef.current.volume = 1;
+        bgMusicRef.current.play().catch(() => {});
+      }
+
       interval = setInterval(() => {
         if (!isOvertime) {
-          if (seconds > 0) setSeconds((s) => s - 1);
-          else {
+          if (seconds > 0) {
+            setSeconds((s) => s - 1);
+          } else {
             setIsOvertime(true);
-            new Audio("https://mixkit.co").play().catch(() => {});
+            if (bgMusicRef.current) {
+              bgMusicRef.current.pause();
+              bgMusicRef.current = null;
+            }
           }
         } else {
           setSeconds((s) => s + 1);
         }
       }, 1000);
+    } else {
+      if (bgMusicRef.current) {
+        bgMusicRef.current.pause();
+        bgMusicRef.current = null;
+      }
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (bgMusicRef.current) bgMusicRef.current.pause();
+    };
   }, [isActive, seconds, isOvertime]);
 
   // --- 4. Data Calculations (Memoized) ---
@@ -146,6 +302,11 @@ const Dashboard = ({ user }) => {
   // };
 
   const finishFocusSession = () => {
+    if (bgMusicRef.current) {
+      bgMusicRef.current.pause();
+      bgMusicRef.current = null;
+    }
+
     const duration = isOvertime
       ? 25 + Math.floor(seconds / 60)
       : 25 - Math.ceil(seconds / 60);
@@ -163,7 +324,7 @@ const Dashboard = ({ user }) => {
     setIsOvertime(false);
     setSeconds(1500);
 
-    alert("Tree Planted Successfully! <LuCheck />");
+    alert("Tree Planted Successfully!");
   };
 
   const formatTime = (s) =>
