@@ -14,10 +14,10 @@ import FinalPapers from "./pages/FinalPapers";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
-import { GiFlyingTarget } from "react-icons/gi";
+// import { GiFlyingTarget } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { PiMathOperationsFill } from "react-icons/pi";
-import { GiPapers } from "react-icons/gi";
+import { GiPapers, GiDreamCatcher } from "react-icons/gi";
 
 // bottom
 const BottomNav = ({ activeTab, setActiveTab }) => (
@@ -25,12 +25,10 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
     <button
       className={activeTab === "dashboard" ? "active" : ""}
       onClick={() => setActiveTab("dashboard")}>
-      {/* <span className="link-name">Dashboard</span>
       <span className="icon">
-        <MdSpaceDashboard />
-      </span>{" "} */}
-      <MdSpaceDashboard />
-      <span>Home</span>
+        <LuCalendarDays />
+      </span>
+      Home
     </button>
 
     <button
@@ -39,7 +37,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       <span className="icon">
         <LuCalendarDays />
       </span>{" "}
-      Master Schedule
+      Timetable
     </button>
 
     <button
@@ -48,7 +46,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       <span className="icon">
         <PiMathOperationsFill />
       </span>{" "}
-      {/* Formulas Vault */}
+      Formulas
     </button>
 
     <button
@@ -57,7 +55,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       <span className="icon">
         <GiPapers />
       </span>{" "}
-      {/* Final Papers */}
+      Final
     </button>
 
     <button
@@ -66,7 +64,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       <span className="icon">
         <IoDocumentsSharp />
       </span>{" "}
-      {/* Past Papers */}
+      Past
     </button>
 
     <button
@@ -75,7 +73,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       <span className="icon">
         <IoStatsChart />
       </span>{" "}
-      {/* Past Paper Analysis */}
+      Analysis
     </button>
   </nav>
 );
@@ -125,7 +123,7 @@ function App() {
 
       <aside className="sidebar" id="sidebar">
         <div className="logo">
-          <GiFlyingTarget className="logo-icon" />
+          <GiDreamCatcher className="logo-icon" />
           <span className="logo-name">Dream</span>
           <span>Track</span>
         </div>
@@ -191,6 +189,9 @@ function App() {
             <span>System Operational</span>
           </div>
           <p>Precision Study Engine | Edition 2026 </p>
+          <a href="https://lakshan-sandeepa-dev.vercel.app/" target="_blank">
+            Lakshan
+          </a>
         </div>
       </aside>
 
