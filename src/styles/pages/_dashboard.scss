@@ -131,6 +131,10 @@
         font-weight: 600;
         font-size: 0.9rem;
 
+        .badge-icon {
+          font-size: 1.2rem;
+        }
+
         &.primary {
           background: #dbeafe;
           color: $primary;
