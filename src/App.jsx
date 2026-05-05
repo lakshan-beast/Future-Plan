@@ -25,7 +25,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       className={activeTab === "dashboard" ? "active" : ""}
       onClick={() => setActiveTab("dashboard")}>
       <span className="icon">
-        <LuCalendarDays />
+        <MdSpaceDashboard />
       </span>
       Home
     </button>
