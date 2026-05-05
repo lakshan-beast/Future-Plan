@@ -27,14 +27,14 @@ const Formulas = () => {
   };
 
   const deleteFormula = (id) => {
-    setFormulas(formulas.filter((f) => f.id !== id));
+    setFormulas(formulas.filter((formula) => formula.id !== id));
   };
 
   // Search filter
   const filteredFormulas = formulas.filter(
-    (f) =>
-      f.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      f.category.toLowerCase().includes(searchTerm.toLowerCase()),
+    (formula) =>
+      formula.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      formula.category.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -52,8 +52,7 @@ const Formulas = () => {
       </div>
 
       {/* Add New Formula Card */}
-      {/* <div className="card add-formula-card"> */}
-      <div className="card tracker-container">
+      <div className="tracker-container">
         <h2>
           Add New Formula <FiPlus />
         </h2>
@@ -83,7 +82,6 @@ const Formulas = () => {
           </div>
           <div className="field">
             <label>Formula</label>
-            {/* <textarea */}
             <input
               type="text"
               placeholder="(e.g. sinAcosB + cosAsinB)"
@@ -100,20 +98,20 @@ const Formulas = () => {
       {/* Display Formulas */}
       <h2>All Formulas</h2>
       <div className="formula-grid">
-        {filteredFormulas.map((f) => (
-          <div key={f.id} className="card formula-item-card">
+        {filteredFormulas.map((formula) => (
+          <div key={formula.id} className="card formula-item-card">
             <div className="card-header">
-              <span className={`tag ${f.category.toLowerCase()}`}>
-                {f.category}
+              <span className={`tag ${formula.category.toLowerCase()}`}>
+                {formula.category}
               </span>
               <button
                 className="delete-btn"
-                onClick={() => deleteFormula(f.id)}>
+                onClick={() => deleteFormula(formula.id)}>
                 <LuTrash2 />
               </button>
             </div>
-            <h4>{f.title}</h4>
-            <div className="formula-content">{f.content}</div>
+            <h4>{formula.title}</h4>
+            <div className="formula-content">{formula.content}</div>
           </div>
         ))}
       </div>
