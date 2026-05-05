@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 
 import { useNavigate } from "react-router-dom";
-import { GiFlyingTarget } from "react-icons/gi";
+import { GiDreamCatcher } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 
 import Dashboards from "./Dashboard";
@@ -52,7 +52,7 @@ const Login = () => {
       <div className="login-card">
         <div className="login-header">
           <div className="logo">
-            <GiFlyingTarget className="logo-icon" />
+            <GiDreamCatcher className="logo-icon" />
             <span className="logo-name">Dream</span>
             <span>Track</span>
           </div>
