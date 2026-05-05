@@ -316,6 +316,29 @@ const Dashboard = ({ user }) => {
             )}
           </div>
 
+          <div className=" performance-card-premium">
+            <div className="card-header">
+              <h3>
+                Latest Evaluation <FiBarChart2 />
+              </h3>
+              <span className="live-tag">Live Data</span>
+            </div>
+            {lastPaper ? (
+              <div className="performance-content">
+                <div className="score-ring">
+                  <span className="score-num">{lastPaper.marks}</span>
+                  <span className="percent-sign">%</span>
+                </div>
+                <div className="paper-info">
+                  <span className="sub-badge">{lastPaper.subject}</span>
+                  <p>{lastPaper.type} Paper Result</p>
+                </div>
+              </div>
+            ) : (
+              <p className="no-data">No records found.</p>
+            )}
+          </div>
+
           {/* <div className="card todo-card-premium">
             <div className="card-header">
               <h3>
