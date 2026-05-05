@@ -113,15 +113,15 @@
 }
 
 // --- 3. Grid System ---
-.main-grid {
-  // display: grid;
-  // grid-template-columns: 1fr 350px; // Left side wider, Right side fixed
-  gap: 2rem;
-  align-content: center;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
+// .main-grid {
+// display: grid;
+// grid-template-columns: 1fr 350px; // Left side wider, Right side fixed
+// gap: 2rem;
+// align-content: center;
+// display: flex;
+// flex-direction: column;
+// flex-wrap: wrap;
+// }
 
 // --- 4. Left Column Styles ---
 .left-col {
