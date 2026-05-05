@@ -41,13 +41,16 @@
         margin-right: 3px;
         width: 40px;
         height: 40px;
-        background: $active-gradient;
+        // background: $active-gradient;
+        background: $primary;
+        background: $logo-bg;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1rem;
+        padding: 3px;
         box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
         display: block;
       }
@@ -271,17 +274,17 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 95%;
-    height: 90px;
-    background: #dfd7d7;
+    width: 100%;
+    height: 100px;
+    padding: 0 16px;
+    background: #fafafa;
     display: flex;
     justify-content: space-around;
     align-items: center;
     border-top: 1px solid #e2e8f0;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    border-radius: 1rem;
-    margin: 1rem;
+    border-radius: 1rem 1rem 0 0;
 
     button {
       background: none;
@@ -290,22 +293,23 @@
       flex-direction: column;
       align-items: center;
       color: #94a3b8;
-      font-size: 1rem;
+      font-size: 0.8rem;
       gap: 4px;
 
-      .icon,
-      span {
-        font-size: 1.5rem;
+      margin: 0 3px;
+
+      .icon {
+        font-size: 0.9rem;
         font-weight: 600;
       }
       &.active {
         color: #2563eb;
-      }
+        font-size: 1.05rem;
 
-      // .link-name {
-      //   font-size: 0.8rerm;
-      //   color: red;
-      // }
+        .icon {
+          font-size: 1.15rem;
+        }
+      }
     }
   }
 
