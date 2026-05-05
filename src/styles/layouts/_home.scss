@@ -3,6 +3,47 @@
   height: 100vh;
   overflow: hidden;
 
+  .logo {
+    padding: 2rem 1rem;
+    font-size: 1.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+
+    @media (max-width: 800px) {
+      font-size: 2rem;
+    }
+
+    span {
+      color: $primary;
+      margin-left: 1px;
+    }
+    .logo-name {
+      background-color: $primary;
+      color: $color-white;
+      border-radius: 5px;
+      padding: 0 5px;
+    }
+
+    .logo-icon {
+      margin-right: 3px;
+      width: 40px;
+      height: 40px;
+      background: $primary;
+      background: $logo-bg;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+      padding: 3px;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+      display: block;
+    }
+  }
+
   .sidebar {
     width: $sidebar-width;
     background: $color-bg;
@@ -16,44 +57,6 @@
 
     @media (max-width: 800px) {
       display: none;
-    }
-
-    .logo {
-      padding: 2rem 1rem;
-      font-size: 1.8rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      margin: 1rem 0;
-
-      span {
-        color: $primary;
-        margin-left: 1px;
-      }
-      .logo-name {
-        background-color: $primary;
-        color: $color-white;
-        border-radius: 5px;
-        padding: 0 5px;
-      }
-
-      .logo-icon {
-        margin-right: 3px;
-        width: 40px;
-        height: 40px;
-        // background: $active-gradient;
-        background: $primary;
-        background: $logo-bg;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1rem;
-        padding: 3px;
-        box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-        display: block;
-      }
     }
 
     .nav-menu {
@@ -194,12 +197,12 @@
 
     .top-bar {
       background: $color-bg;
-      padding: 1rem 2.5rem;
+      padding: 1rem;
       border-bottom: 1px solid $border;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      min-height: 150px;
+      height: 100px;
       border-radius: 0 0 1rem 1rem;
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
@@ -208,17 +211,25 @@
       top: 0;
       z-index: 100;
 
+      @media (max-width: 800px) {
+        display: none;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        height: 200px;
+      }
+
       h1 {
         font-size: 1.9rem;
         margin: 0;
         color: $color-text;
-      }
-      .user-info {
-        font-weight: 600;
-        color: $primary;
-        background: #dbeafe;
-        padding: 5px 25px;
-        border-radius: 20px;
+
+        @media (max-width: 800px) {
+          font-size: 1.5rem;
+        }
       }
     }
 
