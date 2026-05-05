@@ -1,13 +1,14 @@
 // import React from 'react';
 import { useState } from "react";
 import { auth, googleProvider } from "../firebase";
+
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom"; // Page එක මාරු කරන්න
-// import { LuLogIn } from "react-icons/lu";
+
+import { useNavigate } from "react-router-dom";
 import { GiFlyingTarget } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 
@@ -16,22 +17,9 @@ import Dashboards from "./Dashboard";
 const Login = () => {
   const navigate = useNavigate();
 
-  //   const handleLogin = async () => {
-  //     try {
-  //       auth.useDeviceLanguage();
-  //       const result = await signInWithPopup(auth, googleProvider);
-  //       console.log("Welcome:", result.user.displayName);
-
-  //       // සාර්ථකව ලොග් වුණාම Dashboard එකට යවනවා
-  //       navigate("/dashboard");
-  //     } catch (error) {
-  //       alert("Login Failed: " + error.message);
-  //     }
-  //   };
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false); // Login ද Register ද කියලා මාරු කරන්න
+  const [isRegistering, setIsRegistering] = useState(false); // Login ද Register ද
 
   // Email/Password Login & Register
   const handleEmailAuth = async (e) => {
@@ -112,28 +100,3 @@ const Login = () => {
 };
 
 export default Login;
-
-//   return (
-//     <div className="login-wrapper">
-//       <div className="login-card card">
-//         <div className="login-header">
-//           <div className="logo">
-//             <GiFlyingTarget className="logo-icon" />
-//             <span className="logo-name">Dream</span>
-//             <span>Track</span>
-//           </div>
-//           <p>Sign in to sync your study progress across devices.</p>
-//         </div>
-
-//         <button className="google-btn" onClick={handleLogin}>
-//           <FcGoogle className="google-logo" />
-//           Continue with Google
-//         </button>
-
-//         <p className="footer-text">Secure login powered by Google Firebase</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
