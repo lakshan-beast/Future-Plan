@@ -30,7 +30,8 @@
       // justify-content: space-between;
       // gap: 12px;
       transition: $transition;
-      border: 2px solid $color-text;
+      // border: 2px solid $color-text;
+      box-shadow: $shadow;
 
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
