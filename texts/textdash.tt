@@ -3518,3 +3518,356 @@ export default Dashboard;
 
 //new version
 // --- 1. Variables & Mixins ---
+
+
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (!bgInstance && !isOvertime) {
+  //     // if (!bgMusic) {
+  //     bgMusic = new Audio("/bg-music.wav");
+  //     bgMusic.loop = true;
+  //     bgMusic.volume = 0.5;
+  //     bgMusic.play().catch(() => console.log("Bg Audio play Blocked"));
+  //     setBgInstance(bgMusic);
+  //     // }
+
+  //     interval = setInterval(() => {
+  //       if (!isOvertime) {
+  //         if (seconds > 0) setSeconds((s) => s - 1);
+  //         else {
+  //           setIsOvertime(true);
+
+  //           if (bgInstance) {
+  //             bgInstance.pause();
+  //             setBgInstance(null);
+  //           }
+  //         }
+  //       } else {
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     if (bgInstance) {
+  //       bgInstance.pause();
+  //       setBgInstance(null);
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgInstance) {
+  //       bgInstance.pause();
+  //       setBgInstance(null);
+  //     }
+  //   };
+  // }, [isActive, seconds, isOvertime, bgInstance]);
+
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (isActive) {
+  //     // 1. විනාඩි 25 පාඩම් කරන වෙලාවේ සද්දේ පටන් ගන්නවා
+  //     if (!isOvertime && !bgInstance) {
+  //       const audio = new Audio("/nature-sound.mp3");
+  //       audio.loop = true;
+  //       audio.volume = 0.3;
+  //       audio.play().catch(() => {
+  //         console.log("Bg Audio play Blocked");
+  //       });
+  //       setBgInstance(audio);
+  //     }
+
+  //     interval = setInterval(() => {
+  //       if (!isOvertime) {
+  //         if (seconds > 0) {
+  //           setSeconds((s) => s - 1);
+  //         } else {
+  //           // 2. විනාඩි 25 ඉවර වුණාම සද්දේ නවත්තලා Overtime එක පටන් ගන්නවා
+  //           setIsOvertime(true);
+  //           if (bgInstance) {
+  //             bgInstance.pause();
+  //             setBgInstance(null);
+  //           }
+  //         }
+  //       } else {
+  //         // Overtime එකේදී තත්පර වැඩි වෙනවා (සද්දයක් නැහැ)
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     // Pause කරොත් සද්දේ නවත්තනවා
+  //     if (bgInstance) {
+  //       bgInstance.pause();
+  //       setBgInstance(null);
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgInstance) bgInstance.pause();
+  //   };
+  // }, [isActive, seconds, isOvertime, bgInstance]);
+
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (isActive && !isOvertime) {
+  //     // 1. සද්දය පටන් ගැනීම (එක සැරයක් විතරයි පටන් ගන්නේ)
+  //     if (!bgMusicRef.current) {
+  //       const audio = new Audio("/nature-sound.mp3");
+  //       audio.loop = true;
+  //       audio.volume = 0.8;
+  //       audio.play().catch(() => {});
+  //       bgMusicRef.current = audio;
+  //     }
+
+  //     interval = setInterval(() => {
+  //       if (seconds > 0) {
+  //         setSeconds((s) => s - 1);
+  //       } else {
+  //         // 2. විනාඩි 25 ඉවර වුණාම සද්දය නතර කිරීම
+  //         setIsOvertime(true);
+  //         if (bgMusicRef.current) {
+  //           bgMusicRef.current.pause();
+  //           bgMusicRef.current = null;
+  //         }
+  //       }
+  //       else {
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     // 3. Pause කළොත් හෝ Overtime වෙලාවේ සද්දය නැවතීම
+  //     if (bgMusicRef.current) {
+  //       bgMusicRef.current.pause();
+  //       bgMusicRef.current = null;
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgMusicRef.current) bgMusicRef.current.pause();
+  //   };
+  // }, [isActive, seconds, isOvertime]); // Dependency එකෙන් අර අවුල් සහගත state එක අයින් කළා
+
+  // useEffect(() => {
+  //   let interval = null;
+
+  //   if (isActive) {
+  //     if (!isOvertime && !bgMusicRef.current) {
+  //       bgMusicRef.current = new Audio("/bg-music.wav");
+  //       bgMusicRef.current.loop = true;
+  //       bgMusicRef.current.volume = 1;
+  //       bgMusicRef.current.play().catch(() => {});
+  //     }
+
+  //     interval = setInterval(() => {
+  //       if (!isOvertime) {
+  //         if (seconds > 0) {
+  //           setSeconds((s) => s - 1);
+  //         } else {
+  //           setIsOvertime(true);
+  //           if (bgMusicRef.current) {
+  //             bgMusicRef.current.pause();
+  //             bgMusicRef.current = null;
+  //           }
+  //         }
+  //       } else {
+  //         setSeconds((s) => s + 1);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     if (bgMusicRef.current) {
+  //       bgMusicRef.current.pause();
+  //       bgMusicRef.current = null;
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     if (bgMusicRef.current) bgMusicRef.current.pause();
+  //   };
+  // }, [isActive, seconds, isOvertime]);
+
+    // const today = new Date().toLocaleDateString("en-US", {
+  //   weekday: "long",
+  //   month: "long",
+  //   day: "numeric",
+  // });
+
+
+  
+  // const [alarmInstance, setAlarmInstance] = useState(null);
+  // const [bgInstance, setBgInstance] = useState(null);
+
+  
+  // const [newTask, setNewTask] = useState("");
+
+  // const [tasks, setTasks] = useState(() =>
+  //   JSON.parse(localStorage.getItem("tasks") || "[]"),
+  // );
+
+
+       {/* <div className="card todo-card-premium">
+          <div className="card-header">
+            <h3>
+              Daily Objectives <FiTarget />
+            </h3>
+            <span className="task-count">
+              {tasks.filter((t) => !t.completed).length} Left
+            </span>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!newTask.trim()) return;
+              const updated = [
+                ...tasks,
+                { id: Date.now(), text: newTask, completed: false },
+              ];
+              setTasks(updated);
+              localStorage.setItem("tasks", JSON.stringify(updated));
+              setNewTask("");
+            }}
+            className="task-input-box">
+            <input
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              placeholder="Add next goal..."
+            />
+            <button type="submit">+</button>
+          </form>
+          <div className="task-scroll-area">
+            {tasks.map((t) => (
+              <div
+                key={t.id}
+                className={`task-item-premium ${t.completed ? "is-done" : ""}`}
+                onClick={() => handleTaskToggle(t.id)}>
+                <div className="check-box">
+                  {t.completed ? <LuCheck /> : <LuCircle />}
+                </div>
+                <span>{t.text}</span>
+              </div>
+            ))}
+          </div>
+        </div> */}       {/* <div className="card todo-card-premium">
+          <div className="card-header">
+            <h3>
+              Daily Objectives <FiTarget />
+            </h3>
+            <span className="task-count">
+              {tasks.filter((t) => !t.completed).length} Left
+            </span>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!newTask.trim()) return;
+              const updated = [
+                ...tasks,
+                { id: Date.now(), text: newTask, completed: false },
+              ];
+              setTasks(updated);
+              localStorage.setItem("tasks", JSON.stringify(updated));
+              setNewTask("");
+            }}
+            className="task-input-box">
+            <input
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              placeholder="Add next goal..."
+            />
+            <button type="submit">+</button>
+          </form>
+          <div className="task-scroll-area">
+            {tasks.map((t) => (
+              <div
+                key={t.id}
+                className={`task-item-premium ${t.completed ? "is-done" : ""}`}
+                onClick={() => handleTaskToggle(t.id)}>
+                <div className="check-box">
+                  {t.completed ? <LuCheck /> : <LuCircle />}
+                </div>
+                <span>{t.text}</span>
+              </div>
+            ))}
+          </div>
+        </div> */}
+
+        {/* <div className=" performance-card-premium">
+            <div className="card-header">
+              <h3>
+                Latest Evaluation <FiBarChart2 />
+              </h3>
+              <span className="live-tag">Live Data</span>
+            </div>
+            {lastPaper ? (
+              <div className="performance-content">
+                <div className="score-ring">
+                  <span className="score-num">{lastPaper.marks}</span>
+                  <span className="percent-sign">%</span>
+                </div>
+                <div className="paper-info">
+                  <span className="sub-badge">{lastPaper.subject}</span>
+                  <p>{lastPaper.type} Paper Result</p>
+                </div>
+              </div>
+            ) : (
+              <p className="no-data">No records found.</p>
+            )}
+          </div> */}
+
+          {/* <div className="card todo-card-premium">
+            <div className="card-header">
+              <h3>
+                Daily Objectives <FiTarget />
+              </h3>
+              <span className="task-count">
+                {tasks.filter((t) => !t.completed).length} Left
+              </span>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!newTask.trim()) return;
+                const updated = [
+                  ...tasks,
+                  { id: Date.now(), text: newTask, completed: false },
+                ];
+                setTasks(updated);
+                localStorage.setItem("tasks", JSON.stringify(updated));
+                setNewTask("");
+              }}
+              className="task-input-box">
+              <input
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                placeholder="Add next goal..."
+              />
+              <button type="submit">+</button>
+            </form>
+            <div className="task-scroll-area">
+              {tasks.map((t) => (
+                <div
+                  key={t.id}
+                  className={`task-item-premium ${t.completed ? "is-done" : ""}`}
+                  onClick={() => handleTaskToggle(t.id)}>
+                  <div className="check-box">
+                    {t.completed ? <LuCheck /> : <LuCircle />}
+                  </div>
+                  <span>{t.text}</span>
+                </div>
+              ))}
+            </div>
+          </div> */}
+
+            // --- 5. Event Handlers ---
+  // const handleTaskToggle = (id) => {
+  //   const updated = tasks.map((t) =>
+  //     t.id === id ? { ...t, completed: !t.completed } : t,
+  //   );
+
+  //   setTasks(updated);
+  //   localStorage.setItem("tasks", JSON.stringify(updated));
+  // };
