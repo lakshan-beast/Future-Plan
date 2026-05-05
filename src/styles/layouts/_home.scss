@@ -320,44 +320,49 @@
 }
 
 .main-grid {
-  gap: 2rem;
+  // gap: 2rem;
   /* display: flex; */
   /* justify-content: space-evenly; */
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  overflow: scroll;
 }
 
 /* Mobile Styles (Max 800px) */
-@media (max-width: 800px) {
-  // 1. Grid එක Column එකක් කරන්න
-  .main-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.5rem;
-    padding: 10px;
-  }
+// @media (max-width: 800px) {
+//   // 1. Grid එක Column එකක් කරන්න
+//   // .main-grid {
+//   //   display: flex !important;
+//   //   flex-direction: column !important;
+//   //   gap: 1.5rem;
+//   //   padding: 10px;
+//   // }
 
-  // 2. වම සහ දකුණු පැති වල පළල 100% කරන්න
-  .left-col,
-  .right-col {
-    width: 100% !important;
-  }
+//   // 2. වම සහ දකුණු පැති වල පළල 100% කරන්න
+//   .left-col,
+//   .right-col {
+//     width: 100% !important;
+//   }
 
-  // 3. Header එකේ දත්ත එක යට එක වැටෙන්න
-  .dashboard-main {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+//   // 3. Header එකේ දත්ත එක යට එක වැටෙන්න
+//   .dashboard-main {
+//     flex-direction: column;
+//     align-items: flex-start;
+//     gap: 1rem;
 
-    .dashboard-main-right {
-      width: 100%;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-    }
-  }
+//     .dashboard-main-right {
+//       width: 100%;
+//       justify-content: flex-start;
+//       flex-wrap: wrap;
+//     }
+//   }
 
-  // 4. Timer එක පොඩි කරන්න (Mobile screen එකට ගැලපෙන්න)
-  .timer-display h2 {
-    font-size: 3rem !important;
-  }
-}
+//   // 4. Timer එක පොඩි කරන්න (Mobile screen එකට ගැලපෙන්න)
+//   .timer-display h2 {
+//     font-size: 3rem !important;
+//   }
+// }
