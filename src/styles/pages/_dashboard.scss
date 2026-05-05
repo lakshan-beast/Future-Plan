@@ -173,6 +173,13 @@
       text-align: center;
     }
 
+    p {
+      text-align: center;
+      border-top: 2px solid $bg-color;
+      padding-top: 12px;
+      margin-top: 6px;
+    }
+
     .timer-grid {
       display: flex;
       align-content: center;
@@ -198,116 +205,6 @@
       }
     }
   }
-
-  .focus-card-premium {
-    @include card-style;
-    text-align: center;
-
-    .forest-visual {
-      font-size: 5rem;
-      margin: 2rem 0;
-      .tree {
-        &.seed {
-          color: #b45309;
-        }
-        &.growing {
-          color: #fbbf24;
-        }
-        &.grown {
-          color: $success;
-        }
-      }
-    }
-
-    .timer-display {
-      margin-bottom: 2rem;
-      h2 {
-        font-size: 4rem;
-        font-weight: 800;
-        letter-spacing: -2px;
-      }
-      &.emergency {
-        color: $danger;
-        animation: pulse 1s infinite;
-      }
-      .ot-label {
-        font-size: 0.8rem;
-        font-weight: 800;
-        background: $danger;
-        color: white;
-        padding: 2px 8px;
-        border-radius: 4px;
-      }
-    }
-
-    .timer-controls {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      .btn-start {
-        background: $primary;
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 12px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.3s;
-        &:hover {
-          transform: scale(1.05);
-          background: darken($primary, 10%);
-        }
-      }
-      .btn-complete {
-        background: $success;
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 12px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .forest-gallery-premium {
-    @include card-style;
-    .calendar-grid {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1.5rem;
-
-      .day-growth {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-
-        .tree-stack {
-          height: 60px;
-          display: flex;
-          flex-direction: column-reverse;
-          color: $success;
-          font-size: 1.2rem;
-          .seed-dot {
-            color: #cbd5e1;
-          }
-        }
-        .day-label {
-          font-size: 0.75rem;
-          color: $text-muted;
-          font-weight: 600;
-        }
-      }
-    }
-  }
-}
-
-// --- 5. Right Column Styles ---
-.right-col {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 
   .performance-card-premium {
     @include card-style;
@@ -436,6 +333,116 @@
           .check-box {
             color: $success;
           }
+        }
+      }
+    }
+  }
+}
+
+// --- 5. Right Column Styles ---
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .focus-card-premium {
+    @include card-style;
+    text-align: center;
+
+    .forest-visual {
+      font-size: 5rem;
+      margin: 2rem 0;
+      .tree {
+        &.seed {
+          color: #b45309;
+        }
+        &.growing {
+          color: #fbbf24;
+        }
+        &.grown {
+          color: $success;
+        }
+      }
+    }
+
+    .timer-display {
+      margin-bottom: 2rem;
+      h2 {
+        font-size: 4rem;
+        font-weight: 800;
+        letter-spacing: -2px;
+      }
+      &.emergency {
+        color: $danger;
+        animation: pulse 1s infinite;
+      }
+      .ot-label {
+        font-size: 0.8rem;
+        font-weight: 800;
+        background: $danger;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      .btn-start {
+        background: $primary;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover {
+          transform: scale(1.05);
+          background: darken($primary, 10%);
+        }
+      }
+      .btn-complete {
+        background: $success;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .forest-gallery-premium {
+    @include card-style;
+    .calendar-grid {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+
+      .day-growth {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .tree-stack {
+          height: 60px;
+          display: flex;
+          flex-direction: column-reverse;
+          color: $success;
+          font-size: 1.2rem;
+          .seed-dot {
+            color: #cbd5e1;
+          }
+        }
+        .day-label {
+          font-size: 0.75rem;
+          color: $text-muted;
+          font-weight: 600;
         }
       }
     }
