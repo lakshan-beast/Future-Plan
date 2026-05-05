@@ -32,3 +32,39 @@ $chemistry-color: #2ecc71; // Green
 $bg-color: #f8f9fa;
 
 $black-color: #2c3e50;
+
+$primary: #2563eb;
+$success: #10b981;
+$danger: #ef4444;
+$background: #f8fafc;
+$card-bg: #ffffff;
+$text-main: #1e293b;
+$text-muted: #64748b;
+$shadow:
+  0 4px 6px -1px rgb(0 0 0 / 0.1),
+  0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+@mixin card-style {
+  //   background: $card-bg;
+  //   border-radius: 1.25rem;
+  //   padding: 1.5rem;
+  //   box-shadow: $shadow;
+  //   border: 1px solid #f1f5f9;
+  // }
+
+  // .card {
+  background: rgba($color-white, 0.3);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 6px;
+  border: 1px solid $color-bg;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+
+  h3 {
+    margin-top: 0;
+    color: $color-content;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
