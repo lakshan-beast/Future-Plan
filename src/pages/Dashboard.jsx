@@ -9,11 +9,11 @@ import {
   FiActivity,
   FiTrendingUp,
   FiBarChart2,
-  // FiTarget,
+  FiTarget,
 } from "react-icons/fi";
 import {
   LuCheck,
-  // LuCircle,
+  LuCircle,
   LuPlay,
   LuPause,
   LuCalendar,
@@ -37,9 +37,9 @@ const Dashboard = ({ user }) => {
     seconds: 0,
   });
 
-  // const [tasks, setTasks] = useState(() =>
-  //   JSON.parse(localStorage.getItem("tasks") || "[]"),
-  // );
+  const [tasks, setTasks] = useState(() =>
+    JSON.parse(localStorage.getItem("tasks") || "[]"),
+  );
 
   // const [newTask, setNewTask] = useState("");
   const [seconds, setSeconds] = useState(1500);
@@ -186,11 +186,12 @@ const Dashboard = ({ user }) => {
             Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
           {/* <p>Ready to master your academic goals today?</p> */}
+          <p>Target: A/L 2026 | 2026 August 10</p>
 
-          <div className="date-box">
+          {/* <div className="date-box">
             <h4>{today}</h4>
             <p>Target: A/L 2026</p>
-          </div>
+          </div> */}
 
           <div className="dashboard-main-right">
             <div className="badge-status primary">
@@ -205,15 +206,6 @@ const Dashboard = ({ user }) => {
             <CiLogout className="logout-icon" /> Logout
           </button>
         </div>
-
-        {/* <div className="dashboard-main-right">
-          <div className="badge-status primary">
-            <LuCalendar /> {weeksUntilExam} Weeks Remaining
-          </div>
-          <div className="badge-status success">
-            <LuCheck /> {weeklyProgress}% Progress
-          </div>
-        </div> */}
       </header>
 
       <div className="main-grid">
@@ -241,8 +233,79 @@ const Dashboard = ({ user }) => {
                 <small>Secs</small>
               </div>
             </div>
+            <p>Target: A/L 2026 | 2026 August 10</p>
           </div>
 
+          <div className="card performance-card-premium">
+            <div className="card-header">
+              <h3>
+                Latest Evaluation <FiBarChart2 />
+              </h3>
+              <span className="live-tag">Live Data</span>
+            </div>
+            {lastPaper ? (
+              <div className="performance-content">
+                <div className="score-ring">
+                  <span className="score-num">{lastPaper.marks}</span>
+                  <span className="percent-sign">%</span>
+                </div>
+                <div className="paper-info">
+                  <span className="sub-badge">{lastPaper.subject}</span>
+                  <p>{lastPaper.type} Paper Result</p>
+                </div>
+              </div>
+            ) : (
+              <p className="no-data">No records found.</p>
+            )}
+          </div>
+        </div>
+
+        {/* <div className="card todo-card-premium">
+          <div className="card-header">
+            <h3>
+              Daily Objectives <FiTarget />
+            </h3>
+            <span className="task-count">
+              {tasks.filter((t) => !t.completed).length} Left
+            </span>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!newTask.trim()) return;
+              const updated = [
+                ...tasks,
+                { id: Date.now(), text: newTask, completed: false },
+              ];
+              setTasks(updated);
+              localStorage.setItem("tasks", JSON.stringify(updated));
+              setNewTask("");
+            }}
+            className="task-input-box">
+            <input
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              placeholder="Add next goal..."
+            />
+            <button type="submit">+</button>
+          </form>
+          <div className="task-scroll-area">
+            {tasks.map((t) => (
+              <div
+                key={t.id}
+                className={`task-item-premium ${t.completed ? "is-done" : ""}`}
+                onClick={() => handleTaskToggle(t.id)}>
+                <div className="check-box">
+                  {t.completed ? <LuCheck /> : <LuCircle />}
+                </div>
+                <span>{t.text}</span>
+              </div>
+            ))}
+          </div>
+        </div> */}
+
+        {/* Right Column: Performance & Tasks */}
+        <div className="right-col">
           <div className="card focus-card-premium">
             <h3>
               Deep Work Session <FiActivity />
@@ -300,11 +363,8 @@ const Dashboard = ({ user }) => {
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Right Column: Performance & Tasks */}
-        <div className="right-col">
-          <div className="card performance-card-premium">
+          {/* <div className=" performance-card-premium">
             <div className="card-header">
               <h3>
                 Latest Evaluation <FiBarChart2 />
@@ -325,30 +385,7 @@ const Dashboard = ({ user }) => {
             ) : (
               <p className="no-data">No records found.</p>
             )}
-          </div>
-
-          <div className=" performance-card-premium">
-            <div className="card-header">
-              <h3>
-                Latest Evaluation <FiBarChart2 />
-              </h3>
-              <span className="live-tag">Live Data</span>
-            </div>
-            {lastPaper ? (
-              <div className="performance-content">
-                <div className="score-ring">
-                  <span className="score-num">{lastPaper.marks}</span>
-                  <span className="percent-sign">%</span>
-                </div>
-                <div className="paper-info">
-                  <span className="sub-badge">{lastPaper.subject}</span>
-                  <p>{lastPaper.type} Paper Result</p>
-                </div>
-              </div>
-            ) : (
-              <p className="no-data">No records found.</p>
-            )}
-          </div>
+          </div> */}
 
           {/* <div className="card todo-card-premium">
             <div className="card-header">
