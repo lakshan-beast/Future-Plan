@@ -12,7 +12,7 @@ import {
 import { MdOutlineRocketLaunch } from "react-icons/md";
 
 const FinalPaperTracker = () => {
-  // LocalStorage පාවිච්චි කරලා දත්ත ටික ස්ථිරවම තියාගන්නවා
+  // LocalStorage
   const [data, setData] = useState(() => {
     const savedData = localStorage.getItem("finalPaperData");
     return savedData ? JSON.parse(savedData) : [];
@@ -57,7 +57,6 @@ const FinalPaperTracker = () => {
         Final Paper Progress Tracker <MdOutlineRocketLaunch />
       </h2>
 
-      {/* 1. ලකුණු ඇතුළත් කරන Form එක */}
       <form className="input-section" onSubmit={handleAdd}>
         <div className="field">
           <label>Select Paper</label>
@@ -99,7 +98,7 @@ const FinalPaperTracker = () => {
         <button type="submit">Update Data</button>
       </form>
 
-      {/* 2. ප්‍රස්තාරය (Graph) */}
+      {/* 2.  (Graph) */}
       <div className="chart-wrapper">
         <ResponsiveContainer width="99%" aspect={2}>
           <LineChart data={data}>
@@ -111,7 +110,7 @@ const FinalPaperTracker = () => {
             <Line
               type="monotone"
               dataKey="maths"
-              stroke="#e9415d"
+              stroke="#f74672"
               name="Maths"
               strokeWidth={3}
               connectNulls
@@ -119,7 +118,7 @@ const FinalPaperTracker = () => {
             <Line
               type="monotone"
               dataKey="physics"
-              stroke="#6d3be2"
+              stroke="#d142f5"
               name="Physics"
               strokeWidth={3}
               connectNulls
@@ -127,7 +126,7 @@ const FinalPaperTracker = () => {
             <Line
               type="monotone"
               dataKey="chemistry"
-              stroke="#47facd"
+              stroke="#48eff5"
               name="Chemistry"
               strokeWidth={3}
               connectNulls
@@ -136,7 +135,7 @@ const FinalPaperTracker = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* 3. ලකුණු සටහන (Table) - මෙන්න මේ කොටස තමයි අලුතින් එක් කළේ */}
+      {/* 3. (Table)*/}
       <div className="table-section">
         <h3>Marks Summary Table</h3>
         <table>
