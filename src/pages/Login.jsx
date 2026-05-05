@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { GiDreamCatcher } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 
-import Dashboards from "./Dashboard";
+// import Dashboards from "./Dashboard";
 
 const Login = () => {
   const navigate = useNavigate();
