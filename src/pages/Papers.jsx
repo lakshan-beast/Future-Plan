@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LuPlus, LuTrash2, LuFileText } from "react-icons/lu";
+import { LuTrash2, LuFileText } from "react-icons/lu";
 import { FiFileText } from "react-icons/fi";
 
 const Papers = () => {
