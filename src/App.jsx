@@ -14,7 +14,6 @@ import FinalPapers from "./pages/FinalPapers";
 
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoDocumentsSharp, IoStatsChart } from "react-icons/io5";
-// import { GiFlyingTarget } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { PiMathOperationsFill } from "react-icons/pi";
 import { GiPapers, GiDreamCatcher } from "react-icons/gi";
