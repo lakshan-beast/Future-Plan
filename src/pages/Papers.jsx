@@ -25,34 +25,27 @@ const Papers = () => {
     e.preventDefault();
     if (!formData.year || !formData.marks) return;
     setPapers([...papers, { ...formData, id: Date.now() }]);
-    setFormData({ year: "", type: "Pure", marks: "", errors: "" }); // Form එක reset කරන්න
+    setFormData({ year: "", type: "Pure", marks: "", errors: "" }); // Form reset
   };
 
   const deletePaper = (id) => {
-    setPapers(papers.filter((p) => p.id !== id));
+    setPapers(papers.filter((paper) => paper.id !== id));
   };
 
   return (
     <div className="papers-page">
-      {/* <div className=" paper-form"> */}
       <div className="card tracker-container">
         <h2>
           Add Past Paper Record <FiFileText />
         </h2>
 
-        <form
-          className="paper-form"
-          onSubmit={handleSubmit}
-          className="paper-form">
-          {/* <div className="field"> */}
+        <form onSubmit={handleSubmit} className="paper-form">
           <input
             type="number"
             placeholder="Year (e.g. 2022)"
             value={formData.year}
             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
           />
-          {/* </div> */}
-          {/* <div className="field"> */}
           <select
             value={formData.subject}
             onChange={(e) =>
@@ -62,8 +55,6 @@ const Papers = () => {
             <option value="Physics">Physics</option>
             <option value="Chemistry">Chemistry</option>
           </select>
-          {/* </div> */}
-          {/* <div className="field"> */}
           <input
             type="number"
             placeholder="Marks"
@@ -72,8 +63,6 @@ const Papers = () => {
               setFormData({ ...formData, marks: e.target.value })
             }
           />
-          {/* </div> */}
-          {/* <div className="field"> */}
           <input
             type="text"
             placeholder="Errors / Remarks"
@@ -82,17 +71,14 @@ const Papers = () => {
               setFormData({ ...formData, errors: e.target.value })
             }
           />
-          {/* </div> */}
 
           <button type="submit">
             <LuPlus /> Add
           </button>
         </form>
-        {/* </div> */}
 
-        {/* 2. Table එක - ඇතුළත් කළ දත්ත පෙන්වීමට */}
-        {/* <div className="card table-card"> */}
-        <div className=" table-section">
+        {/* 2. Table */}
+        <div className="table-section">
           <h3>
             Results History <LuFileText />
           </h3>
@@ -107,21 +93,21 @@ const Papers = () => {
               </tr>
             </thead>
             <tbody>
-              {papers.map((p) => (
-                <tr key={p.id}>
-                  <td>{p.year}</td>
+              {papers.map((paper) => (
+                <tr key={paper.id}>
+                  <td>{paper.year}</td>
                   <td>
-                    <span className={`tag ${p.subject.toLowerCase()}`}>
-                      {p.subject}
+                    <span className={`tag ${paper.subject.toLowerCase()}`}>
+                      {paper.subject}
                     </span>
                   </td>
                   <td>
-                    <span className="mark-badge">{p.marks}%</span>
+                    <span className="mark-badge">{paper.marks}%</span>
                   </td>
-                  <td className="error-cell">{p.errors || "-"}</td>
+                  <td className="error-cell">{paper.errors || "-"}</td>
                   <td>
                     <button
-                      onClick={() => deletePaper(p.id)}
+                      onClick={() => deletePaper(paper.id)}
                       className="delete-btn">
                       <LuTrash2 />
                     </button>
