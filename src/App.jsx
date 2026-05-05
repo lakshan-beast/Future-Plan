@@ -198,11 +198,6 @@ function App() {
       <main className="main-content">
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
-
-          <div className="date-box">
-            <h4>{today}</h4>
-            <p>Target: A/L 2026</p>
-          </div>
         </header>
 
         <section className="page-render">
