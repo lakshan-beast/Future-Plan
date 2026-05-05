@@ -195,10 +195,11 @@ const Dashboard = ({ user }) => {
 
           <div className="dashboard-main-right">
             <div className="badge-status primary">
-              <LuCalendar /> {weeksUntilExam} Weeks Remaining
+              <LuCalendar className="badge-icon" /> {weeksUntilExam} Weeks
+              Remaining
             </div>
             <div className="badge-status success">
-              <LuCheck /> {weeklyProgress}% Progress
+              <LuCheck className="badge-icon" /> {weeklyProgress}% Progress
             </div>
           </div>
 
