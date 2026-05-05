@@ -179,21 +179,55 @@ const Dashboard = ({ user }) => {
           <h1>
             Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
-          <p>Ready to master your academic goals today?</p>
+          {/* <p>Ready to master your academic goals today?</p> */}
+
+          <div className="dashboard-main-right">
+            <div className="badge-status primary">
+              <LuCalendar /> {weeksUntilExam} Weeks Remaining
+            </div>
+            <div className="badge-status success">
+              <LuCheck /> {weeklyProgress}% Progress
+            </div>
+          </div>
+
+          <div className="right-col">
+            <div className=" performance-card-premium">
+              <div className="card-header">
+                <h3>
+                  Latest Evaluation <FiBarChart2 />
+                </h3>
+                <span className="live-tag">Live Data</span>
+              </div>
+              {lastPaper ? (
+                <div className="performance-content">
+                  <div className="score-ring">
+                    <span className="score-num">{lastPaper.marks}</span>
+                    <span className="percent-sign">%</span>
+                  </div>
+                  <div className="paper-info">
+                    <span className="sub-badge">{lastPaper.subject}</span>
+                    <p>{lastPaper.type} Paper Result</p>
+                  </div>
+                </div>
+              ) : (
+                <p className="no-data">No records found.</p>
+              )}
+            </div>
+          </div>
 
           <button className="logout-btn" onClick={() => auth.signOut()}>
-            <CiLogout /> Logout
+            <CiLogout className="logout-icon" /> Logout
           </button>
         </div>
 
-        <div className="dashboard-main-right">
+        {/* <div className="dashboard-main-right">
           <div className="badge-status primary">
             <LuCalendar /> {weeksUntilExam} Weeks Remaining
           </div>
           <div className="badge-status success">
             <LuCheck /> {weeklyProgress}% Progress
           </div>
-        </div>
+        </div> */}
       </header>
 
       <div className="main-grid">
