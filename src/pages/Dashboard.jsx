@@ -9,11 +9,11 @@ import {
   FiActivity,
   FiTrendingUp,
   FiBarChart2,
-  FiTarget,
+  // FiTarget,
 } from "react-icons/fi";
 import {
   LuCheck,
-  LuCircle,
+  // LuCircle,
   LuPlay,
   LuPause,
   LuCalendar,
@@ -23,11 +23,11 @@ import {
 } from "react-icons/lu";
 
 const Dashboard = ({ user }) => {
-  const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
+  // const today = new Date().toLocaleDateString("en-US", {
+  //   weekday: "long",
+  //   month: "long",
+  //   day: "numeric",
+  // });
 
   // --- 1. States ---
   const [timeLeft, setTimeLeft] = useState({
@@ -37,9 +37,9 @@ const Dashboard = ({ user }) => {
     seconds: 0,
   });
 
-  const [tasks, setTasks] = useState(() =>
-    JSON.parse(localStorage.getItem("tasks") || "[]"),
-  );
+  // const [tasks, setTasks] = useState(() =>
+  //   JSON.parse(localStorage.getItem("tasks") || "[]"),
+  // );
 
   // const [newTask, setNewTask] = useState("");
   const [seconds, setSeconds] = useState(1500);
