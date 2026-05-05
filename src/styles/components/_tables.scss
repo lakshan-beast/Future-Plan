@@ -1,73 +1,12 @@
-// .papers-table {
-//   width: 100%;
-//   border-collapse: collapse;
-//   margin-top: 15px;
-
-//   th,
-//   td {
-//     padding: 15px;
-//     text-align: left;
-//     border-bottom: 1px solid $color-text;
-//   }
-//   th {
-//     color: #64748b;
-//     // color: $color-white;
-//     font-weight: 600;
-//     font-size: 1.2rem;
-//   }
-
-//   .tag {
-//     padding: 4px 10px;
-//     border-radius: 20px;
-//     font-size: 0.8rem;
-//     font-weight: 600;
-//   }
-//   .maths {
-//     background: #dbeafe;
-//     color: #2563eb;
-//   }
-//   .physics {
-//     background: #fef3c7;
-//     color: #ef4444;
-//   }
-//   .chemistry {
-//     background-color: #ddfcf2;
-//     color: #10b981;
-//   }
-
-//   .mark-badge {
-//     font-weight: 700;
-//     color: #1e293b;
-//     background: #f1f5f9;
-//     padding: 4px 8px;
-//     border-radius: 6px;
-//   }
-//   .error-cell {
-//     color: $color-content;
-//     font-style: italic;
-//     max-width: 250px;
-//   }
-
-//   .delete-btn {
-//     color: #ef4444;
-//     background: transparent;
-//     // padding: 3px;
-//     border: none;
-//     border-radius: 3px;
-//     cursor: pointer;
-//     font-size: 1.5rem;
-//   }
-// }
-
 .table-section {
   margin-top: 40px;
   overflow-x: auto;
   border-top: 2px solid $border;
-  padding-top: 12px;
+  padding-top: 16px;
 
   h3 {
-    color: #2c3e50;
-    border-left: 5px solid #3498db;
+    color: $black-color;
+    border-left: 5px solid $primary;
     padding-left: 10px;
     margin-bottom: 20px;
   }
@@ -75,34 +14,35 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    background: rgb(255, 255, 255);
 
     th,
     td {
-      padding: 12px;
+      padding: 12px 0;
       text-align: center;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid $border;
     }
 
     th {
-      background: #f3f3f3;
-      color: #616161;
+      background: rgba($black-color, 0.1);
+      color: $black-color;
+      font-weight: 600;
       font-size: 0.9rem;
       margin-bottom: 16px;
 
       &.maths {
-        color: #3498db;
+        color: $maths-color;
       }
       &.physics {
-        color: #e74c3c;
+        color: $physics-color;
       }
       &.chemistry {
-        color: #2ecc71;
+        color: $chemistry-color;
       }
     }
 
     tr:hover {
-      background: #fafafa;
+      background: rgba($color-text, 0.1);
+      transform: scale(1.01) translateY(2px);
     }
 
     td {
@@ -112,7 +52,7 @@
 
   .no-data {
     text-align: center;
-    color: #bdc3c7;
+    color: rgba($black-color, 0.5);
     margin-top: 20px;
   }
 }
@@ -126,22 +66,22 @@
 }
 .maths {
   background: #dbeafe;
-  color: #2563eb;
+  color: $maths-color;
 }
 .physics {
   background: #fef3c7;
-  color: #ef4444;
+  color: $physics-color;
 }
 .chemistry {
   background-color: #ddfcf2;
-  color: #10b981;
+  color: $chemistry-color;
 }
 
 //badges
 .mark-badge {
   font-weight: 700;
-  color: #1e293b;
-  background: #f1f5f9;
+  color: $black-color;
+  background: $color-bg;
   padding: 4px 8px;
   border-radius: 6px;
 }
@@ -152,7 +92,7 @@
 }
 
 .delete-btn {
-  color: #ef4444;
+  color: $danger;
   background: transparent;
   border: none;
   border-radius: 3px;
@@ -168,14 +108,14 @@
 
   .fill {
     height: 6px;
-    background: #2563eb;
+    background: $primary;
     border-radius: 5px;
     text-align: center;
   }
 }
 .complete-tag {
-  background: #dcfce7;
-  color: #166534;
+  background: $white;
+  color: $success;
   padding: 3px 10px;
   border-radius: 12px;
   font-size: 0.75rem;
