@@ -23,6 +23,12 @@ import {
 } from "react-icons/lu";
 
 const Dashboard = ({ user }) => {
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
   // --- 1. States ---
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -180,6 +186,11 @@ const Dashboard = ({ user }) => {
             Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
           {/* <p>Ready to master your academic goals today?</p> */}
+
+          <div className="date-box">
+            <h4>{today}</h4>
+            <p>Target: A/L 2026</p>
+          </div>
 
           <div className="dashboard-main-right">
             <div className="badge-status primary">
