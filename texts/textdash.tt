@@ -2980,3 +2980,541 @@ export default Dashboard;
 //     }
 //   }
 // }
+
+
+
+{/* <button
+      className={activeTab === "dashboard" ? "active" : ""}
+      onClick={() => setActiveTab("dashboard")}>
+      <MdSpaceDashboard />
+      <span>Home</span>
+    </button>
+    <button
+      className={activeTab === "timetable" ? "active" : ""}
+      onClick={() => setActiveTab("timetable")}>
+      <LuCalendarDays />
+      <span>Plan</span>
+    </button>
+    <button
+      className={activeTab === "analysis" ? "active" : ""}
+      onClick={() => setActiveTab("analysis")}>
+      <IoStatsChart />
+      <span>Stats</span>
+    </button>
+    <button
+      className={activeTab === "formulas" ? "active" : ""}
+      onClick={() => setActiveTab("formulas")}>
+      <PiMathOperationsFill />
+      <span>Vault</span>
+    </button> */}
+
+    // <div className="dashboard-wrapper">
+    //   <header className="dashboard-main">
+    //     <div className="welcome-section card">
+    //       <h1>
+    //         Hello, <span>Wihanga!</span>
+    //       </h1>
+    //       <p>Ready to master your academic goals today?</p>
+    //     </div>
+    //     <div className="dashboard-main-right">
+    //       <div className="badge-status primary">
+    //         <LuCalendar /> {weeksUntilExam} Weeks Remaining
+    //       </div>
+    //       <div className="badge-status success">
+    //         <LuCheck /> {weeklyProgress}% Progress
+    //       </div>
+    //     </div>
+    //   </header>
+
+    //   <div className="main-grid">
+    //     <div className="left-col">
+    //       <div className="card countdown-card-premium">
+    //         <h3>Final Countdown ⏳</h3>
+    //         <div className="timer-grid">
+    //           <div className="time-item">
+    //             <span>{timeLeft.days}</span>
+    //             <small>Days</small>
+    //           </div>
+    //           <div className="time-item">
+    //             <span>{timeLeft.hours}</span>
+    //             <small>Hours</small>
+    //           </div>
+    //           <div className="time-item">
+    //             <span>{timeLeft.mins}</span>
+    //             <small>Mins</small>
+    //           </div>
+    //           <div className="time-item">
+    //             <span className="secs">{timeLeft.seconds}</span>
+    //             <small>Secs</small>
+    //           </div>
+    //         </div>
+    //       </div>
+
+    //       <div className="card focus-card-premium">
+    //         <h3>
+    //           Deep Work Session <LuTrees />
+    //         </h3>
+    //         <div className="forest-visual">
+    //           {isOvertime || 1500 - seconds > 1200 ? (
+    //             <LuTrees className="tree grown" />
+    //           ) : 1500 - seconds > 600 ? (
+    //             <LuFlower2 className="tree growing" />
+    //           ) : (
+    //             <LuSprout className="tree seed" />
+    //           )}
+    //         </div>
+
+    //         <div className={`timer-display ${isOvertime ? "emergency" : ""}`}>
+    //           {isOvertime && <span className="ot-label">OVERTIME</span>}
+    //           <h2>{formatTime(seconds)}</h2>
+    //         </div>
+
+    //         <div className="timer-controls">
+    //           <button
+    //             onClick={() => setIsActive(!isActive)}
+    //             className="btn-start">
+    //             {isActive ? <LuPause /> : <LuPlay />}{" "}
+    //             {isActive ? "Pause" : "Start Again"}
+    //           </button>
+    //           {(isActive || isOvertime) && (
+    //             <button onClick={finishFocusSession} className="btn-complete">
+    //               Finish & Plant
+    //             </button>
+    //           )}
+    //         </div>
+    //         {/* </div> */}
+
+    //         <div className="forest-gallery">
+    //           <h3>Weekly Forest Growth </h3>
+    //           <div className="calendar-grid">
+    //             {weeklyForest.map(([date, count], i) => (
+    //               <div key={i} className="day-growth">
+    //                 <div className="tree-stack">
+    //                   {[...Array(Math.min(count, 3))].map((_, idx) => (
+    //                     <LuTrees key={idx} />
+    //                   ))}
+    //                   {count === 0 && <span className="seed-dot">.</span>}
+    //                 </div>
+    //                 <span className="day-label">
+    //                   {date === new Date().toLocaleDateString()
+    //                     ? "Today"
+    //                     : date.split("/")[1] + "/" + date.split("/")[0]}
+    //                 </span>
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+
+    //     <div className="right-col">
+    //       <div className="card performance-card">
+    //         <h3>Latest Evaluation 🎯</h3>
+    //         {lastPaper ? (
+    //           <div className="performance-content">
+    //             <span className="sub-badge">{lastPaper.subject}</span>
+    //             <div className="score-box">
+    //               <span className="score-num">{lastPaper.marks}</span>
+    //               <span className="percent-sign">%</span>
+    //             </div>
+    //             <p className="paper-type">{lastPaper.type} Paper</p>
+    //           </div>
+    //         ) : (
+    //           <p className="no-data">No records found.</p>
+    //         )}
+    //       </div>
+
+    //       <div className="card todo-card">
+    //         <h3>Daily Objectives 📚</h3>
+    //         <form
+    //           onSubmit={(e) => {
+    //             e.preventDefault();
+    //             if (!newTask.trim()) return;
+    //             const updated = [
+    //               ...tasks,
+    //               { id: Date.now(), text: newTask, completed: false },
+    //             ];
+    //             setTasks(updated);
+    //             localStorage.setItem("tasks", JSON.stringify(updated));
+    //             setNewTask("");
+    //           }}
+    //           className="task-form">
+    //           <input
+    //             value={newTask}
+    //             onChange={(e) => setNewTask(e.target.value)}
+    //             placeholder="Next milestone..."
+    //           />
+    //         </form>
+    //         <div className="task-list">
+    //           {tasks.map((t) => (
+    //             <div
+    //               key={t.id}
+    //               className={`task-item ${t.completed ? "done" : ""}`}
+    //               onClick={() => handleTaskToggle(t.id)}>
+    //               {t.completed ? <LuCheck /> : <LuCircle />}{" "}
+    //               <span>{t.text}</span>
+    //             </div>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+
+    // .dashboard-wrapper {
+//   //   max-width: 600px;
+//   //   display: flex;
+//   //   flex-direction: column;
+//   //   justify-content: center;
+//   //   align-items: center;
+
+//   .dashboard-main {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     gap: 20px;
+//     padding: 2rem 0;
+//     margin-bottom: 1rem;
+//     -webkit-backdrop-filter: blur(10px);
+//     backdrop-filter: blur(10px);
+//     border-bottom: 1px solid $border;
+
+//     .welcome-section {
+//       h1 {
+//         font-size: 1.8rem;
+//         color: $text-dark;
+
+//         span {
+//           color: $primary;
+//         }
+//       }
+//       p {
+//         margin: 5px 0 0 0;
+//         color: $color-content;
+//         font-size: 1.1rem;
+//         font-weight: 500;
+//       }
+//     }
+
+//     .dashboard-main-right {
+//       display: flex;
+//       align-items: center;
+//       flex-direction: column;
+//       justify-content: space-between;
+//       gap: 10px;
+
+//       .badge-status {
+//         background: $color-white;
+//         color: $primary;
+//         padding: 8px 15px;
+//         border-radius: 12px;
+//         font-weight: 700;
+//         font-family: $font-exo;
+//         font-size: 0.85rem;
+//         display: flex;
+//         align-items: center;
+//         gap: 8px;
+//         border: 1px solid $border;
+//       }
+//     }
+//   }
+
+//   .main-grid {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+//     gap: 15px;
+//   }
+// }
+
+// //   // To-Do Styles
+// .todo-card {
+//   display: none;
+//   input {
+//     width: 100%;
+//     padding: 12px;
+//     border-radius: 10px;
+//     border: 1px solid #e2e8f0;
+//     margin-bottom: 15px;
+//     outline: none;
+//     &:focus {
+//       border-color: #2563eb;
+//     }
+//   }
+//   .task-list {
+//     .task-item {
+//       display: flex;
+//       align-items: center;
+//       gap: 12px;
+//       padding: 10px;
+//       cursor: pointer;
+//       border-radius: 8px;
+//       transition: $transition;
+//       &:hover {
+//         background: #f8fafc;
+//       }
+//       &.done {
+//         color: #94a3b8;
+//         text-decoration: line-through;
+//         .check {
+//           color: #22c55e;
+//         }
+//       }
+//     }
+//   }
+// }
+// // }
+// .focus-card-premium {
+//   text-align: center;
+
+//   h3 {
+//     font-size: 1.2rem;
+//     color: $black-color;
+//   }
+
+//   .forest-visual {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     margin: 20px 0;
+
+//     .tree {
+//       font-size: 5rem;
+//       transition: $transition;
+
+//       &.seed {
+//         color: #aaecc3;
+//       }
+//       &.growing {
+//         color: #22c55e;
+//       }
+//       &.grown {
+//         color: #019138;
+//         filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4));
+//       }
+//     }
+
+//     .pulsing {
+//       animation: pulse 2s infinite;
+//     }
+
+//     .timer-display {
+//       margin-top: 15px;
+
+//       .display-time {
+//         font-size: 4rem;
+//         font-weight: 800;
+//         font-family: $font-exo;
+//         color: #1e293b;
+//       }
+//       &.overtime {
+//         .display-time {
+//           color: #ef4444;
+//           text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+//         }
+//         .ot-label {
+//           color: #ef4444;
+//           font-weight: 800;
+//           font-size: 0.8rem;
+//           letter-spacing: 2px;
+//         }
+//       }
+//     }
+//   }
+
+//   .timer-controls {
+//     margin-top: 8px;
+//     display: flex;
+//     gap: 10px;
+//     justify-content: center;
+
+//     button {
+//       padding: 12px 25px;
+//       border-radius: 12px;
+//       border: none;
+//       cursor: pointer;
+//       display: flex;
+//       align-items: center;
+//       gap: 8px;
+//       font-weight: 600;
+//       font-family: $font-exo;
+//     }
+//     .btn-start {
+//       background: #258beb;
+//       color: white;
+//     }
+//     .btn-complete {
+//       background: #0ce017;
+//       color: white;
+//     }
+//     .btn-pause {
+//       background: #f1f5f9;
+//       color: #596a81;
+//     }
+//   }
+// }
+
+// @keyframes pulse {
+//   0% {
+//     transform: scale(1);
+//   }
+//   50% {
+//     transform: scale(1.1);
+//   }
+//   100% {
+//     transform: scale(1);
+//   }
+// }
+
+// .forest-gallery {
+//   margin-top: 1rem;
+//   border-top: 2px solid $color-text;
+//   padding-top: 16px;
+
+//   .calendar-grid {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 15px;
+//     margin: 20px 0;
+//     min-height: 80px;
+//     padding: 15px;
+//     background: #eceef0;
+//     border-radius: 12px;
+
+//     .day-growth {
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//       background: white;
+//       padding: 12px 8px;
+//       border-radius: 10px;
+//       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+//       animation: growIn 0.5s ease-out;
+
+//       .tree-stack {
+//         //   color: #166534;
+//         color: #0ce017;
+//         font-size: 1.3rem;
+//       }
+//       .seed-dot {
+//         font-size: 0.7rem;
+//         font-weight: 700;
+//         color: #84b0ee;
+//         margin-top: 4px;
+//       }
+//     }
+
+//     .day-label {
+//       color: #94a3b8;
+//       font-size: 0.85rem;
+//       font-style: italic;
+//       width: 100%;
+//       text-align: center;
+//     }
+//   }
+// }
+
+// @keyframes growIn {
+//   from {
+//     transform: scale(0);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: scale(1);
+//     opacity: 1;
+//   }
+// }
+
+// .performance-card {
+//   text-align: center;
+//   h3 {
+//     text-align: center;
+//     color: $black-color;
+//     font-size: 1.3rem;
+//   }
+
+//   .sub-badge {
+//     display: inline-block;
+//     padding: 4px 20px;
+//     background: #cbced6;
+//     color: $primary;
+//     border-radius: 20px;
+//     font-size: 0.75rem;
+//     font-weight: 700;
+//     margin-top: 12px;
+//   }
+//   .score-box {
+//     margin: 15px 0 6px 0;
+
+//     .score-num {
+//       font-family: $font-exo;
+//       font-size: 3rem;
+//       font-weight: 800;
+//       color: $text-dark;
+//     }
+//     .percent-sign {
+//       font-size: 1.2rem;
+//       color: #4f555f;
+//       font-weight: 700;
+//     }
+//   }
+
+//   .paper-type {
+//     font-size: 0.8rem;
+//     color: $color-content;
+//     text-transform: uppercase;
+//     letter-spacing: 2px;
+//     border-left: 5px solid;
+//     background-color: rgba($black-color, 0.2);
+//     padding: 6px 0;
+//     border-radius: 0 6px 6px 0;
+//     transition: $transition;
+
+//     &:hover {
+//       background-color: rgba($black-color, 1);
+//       color: $color-white;
+//     }
+//   }
+// }
+
+// .countdown-card-premium {
+//   background: rgba($black-color, 0.7);
+//   color: $color-white;
+//   text-align: center;
+
+//   h3 {
+//     color: $color-white;
+//     font-size: 1.3rem;
+//   }
+
+//   .timer-grid {
+//     display: flex;
+//     justify-content: center;
+//     gap: 30px;
+//     margin-top: 15px;
+
+//     .time-item {
+//       span {
+//         display: block;
+//         font-size: 3rem;
+//         font-weight: 800;
+//         font-family: $font-exo;
+
+//         padding-right: 16px;
+//         border-right: 2px solid;
+//       }
+//       .secs {
+//         color: rgb(255, 61, 61);
+//         border: none;
+//       }
+
+//       small {
+//         font-size: 0.7rem;
+//         opacity: 0.8;
+//         text-transform: uppercase;
+//       }
+//     }
+//   }
+// }
+
+//new version
+// --- 1. Variables & Mixins ---
