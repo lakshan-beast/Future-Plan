@@ -34,47 +34,60 @@ const Papers = () => {
 
   return (
     <div className="papers-page">
-      <div className="card tracker-container">
+      <div className="tracker-container">
         <h2>
           Add Past Paper Record <FiFileText />
         </h2>
 
-        <form onSubmit={handleSubmit} className="paper-form">
-          <input
-            type="number"
-            placeholder="Year (e.g. 2022)"
-            value={formData.year}
-            onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-          />
-          <select
-            value={formData.subject}
-            onChange={(e) =>
-              setFormData({ ...formData, subject: e.target.value })
-            }>
-            <option value="Maths">Combined Maths</option>
-            <option value="Physics">Physics</option>
-            <option value="Chemistry">Chemistry</option>
-          </select>
-          <input
-            type="number"
-            placeholder="Marks"
-            value={formData.marks}
-            onChange={(e) =>
-              setFormData({ ...formData, marks: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Errors / Remarks"
-            value={formData.errors}
-            onChange={(e) =>
-              setFormData({ ...formData, errors: e.target.value })
-            }
-          />
+        {/* <form onSubmit={handleSubmit} className="paper-form"> */}
+        <form onSubmit={handleSubmit} className="input-section">
+          <div className="field">
+            <label>Add Paper Year</label>
+            <input
+              type="number"
+              placeholder="Year (e.g. 2022)"
+              value={formData.year}
+              onChange={(e) =>
+                setFormData({ ...formData, year: e.target.value })
+              }
+            />
+          </div>
+          <div className="field">
+            <label>Select Subject</label>
+            <select
+              value={formData.subject}
+              onChange={(e) =>
+                setFormData({ ...formData, subject: e.target.value })
+              }>
+              <option value="Maths">Combined Maths</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Add Marks</label>
+            <input
+              type="number"
+              placeholder="(e.g. 78)"
+              value={formData.marks}
+              onChange={(e) =>
+                setFormData({ ...formData, marks: e.target.value })
+              }
+            />{" "}
+          </div>
+          <div className="field">
+            <label>Add Errors </label>
+            <input
+              type="text"
+              placeholder="Errors / Remarks"
+              value={formData.errors}
+              onChange={(e) =>
+                setFormData({ ...formData, errors: e.target.value })
+              }
+            />{" "}
+          </div>
 
-          <button type="submit">
-            <LuPlus /> Add
-          </button>
+          <button type="submit">Add Marks</button>
         </form>
 
         {/* 2. Table */}
@@ -82,6 +95,7 @@ const Papers = () => {
           <h3>
             Results History <LuFileText />
           </h3>
+
           <table className="papers-table">
             <thead>
               <tr>
