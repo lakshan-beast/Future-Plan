@@ -18,55 +18,19 @@ import { GiFlyingTarget } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { PiMathOperationsFill } from "react-icons/pi";
 import { GiPapers } from "react-icons/gi";
-// import { LuMonitorOff } from "react-icons/lu";
-
-// const DesktopOnlyView = () => (
-//   <div className="mobile-blocker">
-//     <div className="device-animation">
-//       <LuMonitorOff />
-//     </div>
-//     <h2>Desktop Experience Only</h2>
-//     <p>
-//       This dashboard is optimized for Large Screens. Please switch to a Desktop
-//       or Laptop.
-//     </p>
-//   </div>
-// );
 
 // bottom
 const BottomNav = ({ activeTab, setActiveTab }) => (
   <nav className="bottom-nav" id="bottom-nav">
-    {/* <button
-      className={activeTab === "dashboard" ? "active" : ""}
-      onClick={() => setActiveTab("dashboard")}>
-      <MdSpaceDashboard />
-      <span>Home</span>
-    </button>
-    <button
-      className={activeTab === "timetable" ? "active" : ""}
-      onClick={() => setActiveTab("timetable")}>
-      <LuCalendarDays />
-      <span>Plan</span>
-    </button>
-    <button
-      className={activeTab === "analysis" ? "active" : ""}
-      onClick={() => setActiveTab("analysis")}>
-      <IoStatsChart />
-      <span>Stats</span>
-    </button>
-    <button
-      className={activeTab === "formulas" ? "active" : ""}
-      onClick={() => setActiveTab("formulas")}>
-      <PiMathOperationsFill />
-      <span>Vault</span>
-    </button> */}
     <button
       className={activeTab === "dashboard" ? "active" : ""}
       onClick={() => setActiveTab("dashboard")}>
+      {/* <span className="link-name">Dashboard</span>
       <span className="icon">
         <MdSpaceDashboard />
-      </span>{" "}
-      {/* Dashboard */}
+      </span>{" "} */}
+      <MdSpaceDashboard />
+      <span>Home</span>
     </button>
 
     <button
@@ -75,7 +39,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
       <span className="icon">
         <LuCalendarDays />
       </span>{" "}
-      {/* Master Schedule */}
+      Master Schedule
     </button>
 
     <button
@@ -118,9 +82,8 @@ const BottomNav = ({ activeTab, setActiveTab }) => (
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  // const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 800);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Login එක check කරනකම් පොඩි වෙලාවක් යනවා
+  const [loading, setLoading] = useState(true);
 
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -129,11 +92,7 @@ function App() {
   });
 
   useEffect(() => {
-    // 1. Screen size එක check කිරීම
-    // const handleResize = () => setIsLargeScreen(window.innerWidth >= 300);
-    // window.addEventListener("resize", handleResize);
-
-    // 2. Firebase User check කිරීම
+    // 2. Firebase User check ක
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
@@ -141,12 +100,9 @@ function App() {
 
     return () => {
       unsubscribe();
-      // window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Loading වෙලාවට හිස් screen එකක් පේනවා වෙනුවට මොනවා හරි දාන්න පුළුවන්
-  // if (loading) return <div className="loader">Loading...</div>;
   if (loading) {
     return (
       <div className="loader-wrapper">
@@ -158,16 +114,6 @@ function App() {
       </div>
     );
   }
-
-  // Screen එක පොඩි නම් මුලින්ම ඒක පෙන්වමු (Login වෙලා හිටියත් නැතත්)
-  // if (!isLargeScreen) {
-  //   return (
-  //     <div className="mobile-blocker">
-  //       <h2>Desktop Experience Only</h2>
-  //       <p>Please use a computer to access your study plan.</p>
-  //     </div>
-  //   );
-  // }
 
   if (!user) {
     return <Login />;
