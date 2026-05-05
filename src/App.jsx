@@ -192,6 +192,12 @@ function App() {
       <main className="main-content">
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
+
+          <div className="logo">
+            <GiDreamCatcher className="logo-icon" />
+            <span className="logo-name">Dream</span>
+            <span>Track</span>
+          </div>
         </header>
 
         <section className="page-render">
