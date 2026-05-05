@@ -73,7 +73,7 @@ const Dashboard = ({ user }) => {
           if (seconds > 0) setSeconds((s) => s - 1);
           else {
             setIsOvertime(true);
-            new Audio("https://google.com").play().catch(() => {});
+            new Audio("https://mixkit.co").play().catch(() => {});
           }
         } else {
           setSeconds((s) => s + 1);
