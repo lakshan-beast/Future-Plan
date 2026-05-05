@@ -82,12 +82,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-
   useEffect(() => {
     // 2. Firebase User check ක
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
