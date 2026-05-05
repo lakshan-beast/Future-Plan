@@ -9,11 +9,11 @@ import {
   FiActivity,
   FiTrendingUp,
   FiBarChart2,
-  FiTarget,
+  // FiTarget,
 } from "react-icons/fi";
 import {
   LuCheck,
-  LuCircle,
+  // LuCircle,
   LuPlay,
   LuPause,
   LuCalendar,
@@ -31,11 +31,11 @@ const Dashboard = ({ user }) => {
     seconds: 0,
   });
 
-  const [tasks, setTasks] = useState(() =>
-    JSON.parse(localStorage.getItem("tasks") || "[]"),
-  );
+  // const [tasks, setTasks] = useState(() =>
+  //   JSON.parse(localStorage.getItem("tasks") || "[]"),
+  // );
 
-  const [newTask, setNewTask] = useState("");
+  // const [newTask, setNewTask] = useState("");
   const [seconds, setSeconds] = useState(1500);
   const [isActive, setIsActive] = useState(false);
   const [isOvertime, setIsOvertime] = useState(false);
@@ -130,14 +130,14 @@ const Dashboard = ({ user }) => {
   );
 
   // --- 5. Event Handlers ---
-  const handleTaskToggle = (id) => {
-    const updated = tasks.map((t) =>
-      t.id === id ? { ...t, completed: !t.completed } : t,
-    );
+  // const handleTaskToggle = (id) => {
+  //   const updated = tasks.map((t) =>
+  //     t.id === id ? { ...t, completed: !t.completed } : t,
+  //   );
 
-    setTasks(updated);
-    localStorage.setItem("tasks", JSON.stringify(updated));
-  };
+  //   setTasks(updated);
+  //   localStorage.setItem("tasks", JSON.stringify(updated));
+  // };
 
   const finishFocusSession = () => {
     const duration = isOvertime
@@ -316,7 +316,7 @@ const Dashboard = ({ user }) => {
             )}
           </div>
 
-          <div className="card todo-card-premium">
+          {/* <div className="card todo-card-premium">
             <div className="card-header">
               <h3>
                 Daily Objectives <FiTarget />
@@ -358,7 +358,7 @@ const Dashboard = ({ user }) => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
