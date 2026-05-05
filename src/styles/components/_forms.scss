@@ -1,84 +1,92 @@
-.paper-form {
-  gap: 10px;
-  margin-top: 35px;
+// .paper-form {
+//   gap: 10px;
+//   margin-top: 35px;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 0 1rem;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   padding: 0 1rem;
 
-  input,
-  select {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    outline: none;
+//   input,
+//   select {
+//     padding: 10px;
+//     border-radius: 8px;
+//     border: 1px solid $border;
+//     outline: none;
 
-    &:focus {
-      border-color: $color-content;
-    }
-  }
+//     &:focus {
+//       border-color: $color-content;
+//     }
+//   }
 
-  button {
-    background: #2c3e50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+//   button {
+//     background: $black-color;
+//     color: $white;
+//     border: none;
+//     padding: 10px 20px;
+//     border-radius: 8px;
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     gap: 5px;
 
-    &:hover {
-      background: #34495e;
-    }
-  }
-}
+//     &:hover {
+//       background: rgba($black-color, 0.9);
+//     }
+//   }
+// }
 
 .input-section {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  gap: 10px;
   background: $color-bg;
-  padding: 20px;
+  padding: 30px 0;
   border-radius: 10px;
   margin: 30px 0;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
 
   .field {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-width: 150px;
+    min-width: 200px;
+    max-width: 300px;
+    width: 100%;
 
     label {
-      font-size: 12px;
+      font-size: 0.9rem;
       font-weight: bold;
       margin-bottom: 5px;
-      color: #7f8c8d;
+      color: $color-text;
     }
 
     select,
     input {
       padding: 10px;
-      border: 1px solid #ddd;
+      border: 1px solid $border;
       border-radius: 5px;
       outline: none;
-      width: 200px;
+      margin: 0 auto;
+      min-width: 230px;
+      max-width: 100%;
+      width: 100%;
     }
   }
 
   button {
     padding: 10px 20px;
-    background: #2c3e50;
-    color: white;
+    margin: 0 auto;
+    min-width: 250px;
+    max-width: 100%;
+    width: 100%;
+    background: $black-color;
+    color: $white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
     &:hover {
-      background: #34495e;
+      background: rgba($black-color, 0.9);
     }
   }
 }
