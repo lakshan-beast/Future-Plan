@@ -110,6 +110,7 @@ const Timetable = () => {
 
   return (
     <div className="timetable-page">
+      {/* <div className="tracker-container"> */}
       <h2>Week Schedule</h2>
 
       <div className="timetable-grid">
