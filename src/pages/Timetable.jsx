@@ -110,7 +110,7 @@ const Timetable = () => {
 
   return (
     <div className="timetable-page">
-      <h2>This Week Schedule</h2>
+      <h2>Week Schedule</h2>
 
       <div className="timetable-grid">
         {days.map((day) => (
@@ -122,18 +122,20 @@ const Timetable = () => {
               </span>
             </div>
             <div className="slots">
-              {schedule[day].map((slot, idx) => (
+              {schedule[day].map((slot, index) => (
                 <div
-                  key={idx}
+                  key={index}
                   className={`slot-item ${slot.completed ? "is-done" : ""}`}>
-                  <button onClick={() => toggleComplete(day, idx)}>
+                  <button onClick={() => toggleComplete(day, index)}>
                     {slot.completed ? <LuCheck /> : <LuSquare />}
                   </button>
                   <input
                     type="text"
-                    placeholder={`Task ${idx + 1}`}
+                    placeholder={`Task ${index + 1}`}
                     value={slot.text}
-                    onChange={(e) => handleTextChange(day, idx, e.target.value)}
+                    onChange={(e) =>
+                      handleTextChange(day, index, e.target.value)
+                    }
                   />
                 </div>
               ))}
@@ -151,7 +153,6 @@ const Timetable = () => {
         ))}
       </div>
 
-      {/* <div className="history-section card"> */}
       <div className="table-section">
         <h3>
           Academic History (Previous Weeks) <MdHistory />
@@ -167,16 +168,16 @@ const Timetable = () => {
           </thead>
           <tbody>
             {JSON.parse(localStorage.getItem("weekly-history") || "[]").map(
-              (h, i) => (
+              (history, i) => (
                 <tr key={i}>
-                  <td>{h.weekId}</td>
-                  <td>{h.date}</td>
+                  <td>{history.weekId}</td>
+                  <td>{history.date}</td>
                   <td>
                     <div className="mini-progress-bar">
                       <div
                         className="fill"
-                        style={{ width: `${h.progress}%` }}></div>
-                      <span>{h.progress}%</span>
+                        style={{ width: `${history.progress}%` }}></div>
+                      <span>{history.progress}%</span>
                     </div>
                   </td>
                   <td>
