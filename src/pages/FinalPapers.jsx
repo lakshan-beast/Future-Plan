@@ -100,7 +100,7 @@ const FinalPaperTracker = () => {
 
       {/* 2.  (Graph) */}
       <div className="chart-wrapper">
-        <ResponsiveContainer width="99%" aspect={2}>
+        <ResponsiveContainer width="99%" aspect={2.5}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="paper" />
