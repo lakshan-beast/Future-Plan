@@ -72,7 +72,7 @@ const Analysis = () => {
   return (
     <div className="analysis-page">
       <div className="tracker-container">
-        <h3>Overall Performance (Maths, Physics, Chemistry)</h3>
+        <h2>Overall Performance | Past Papers</h2>
 
         <div className="chart-wrapper">
           <ResponsiveContainer width="99%" aspect={2.5}>
