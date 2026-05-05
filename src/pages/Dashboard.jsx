@@ -17,7 +17,7 @@ import {
 } from "react-icons/lu";
 
 const Dashboard = ({ user }) => {
-  const [seconds, setSeconds] = useState(15);
+  const [seconds, setSeconds] = useState(1500);
   const [isActive, setIsActive] = useState(false);
   const [isOvertime, setIsOvertime] = useState(false);
 
