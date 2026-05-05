@@ -309,11 +309,23 @@ const Dashboard = ({ user }) => {
     <div className="dashboard-wrapper">
       {/* Header Section */}
       <header className="dashboard-main">
-        <div className="welcome-section card">
+        {/* <div className="welcome-section card"> */}
+        <div className="user-profile card">
+          <img
+            src={user.photoURL || <FaUserGraduate />}
+            alt="profile"
+            className="avatar"
+            referrerPolicy="no-referrer"
+          />
           <h1>
             Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
           <p>Ready to master your academic goals today?</p>
+
+          <button className="logout-btn" onClick={() => auth.signOut()}>
+            <CiLogout /> Logut
+          </button>
+          {/* <div /> */}
         </div>
 
         <div className="user-profile">
