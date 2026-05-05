@@ -142,16 +142,6 @@ const Dashboard = ({ user }) => {
     ),
   );
 
-  // --- 5. Event Handlers ---
-  // const handleTaskToggle = (id) => {
-  //   const updated = tasks.map((t) =>
-  //     t.id === id ? { ...t, completed: !t.completed } : t,
-  //   );
-
-  //   setTasks(updated);
-  //   localStorage.setItem("tasks", JSON.stringify(updated));
-  // };
-
   const finishFocusSession = () => {
     if (bgMusicRef.current) {
       bgMusicRef.current.pause();
