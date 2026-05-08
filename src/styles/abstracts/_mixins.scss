@@ -1,59 +1,53 @@
-// _mixins.scss හෝ styles.scss ඇතුළේ
-// $desktop: 800px;
+// Flexbox Mixins
+// A mixin to center content both horizontally and vertically
+@mixin center-everything {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-// @mixin mobile-only {
-//   @media (max-width: #{$desktop - 1}) {
-//     @content;
-//   }
-// }
+// A mixin to create a flex container with customizable properties
+@mixin flex-custom(
+  $justify: center,
+  $align: center,
+  $direction: column,
+  $gap: 0,
+  $wrap: nowrap
+) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
 
-// @mixin desktop-only {
-//   @media (min-width: #{$desktop}) {
-//     @content;
-//   }
-// }
-
-// .dashboard-wrapper {
-//   display: block;
-
-//   @include mobile-only {
-//     display: none;
-//   }
-// }
-
-// .mobile-blocker {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100vh;
-//   text-align: center;
-//   background: $color-bg;
-
-//   h2 {
-//     font-size: 1.8rem;
-//     color: $color-content;
-//     margin: 15px 0;
-//   }
-//   p {
-//     color: $color-text;
-//     max-width: 300px;
-//     line-height: 1.5;
-//   }
-
-//   .device-animation {
-//     font-size: 4rem;
-//     color: $primary;
-//     animation: bounce 2s infinite;
-//   }
-// }
-
-// @keyframes bounce {
-//   0%,
-//   100% {
-//     transform: translateY(0);
-//   }
-//   50% {
-//     transform: translateY(-10px);
-//   }
-// }
+// Media Query Mixins
+// A mixin for devices
+@mixin respond($breakpoint) {
+  @if $breakpoint == small-mobile {
+    @media only screen and (min-width: $breakpoint-small-mobile) {
+      @content; // 350px
+    }
+  }
+  @if $breakpoint == mobile {
+    @media only screen and (min-width: $breakpoint-mobile) {
+      @content; // 600px
+    }
+  }
+  @if $breakpoint == tablet {
+    @media only screen and (min-width: $breakpoint-tablet) {
+      @content; // 900px
+    }
+  }
+  @if $breakpoint == desktop {
+    @media only screen and (min-width: $breakpoint-laptop) {
+      @content; // 1200px
+    }
+  }
+  @if $breakpoint == large-desktop {
+    @media only screen and (min-width: $breakpoint-large-desktop) {
+      @content; // 1400px
+    }
+  }
+}
