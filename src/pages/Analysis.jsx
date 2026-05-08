@@ -111,7 +111,7 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="stats-row tracker-container">
+      <div className=" stats-row">
         <div className=" mini-stat border-chemistry">
           <h4>Chemistry Avg</h4>
           <p className="stat-val">{data.stats.chemistry}%</p>
