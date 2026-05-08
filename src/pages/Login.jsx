@@ -49,7 +49,7 @@ const Login = () => {
 
   return (
     <div className="login-wrapper">
-      <div className="login-card">
+      <div className="login-card card">
         <div className="login-header">
           <div className="logo">
             <GiDreamCatcher className="logo-icon" />
