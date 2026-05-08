@@ -14,7 +14,7 @@
   padding: 3px 6px;
   background-color: rgba($black-color, 0.1);
   border-radius: 5px;
-  width: 33.3%;
+  width: 100%;
 
   @include flex-custom(space-between, center, row, 12px, nowrap);
 
