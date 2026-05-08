@@ -182,9 +182,6 @@ function App() {
             <span>System Operational</span>
           </div>
           <p>Precision Study Engine | Edition 2026 </p>
-          <a href="https://lakshan-sandeepa-dev.vercel.app/" target="_blank">
-            Lakshan
-          </a>
         </div>
       </aside>
 
@@ -193,7 +190,7 @@ function App() {
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
 
-          <div className="logo">
+          <div className="logo mobile-logo">
             <GiDreamCatcher className="logo-icon" />
             <span className="logo-name">Dream</span>
             <span>Track</span>
