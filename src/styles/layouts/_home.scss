@@ -2,50 +2,41 @@
   display: flex;
   height: 100vh;
   overflow: hidden;
-  // @media (max-width: 800px) {
-  //   margin-bottom: 5rem;
-  //   // font-size: 2rem;
-  // }
 
   .logo {
     padding: 2rem 1rem;
     font-size: 1.8rem;
     font-weight: 800;
-    display: flex;
-    align-items: center;
-    margin: 1rem 0;
 
-    @media (max-width: 800px) {
-      font-size: 2rem;
+    @include center-everything;
+
+    @include respond(tablet) {
       padding: 1rem;
+      margin: 2rem auto;
+      font-size: 2rem;
     }
 
     span {
-      color: $primary;
       margin-left: 1px;
+      color: $primary;
     }
     .logo-name {
+      padding: 0 5px;
       background-color: $primary;
       color: $color-white;
-      border-radius: 5px;
-      padding: 0 5px;
+      border-radius: 7px;
     }
 
     .logo-icon {
       margin-right: 3px;
+      padding: 3px;
       width: 40px;
       height: 40px;
-      background: $primary;
       background: $logo-bg;
+      color: $color-white;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
       font-size: 1rem;
-      padding: 3px;
-      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-      display: block;
+      box-shadow: $shadow;
     }
   }
 
@@ -53,15 +44,19 @@
     width: $sidebar-width;
     background: $color-bg;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
     box-shadow: 0px 0px 6px $color-text;
     transition: $transition;
     position: sticky;
     top: 0;
 
-    @media (max-width: 800px) {
-      display: none;
+    @include flex-custom(center, center, column, 0, wrap);
+    display: none;
+
+    @include respond(desktop) {
+      display: block;
+      padding: 0 0.5rem;
+
+      @include flex-custom(center, center, column, 0, wrap);
     }
 
     .nav-menu {
@@ -69,38 +64,39 @@
       padding: 0 0.3rem;
 
       button {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 15px;
         padding: 14px 18px;
         margin-bottom: 8px;
-        border: none;
-        // background: transparent;
+        width: 100%;
         background: rgba($color-medium, 0.2);
+        color: $color-text;
         border-radius: 12px;
-        color: #64748b;
         font-weight: 500;
-        cursor: pointer;
+        border: none;
         transition: $transition;
+        cursor: pointer;
+
+        @include flex-custom(flex-start, center, row, 12px, wrap);
 
         &:hover {
           background: $color-bg;
-          border: 2px solid $border;
           color: $black-color;
+          border: 2px solid $border;
+
           .icon {
             transform: translateX(3px);
           }
         }
+
         &.active {
           background: $black-color;
-          color: white;
+          color: $color-white;
           box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2);
 
           .icon {
-            color: white;
+            color: $color-white;
           }
         }
+
         .icon {
           margin-right: 12px;
           font-size: 1.2rem;
@@ -113,34 +109,31 @@
       padding: 1.5rem;
       margin: 2rem 1rem;
       border-top: 1px solid $color-text;
+      text-align: center;
 
       .footer-status {
-        display: flex;
-        align-items: center;
-        gap: 8px;
         margin-bottom: 5px;
+        @include flex-custom(center, center, row, 12px, wrap);
 
         .status-dot {
-          width: 12px;
-          height: 12px;
-          background: #08e659;
+          width: 15px;
+          height: 15px;
+          background: $success;
           border-radius: 50%;
-          box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-          border: 1px solid rgb(0, 0, 180);
-          cursor: pointer;
+          animation: pulse 1s infinite;
           transition: $transition;
+          cursor: pointer;
 
           &:hover {
-            border: none;
-            width: 15px;
-            height: 15px;
+            width: 18px;
+            height: 18px;
           }
         }
 
         span {
           font-size: 0.75rem;
           font-weight: 700;
-          color: #64748b;
+          color: $color-text;
           text-transform: uppercase;
           letter-spacing: 0.5px;
         }
@@ -149,47 +142,9 @@
       p {
         margin: 0;
         font-size: 0.7rem;
-        color: #94a3b8;
+        color: $color-text;
         font-family: $font-exo;
         letter-spacing: 0.3px;
-      }
-    }
-
-    .user-profile {
-      margin: 20px;
-      padding: 15px;
-      background: rgba($color-medium, 1);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      transition: $transition;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-
-      .avatar {
-        width: 60px;
-        height: 60px;
-        background: #ddd;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      .info {
-        text-align: end;
-        h4 {
-          margin: 0;
-          font-size: 0.9rem;
-          color: $text-dark;
-        }
-        p {
-          margin: 0;
-          font-size: 0.75rem;
-          color: #3e526e;
-        }
       }
     }
   }
@@ -201,67 +156,34 @@
     overflow-y: auto;
 
     .top-bar {
-      background: rgba($black-color, 0.1);
-
       padding: 1rem;
-      border-bottom: 1px solid $border;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 100px;
+      height: 200px;
       border-radius: 0 0 1rem 1rem;
+      border-bottom: 2px solid $border;
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid $border;
       position: sticky;
       top: 0;
       z-index: 100;
+      @include flex-custom(space-between, center, column-reverse, 0, nowrap);
 
-      @media (max-width: 800px) {
-        display: none;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        height: 200px;
+      @include respond(tablet) {
+        padding: 3rem;
+        @include flex-custom(space-between, center, row, 0, nowrap);
+
+        .mobile-logo {
+          display: none;
+        }
       }
 
       h1 {
-        font-size: 1.9rem;
         margin: 0;
+        font-size: 1.5rem;
         color: $color-text;
 
-        @media (max-width: 800px) {
-          font-size: 1.5rem;
+        @include respond(tablet) {
+          font-size: 1.9rem;
         }
-      }
-    }
-
-    .date-box {
-      text-align: right;
-      padding-right: 20px;
-
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      background: rgba($color-medium, 0.2);
-      padding: 6px 16px;
-      border-radius: 6px;
-
-      h4 {
-        margin: 0;
-        font-size: 1.3rem;
-        color: $text-dark;
-        padding-right: 6px;
-      }
-      p {
-        border-left: 2px solid $color-content;
-        margin: 0;
-        font-size: 0.8rem;
-        color: $color-content;
-        padding-left: 6px;
       }
     }
 
@@ -273,113 +195,64 @@
   }
 }
 
-.bottom-nav {
-  display: none;
-}
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  padding: 0 2rem;
+  background: $border;
+  border-top: 1px solid $border;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 
-// bottom nav
-@media (max-width: 800px) {
-  .sidebar {
-    display: none;
-  } // Mobile වලදී sidebar එක හංගනවා
+  @include flex-custom(space-between, center, row, 0, nowrap);
 
-  aside {
-    display: none;
-  }
+  button {
+    margin: 0 3px;
+    background: none;
+    border: none;
+    color: $color-text;
+    font-size: 0.8rem;
 
-  #bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    padding: 0 16px;
-    background: #fafafa;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top: 1px solid #e2e8f0;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    border-radius: 1rem 1rem 0 0;
+    @include flex-custom(center, center, column, 4px, nowrap);
 
-    button {
-      background: none;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #94a3b8;
-      font-size: 0.8rem;
-      gap: 4px;
+    .icon {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
 
-      margin: 0 3px;
+    &.active {
+      color: $primary;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: underline;
 
       .icon {
-        font-size: 0.9rem;
-        font-weight: 600;
-      }
-      &.active {
-        color: #2563eb;
-        font-size: 1.05rem;
-
-        .icon {
-          font-size: 1.15rem;
-        }
+        font-size: 1.8rem;
       }
     }
   }
 
-  .main-content {
-    margin-left: 0 !important; // Sidebar එකේ ඉඩ අයින් කරනවා
-    padding-bottom: 80px; // Bottom nav එකට යට නොවෙන්න පල්ලෙහයින් ඉඩ තියනවා
+  @include respond(desktop) {
+    display: none;
   }
 }
 
 .main-grid {
-  // gap: 2rem;
-  /* display: flex; */
-  /* justify-content: space-evenly; */
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  overflow: scroll;
+  padding-bottom: 100px;
+  padding: 0 auto;
+
+  @include respond(desktop) {
+    padding: 1rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 }
-
-/* Mobile Styles (Max 800px) */
-// @media (max-width: 800px) {
-//   // 1. Grid එක Column එකක් කරන්න
-//   // .main-grid {
-//   //   display: flex !important;
-//   //   flex-direction: column !important;
-//   //   gap: 1.5rem;
-//   //   padding: 10px;
-//   // }
-
-//   // 2. වම සහ දකුණු පැති වල පළල 100% කරන්න
-//   .left-col,
-//   .right-col {
-//     width: 100% !important;
-//   }
-
-//   // 3. Header එකේ දත්ත එක යට එක වැටෙන්න
-//   .dashboard-main {
-//     flex-direction: column;
-//     align-items: flex-start;
-//     gap: 1rem;
-
-//     .dashboard-main-right {
-//       width: 100%;
-//       justify-content: flex-start;
-//       flex-wrap: wrap;
-//     }
-//   }
-
-//   // 4. Timer එක පොඩි කරන්න (Mobile screen එකට ගැලපෙන්න)
-//   .timer-display h2 {
-//     font-size: 3rem !important;
-//   }
-// }
