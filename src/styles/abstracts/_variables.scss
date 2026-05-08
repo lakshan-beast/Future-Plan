@@ -3,16 +3,27 @@ $color-medium: #bcccdc;
 $color-text: #829ab1;
 $color-content: #486581;
 $color-bg: #ffffff91;
+
+$black-color: #2c3e50;
 $text-dark: #1e293b;
-// $primary: #4f46e5;
+
+$primary-color: #3498db;
+
+$maths-color: #3498db; // Blue
+$physics-color: #e74c3c; // Red
+$chemistry-color: #2ecc71; // Green
+
+$primary: #2563eb;
+$success: #10b981;
+$danger: #ef4444;
 
 $border: #e2e8f0;
 
 $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 $sidebar-width: 300px;
+$tracker-width: 1100px;
 
-// $active-gradient: linear-gradient(120deg, #625be9 0%, #9a69ee 100%);
 $logo-bg: linear-gradient(120deg, #2563eb 0%, #6491f0 100%);
 
 $font-exo: "Exo 2", sans-serif;
@@ -20,46 +31,24 @@ $font-Oswald: "Oswald", sans-serif;
 $font-Elms: "Elms Sans", sans-serif;
 $font-Michroma: "Michroma", sans-serif;
 
-$primary-color: #3498db;
-$secondary-color: #2c3e50;
-$success-color: #27ae60;
-$error-color: #e74c3c;
-$bg-light: #f4f7f6;
-$white: #ffffff;
+// breakpoints
+$breakpoint-small-mobile: 350px;
+$breakpoint-mobile: 600px;
+$breakpoint-tablet: 800px;
+$breakpoint-laptop: 1200px;
+$breakpoint-large-desktop: 1400px;
 
-$maths-color: #3498db; // Blue
-$physics-color: #e74c3c; // Red
-$chemistry-color: #2ecc71; // Green
-$bg-color: #f8f9fa;
-
-$black-color: #2c3e50;
-
-$primary: #2563eb;
-$success: #10b981;
-$danger: #ef4444;
-$background: #f8fafc;
-$card-bg: #ffffff;
-$text-main: #1e293b;
-$text-muted: #64748b;
 $shadow:
   0 4px 6px -1px rgb(0 0 0 / 0.1),
   0 2px 4px -2px rgb(0 0 0 / 0.1);
 
 @mixin card-style {
-  //   background: $card-bg;
-  //   border-radius: 1.25rem;
-  //   padding: 1.5rem;
-  //   box-shadow: $shadow;
-  //   border: 1px solid #f1f5f9;
-  // }
-
-  // .card {
   background: rgba($color-white, 0.3);
   padding: 1.5rem;
   border-radius: 15px;
   margin-bottom: 6px;
   border: 1px solid $color-bg;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  background-color: #386dc2;
   box-shadow: $shadow;
 
   h3 {
