@@ -4,8 +4,12 @@ import { auth } from "../firebase";
 
 import { MdOutlineTimer } from "react-icons/md";
 import { FaUserGraduate } from "react-icons/fa";
-import { CiLogout } from "react-icons/ci";
-import { FiActivity, FiTrendingUp, FiBarChart2 } from "react-icons/fi";
+import {
+  FiActivity,
+  FiTrendingUp,
+  FiBarChart2,
+  FiLogOut,
+} from "react-icons/fi";
 import {
   LuCheck,
   LuPlay,
@@ -201,125 +205,126 @@ const Dashboard = ({ user }) => {
           </div>
 
           <button className="logout-btn" onClick={() => auth.signOut()}>
-            <CiLogout className="logout-icon" /> Logout
+            <FiLogOut />
+            Logout
           </button>
         </div>
       </header>
 
       <div className="main-grid">
         {/* Left Column: Focus & Countdown */}
-        <div className="left-col">
-          <div className="card countdown-card-premium">
+        {/* <div className="left-col"> */}
+        <div className="card countdown-card-premium">
+          <h3>
+            Final Countdown <MdOutlineTimer />
+          </h3>
+          <div className="timer-grid">
+            <div className="time-item">
+              <span>{timeLeft.days}</span>
+              <small>Days</small>
+            </div>
+            <div className="time-item">
+              <span>{timeLeft.hours}</span>
+              <small>Hours</small>
+            </div>
+            <div className="time-item">
+              <span>{timeLeft.mins}</span>
+              <small>Mins</small>
+            </div>
+            <div className="time-item">
+              <span className="secs">{timeLeft.seconds}</span>
+              <small>Secs</small>
+            </div>
+          </div>
+          <p>Target: A/L 2026 | 2026 August 10</p>
+        </div>
+
+        <div className="card performance-card-premium">
+          <div className="card-header">
             <h3>
-              Final Countdown <MdOutlineTimer />
+              Latest Evaluation <FiBarChart2 />
             </h3>
-            <div className="timer-grid">
-              <div className="time-item">
-                <span>{timeLeft.days}</span>
-                <small>Days</small>
+            <span className="live-tag">Live Data</span>
+          </div>
+          {lastPaper ? (
+            <div className="performance-content">
+              <div className="score-ring">
+                <span className="score-num">{lastPaper.marks}</span>
+                <span className="percent-sign">%</span>
               </div>
-              <div className="time-item">
-                <span>{timeLeft.hours}</span>
-                <small>Hours</small>
-              </div>
-              <div className="time-item">
-                <span>{timeLeft.mins}</span>
-                <small>Mins</small>
-              </div>
-              <div className="time-item">
-                <span className="secs">{timeLeft.seconds}</span>
-                <small>Secs</small>
+              <div className="paper-info">
+                <span className="sub-badge">{lastPaper.subject}</span>
+                <p>{lastPaper.type} Paper Result</p>
               </div>
             </div>
-            <p>Target: A/L 2026 | 2026 August 10</p>
+          ) : (
+            <p className="no-data">No records found.</p>
+          )}
+        </div>
+        {/* </div> */}
+
+        {/* Right Column: Performance & Tasks */}
+        {/* <div className="right-col"> */}
+        <div className="card focus-card-premium">
+          <h3>
+            Deep Work Session <FiActivity />
+          </h3>
+          <div className="forest-visual">
+            {isOvertime || 1500 - seconds > 1200 ? (
+              <LuTrees className="tree grown" />
+            ) : 1500 - seconds > 600 ? (
+              <LuFlower2 className="tree growing" />
+            ) : (
+              <LuSprout className="tree seed" />
+            )}
           </div>
 
-          <div className="card performance-card-premium">
-            <div className="card-header">
-              <h3>
-                Latest Evaluation <FiBarChart2 />
-              </h3>
-              <span className="live-tag">Live Data</span>
-            </div>
-            {lastPaper ? (
-              <div className="performance-content">
-                <div className="score-ring">
-                  <span className="score-num">{lastPaper.marks}</span>
-                  <span className="percent-sign">%</span>
-                </div>
-                <div className="paper-info">
-                  <span className="sub-badge">{lastPaper.subject}</span>
-                  <p>{lastPaper.type} Paper Result</p>
-                </div>
-              </div>
-            ) : (
-              <p className="no-data">No records found.</p>
+          <div className={`timer-display ${isOvertime ? "emergency" : ""}`}>
+            {isOvertime && <span className="ot-label">OVERTIME</span>}
+            <h2>{formatTime(seconds)}</h2>
+          </div>
+
+          <div className="timer-controls">
+            <button
+              onClick={() => setIsActive(!isActive)}
+              className="btn-start">
+              {isActive ? <LuPause /> : <LuPlay />}{" "}
+              {isActive ? "Pause" : "Start Again"}
+            </button>
+            {(isActive || isOvertime) && (
+              <button onClick={finishFocusSession} className="btn-complete">
+                Finish & Plant
+              </button>
             )}
           </div>
         </div>
 
-        {/* Right Column: Performance & Tasks */}
-        <div className="right-col">
-          <div className="card focus-card-premium">
-            <h3>
-              Deep Work Session <FiActivity />
-            </h3>
-            <div className="forest-visual">
-              {isOvertime || 1500 - seconds > 1200 ? (
-                <LuTrees className="tree grown" />
-              ) : 1500 - seconds > 600 ? (
-                <LuFlower2 className="tree growing" />
-              ) : (
-                <LuSprout className="tree seed" />
-              )}
-            </div>
-
-            <div className={`timer-display ${isOvertime ? "emergency" : ""}`}>
-              {isOvertime && <span className="ot-label">OVERTIME</span>}
-              <h2>{formatTime(seconds)}</h2>
-            </div>
-
-            <div className="timer-controls">
-              <button
-                onClick={() => setIsActive(!isActive)}
-                className="btn-start">
-                {isActive ? <LuPause /> : <LuPlay />}{" "}
-                {isActive ? "Pause" : "Start Again"}
-              </button>
-              {(isActive || isOvertime) && (
-                <button onClick={finishFocusSession} className="btn-complete">
-                  Finish & Plant
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Forest Gallery - separate card for better layout */}
-          <div className="card forest-gallery-premium">
-            <h3>
-              Weekly Forest Growth <FiTrendingUp />
-            </h3>
-            <div className="calendar-grid">
-              {weeklyForest.map(([date, count], i) => (
-                <div key={i} className="day-growth">
-                  <div className="tree-stack">
-                    {[...Array(Math.min(count, 3))].map((_, idx) => (
-                      <LuTrees key={idx} />
-                    ))}
-                    {count === 0 && <span className="seed-dot">.</span>}
-                  </div>
-                  <span className="day-label">
-                    {date === new Date().toLocaleDateString()
-                      ? "Today"
-                      : date.split("/")[1] + "/" + date.split("/")[0]}
-                  </span>
+        {/* Forest Gallery - separate card for better layout */}
+        <div className="card forest-gallery-premium">
+          <h3>
+            Weekly Forest Growth <FiTrendingUp />
+          </h3>
+          <div className="calendar-grid">
+            {weeklyForest.map(([date, count], i) => (
+              <div key={i} className="day-growth">
+                <div className="tree-stack">
+                  {[...Array(Math.min(count, 3))].map((_, idx) => (
+                    <LuTrees key={idx} />
+                  ))}
+                  {count === 0 && <span className="seed-dot">.</span>}
                 </div>
-              ))}
-            </div>
+                <span className="day-label">
+                  {date === new Date().toLocaleDateString()
+                    ? "Today"
+                    : date.split("/")[1] + "/" + date.split("/")[0]}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 
