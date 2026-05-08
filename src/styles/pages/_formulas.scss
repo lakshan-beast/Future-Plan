@@ -5,52 +5,39 @@
     .search-bar {
       display: flex;
       align-items: center;
-      background: white;
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
       gap: 10px;
-      color: #64748b;
+      color: $color-text;
+      background: $color-white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      border: 1px solid $border;
 
       input {
+        width: 100%;
         border: none;
         outline: none;
-        width: 100%;
         font-size: 1rem;
+        background-color: transparent;
       }
     }
   }
 }
-
-// h3 {
-//   margin: 25px auto;
-//   color: $color-text;
-//   font-size: 1.2rem;
-//   text-transform: uppercase;
-//   letter-spacing: 1px;
-//   text-align: center;
-// }
-
-// .add-formula-card {
-//   width: 500px;
-//   margin: 0 auto;
-// }
 
 .formula-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   overflow: scroll;
+  margin-top: 12px;
 }
 
 .formula-item-card {
   .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 10px;
     padding: 0;
     margin: 0;
+
+    @include flex-custom(space-between, center, row, 0 nowrap);
 
     .tag {
       padding: 4px 10px;
