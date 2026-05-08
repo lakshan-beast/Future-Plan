@@ -9,7 +9,7 @@ const Formulas = () => {
   });
 
   const [newFormula, setNewFormula] = useState({
-    category: "Trigonometry",
+    category: "",
     title: "",
     content: "",
   });
