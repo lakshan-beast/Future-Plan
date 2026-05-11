@@ -138,7 +138,7 @@ const Dashboard = ({ user }) => {
     });
 
     return Object.entries(last7Days).reverse();
-  }, []);
+  }, [isActive]);
 
   const weeksUntilExam = Math.max(
     0,
@@ -183,12 +183,18 @@ const Dashboard = ({ user }) => {
       {/* Header Section */}
       <header className="dashboard-main">
         <div className="user-profile">
-          <img
-            src={user.photoURL || <FaUserGraduate />}
-            alt="profile"
-            className="avatar"
-            referrerPolicy="no-referrer"
-          />
+          {user?.photoURL ? (
+            <img
+              src={user.photoURL}
+              alt="profile"
+              className="avatar"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="avatar-placeholder">
+              <FaUserGraduate />
+            </div>
+          )}
           <h1>
             Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
