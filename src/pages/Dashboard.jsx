@@ -39,6 +39,7 @@ const Dashboard = ({ user }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       const diff = +new Date("2026-08-10T00:00:00") - +new Date();
+
       if (diff > 0) {
         setTimeLeft({
           days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -191,7 +192,6 @@ const Dashboard = ({ user }) => {
           <h1>
             Hello, <span>{user?.displayName || "Student"}!</span>
           </h1>
-          {/* <p>Ready to master your academic goals today?</p> */}
           <p>Target: A/L 2026 | 2026 August 10</p>
 
           <div className="dashboard-main-right">
@@ -212,8 +212,6 @@ const Dashboard = ({ user }) => {
       </header>
 
       <div className="main-grid">
-        {/* Left Column: Focus & Countdown */}
-        {/* <div className="left-col"> */}
         <div className="card countdown-card-premium">
           <h3>
             Final Countdown <MdOutlineTimer />
@@ -261,10 +259,7 @@ const Dashboard = ({ user }) => {
             <p className="no-data">No records found.</p>
           )}
         </div>
-        {/* </div> */}
 
-        {/* Right Column: Performance & Tasks */}
-        {/* <div className="right-col"> */}
         <div className="card focus-card-premium">
           <h3>
             Deep Work Session <FiActivity />
@@ -324,7 +319,6 @@ const Dashboard = ({ user }) => {
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 
