@@ -138,7 +138,7 @@ const Dashboard = ({ user }) => {
     });
 
     return Object.entries(last7Days).reverse();
-  }, [isActive]);
+  }, []);
 
   const weeksUntilExam = Math.max(
     0,
