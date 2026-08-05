@@ -52,7 +52,7 @@ const Timetable = () => {
       : Math.round((completed / totalWithText) * 100);
   };
 
-  // මුළු සතියේම ප්‍රගතිය ගණනය කිරීමට
+
   const calculateWeeklyProgress = () => {
     let total = 0;
     days.forEach((day) => {

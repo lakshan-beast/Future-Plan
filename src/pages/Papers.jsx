@@ -8,10 +8,10 @@ const Papers = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // state එක මේ විදිහට වෙනස් කරන්න
+
   const [formData, setFormData] = useState({
     year: "",
-    subject: "Maths", // අලුතින් එකතු කළා
+    subject: "Maths", 
     type: "Theory/Full",
     marks: "",
     errors: "",
@@ -39,7 +39,6 @@ const Papers = () => {
           Add Past Paper Record <FiFileText />
         </h2>
 
-        {/* <form onSubmit={handleSubmit} className="paper-form"> */}
         <form onSubmit={handleSubmit} className="input-section">
           <div className="field">
             <label>Add Paper Year</label>

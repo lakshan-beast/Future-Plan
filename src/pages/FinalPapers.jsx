@@ -161,7 +161,7 @@ const FinalPaperTracker = () => {
           </tbody>
         </table>
         {data.length === 0 && (
-          <p className="no-data">තවමත් ලකුණු ඇතුළත් කර නොමැත.</p>
+          <p className="no-data">No scores have been entered yet.</p>
         )}
       </div>
     </div>

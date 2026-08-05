@@ -185,7 +185,7 @@ function App() {
         </div>
       </aside>
 
-      {/* Main Content - දකුණු පස ප්‍රධාන කොටස */}
+      {/* Main Content */}
       <main className="main-content">
         <header className="top-bar">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}</h1>
