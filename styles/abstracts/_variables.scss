@@ -1,0 +1,88 @@
+// ==========================================
+// COLOR PALETTE
+// ==========================================
+$color-white: #f0f4f8;
+$color-medium: #bcccdc;
+$color-text: #829ab1;
+$color-content: #486581;
+$color-bg: #f8fafc;
+
+$black-color: #2c3e50;
+$text-dark: #1e293b;
+
+// Primary Branding
+$primary: #2563eb;
+$primary-color: #3498db;
+
+// Subject Colors (Study App Specific)
+$maths-color: #3498db; // Blue
+$physics-color: #e74c3c; // Red
+$chemistry-color: #2ecc71; // Green
+
+// Status Colors
+$success: #10b981;
+$danger: #ef4444;
+
+$border: #e2e8f0;
+
+// ==========================================
+// TRANSITIONS & SIZING
+// ==========================================
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+$sidebar-width: 300px;
+$tracker-width: 1100px;
+
+$logo-bg: linear-gradient(120deg, #2563eb 0%, #6491f0 100%);
+
+// Border Radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 20px;
+
+// ==========================================
+// TYPOGRAPHY
+// ==========================================
+$font-exo: "Exo 2", sans-serif;
+$font-Oswald: "Oswald", sans-serif;
+$font-Elms: "Elms Sans", sans-serif;
+$font-Michroma: "Michroma", sans-serif;
+
+// ==========================================
+// BREAKPOINTS
+// ==========================================
+$breakpoint-small-mobile: 350px;
+$breakpoint-mobile: 600px;
+$breakpoint-tablet: 800px;
+$breakpoint-laptop: 1200px;
+$breakpoint-large-desktop: 1400px;
+
+// ==========================================
+// SHADOWS & MIXINS
+// ==========================================
+$shadow:
+  0 4px 6px -1px rgb(0 0 0 / 0.05),
+  0 2px 4px -2px rgb(0 0 0 / 0.05);
+
+@mixin card-style {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: $radius-md;
+  margin-bottom: 1rem;
+  border: 1px solid $border;
+  box-shadow: $shadow;
+  transition: $transition;
+
+  &:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  }
+
+  h3 {
+    margin-top: 0;
+    color: $text-dark;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}

@@ -1,0 +1,83 @@
+// ==========================================
+// FLEXBOX MIXINS
+// ==========================================
+
+// Center content both horizontally and vertically
+@mixin center-everything {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Create a flex container with customizable properties
+@mixin flex-custom(
+  $justify: center,
+  $align: center,
+  $direction: column,
+  $gap: 0,
+  $wrap: nowrap
+) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+// ==========================================
+// MODERN UI MIXINS (For Study App Vibe)
+// ==========================================
+
+// Glassmorphism effect for cards and modals
+@mixin glass-card($bg: rgba(255, 255, 255, 0.7), $blur: 10px) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+// Smooth transitions
+@mixin smooth-transition($property: all, $duration: 0.3s, $ease: ease-in-out) {
+  transition: $property $duration $ease;
+}
+
+// Custom box shadows for dashboard widgets
+@mixin card-shadow($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  } @else if $level == 2 {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  } @else if $level == 3 {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// ==========================================
+// MEDIA QUERY MIXINS
+// ==========================================
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == small-mobile {
+    @media only screen and (min-width: $breakpoint-small-mobile) {
+      @content;
+    }
+  } @else if $breakpoint == mobile {
+    @media only screen and (min-width: $breakpoint-mobile) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media only screen and (min-width: $breakpoint-tablet) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media only screen and (min-width: $breakpoint-laptop) {
+      @content;
+    }
+  } @else if $breakpoint == large-desktop {
+    @media only screen and (min-width: $breakpoint-large-desktop) {
+      @content;
+    }
+  }
+}
