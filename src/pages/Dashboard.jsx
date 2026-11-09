@@ -86,12 +86,19 @@ const Dashboard = () => {
     let total = 0;
     let done = 0;
 
-    Object.values(schedule).forEach((day) => {
-      day.forEach((slot) => {
-        if (slot.text?.trim()) {
-          total++;
-          if (slot.completed) done++;
-        }
+    // New structure: { weekKey: { dateKey: { tasks: [] } } }
+    Object.values(schedule).forEach((week) => {
+      if (typeof week !== "object" || week === null) return;
+
+      Object.values(week).forEach((day) => {
+        if (!day || !Array.isArray(day.tasks)) return;
+
+        day.tasks.forEach((task) => {
+          if (task.text?.trim()) {
+            total++;
+            if (task.completed) done++;
+          }
+        });
       });
     });
 
