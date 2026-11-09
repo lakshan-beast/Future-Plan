@@ -214,9 +214,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
-// import Timetable from "./pages/Timetable";
-// import Focus from "./pages/Focus";
-// import Notes from "./pages/Notes";
+import Timetable from "./pages/Timetable";
+import Focus from "./pages/Focus";
+import Notes from "./pages/Notes";
 // import Practice from "./pages/Practice";
 // import Insights from "./pages/Insights";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -264,18 +264,18 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
       },
-      // {
-      //   path: "timetable",
-      //   element: <Timetable />,
-      // },
-      // {
-      //   path: "focus",
-      //   element: <Focus />,
-      // },
-      // {
-      //   path: "notes",
-      //   element: <Notes />,
-      // },
+      {
+        path: "timetable",
+        element: <Timetable />,
+      },
+      {
+        path: "focus",
+        element: <Focus />,
+      },
+      {
+        path: "notes",
+        element: <Notes />,
+      },
       // {
       //   path: "practice",
       //   element: <Practice />,
