@@ -1,5 +1,34 @@
 /* src/index.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Elms+Sans:wght@400..800&family=Oswald:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Elms Sans", sans-serif;
+  --font-body: "Oswald", sans-serif;
+}
+
+/* Global Smooth Behavior & Font Smoothing */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body, sans-serif);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings Custom Font */
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+  font-family: var(--font-sans, sans-serif);
+}
 
 /* Modern Minimal Custom Scrollbar */
 ::-webkit-scrollbar {
