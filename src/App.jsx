@@ -217,10 +217,11 @@ import Dashboard from "./pages/Dashboard";
 import Timetable from "./pages/Timetable";
 import Focus from "./pages/Focus";
 import Notes from "./pages/Notes";
-// import Practice from "./pages/Practice";
+import Practice from "./pages/Practice";
 // import Insights from "./pages/Insights";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
+import BottomNav from "./components/BottomNav";
 
 const AppLayout = () => {
   return (
@@ -231,6 +232,8 @@ const AppLayout = () => {
           <Outlet />
         </main>
       </div>
+
+      <BottomNav />
     </div>
   );
 };
@@ -276,10 +279,10 @@ const router = createBrowserRouter([
         path: "notes",
         element: <Notes />,
       },
-      // {
-      //   path: "practice",
-      //   element: <Practice />,
-      // },
+      {
+        path: "practice",
+        element: <Practice />,
+      },
       // {
       //   path: "insights",
       //   element: <Insights />,
