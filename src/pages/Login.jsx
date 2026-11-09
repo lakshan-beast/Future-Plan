@@ -190,7 +190,7 @@ const Login = () => {
           <div>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
-                <GiDreamCatcher className="text-white text-2xl" />
+                <GiDreamCatcher className="text-white text-4xl" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold tracking-tight">
@@ -208,7 +208,7 @@ const Login = () => {
               <span className="text-indigo-300">Reach your dream.</span>
             </h2>
 
-            <p className="mt-5 text-white/70 leading-relaxed">
+            <p className="mt-5 text-white/70 leading-tight">
               DreamUTrack helps O/L and A/L students manage subjects,
               timetables, formulas, past papers and daily focus sessions in one
               place.
@@ -254,18 +254,18 @@ const Login = () => {
           </div>
 
           <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm text-white/70">
-              🔒 Your study data stays on your device. DreamUTrack does not
-              upload your marks, timetable or notes to its servers.
+            <p className="text-sm text-white/70 leading-tight">
+              Your study data stays on your device. DreamUTrack does not upload
+              your marks, timetable or notes to its servers.
             </p>
           </div>
         </div>
 
         {/* Right side */}
-        <div className="p-7 sm:p-10 bg-[#0e1424]/80">
+        <div className="p-7 sm:p-10 bg-[#0e1424]/80 lg:flex flex-col justify-center">
           <div className="lg:hidden flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
-              <GiDreamCatcher className="text-white text-xl" />
+              <GiDreamCatcher className="text-white text-3xl" />
             </div>
             <h1 className="text-xl font-bold">
               Dream<span className="text-indigo-300">U</span>Track
@@ -297,7 +297,7 @@ const Login = () => {
 
           <form onSubmit={handleEmailAuth} className="space-y-4">
             <div>
-              <label className="block text-sm text-white/70 mb-2">
+              <label className="block text-sm text-white/70 mb-0">
                 Email address
               </label>
               <div className="relative">
@@ -314,7 +314,7 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="block text-sm text-white/70 mb-2">
+              <label className="block text-sm text-white/70 mb-0">
                 Password
               </label>
               <div className="relative">
@@ -374,9 +374,9 @@ const Login = () => {
           </p>
 
           <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4 lg:hidden">
-            <p className="text-xs text-white/60">
-              🔒 Your study data stays on your device. DreamUTrack does not
-              upload your marks, timetable or notes to its servers.
+            <p className="text-xs text-white/60 text-center font-body leading-tight">
+              Your study data stays on your device. DreamUTrack does not upload
+              your marks, timetable or notes to its servers.
             </p>
           </div>
         </div>
