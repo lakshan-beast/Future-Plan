@@ -217,7 +217,7 @@ import Dashboard from "./pages/Dashboard";
 import Timetable from "./pages/Timetable";
 import Focus from "./pages/Focus";
 import Notes from "./pages/Notes";
-import Practices from "./pages/Practice";
+import Practice from "./pages/Practice";
 import Insights from "./pages/Insights";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
@@ -280,8 +280,8 @@ const router = createBrowserRouter([
         element: <Notes />,
       },
       {
-        path: "practices",
-        element: <Practices />,
+        path: "practice",
+        element: <Practice />,
       },
       {
         path: "insights",
