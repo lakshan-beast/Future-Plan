@@ -218,7 +218,7 @@ import Timetable from "./pages/Timetable";
 import Focus from "./pages/Focus";
 import Notes from "./pages/Notes";
 import Practice from "./pages/Practice";
-// import Insights from "./pages/Insights";
+import Insights from "./pages/Insights";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 import BottomNav from "./components/BottomNav";
@@ -283,10 +283,10 @@ const router = createBrowserRouter([
         path: "practice",
         element: <Practice />,
       },
-      // {
-      //   path: "insights",
-      //   element: <Insights />,
-      // },
+      {
+        path: "insights",
+        element: <Insights />,
+      },
     ],
   },
 ]);

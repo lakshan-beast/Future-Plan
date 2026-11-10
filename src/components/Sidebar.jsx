@@ -5,7 +5,7 @@ import {
   Timer,
   BookOpen,
   FileText,
-  // BarChart3,
+  BarChart3,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -19,7 +19,7 @@ const Sidebar = () => {
     { to: "/focus", label: "Focus", icon: <Timer size={18} /> },
     { to: "/notes", label: "Notes", icon: <BookOpen size={18} /> },
     { to: "/practice", label: "Practice", icon: <FileText size={18} /> },
-    // { to: "/insights", label: "Insights", icon: <BarChart3 size={18} /> },
+    { to: "/insights", label: "Insights", icon: <BarChart3 size={18} /> },
   ];
 
   return (
