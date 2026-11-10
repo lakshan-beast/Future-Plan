@@ -508,7 +508,7 @@ const Timetable = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className={`w-96 max-w-full flex-shrink-0 rounded-3xl border p-5 backdrop-blur-xl ${
+                className={`w-76 max-w-full flex-shrink-0 rounded-3xl border p-5 backdrop-blur-xl ${
                   isToday
                     ? "border-indigo-400/50 bg-indigo-500/10 shadow-lg shadow-indigo-500/20"
                     : "border-white/10 bg-white/5"
@@ -591,7 +591,7 @@ const Timetable = () => {
                               className="w-full bg-transparent text-sm outline-none placeholder-white/30"
                             />
 
-                            <div className="flex items-center gap-2 mt-2">
+                            <div className="flex-col items-center gap-2 mt-2">
                               <select
                                 value={task.subject}
                                 onChange={(e) =>
