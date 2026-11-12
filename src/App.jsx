@@ -210,6 +210,97 @@
 
 // export default App;
 
+// import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+// import Login from "./pages/Login";
+// import Onboarding from "./pages/Onboarding";
+// import Dashboard from "./pages/Dashboard";
+// import Timetable from "./pages/Timetable";
+// import Focus from "./pages/Focus";
+// import Notes from "./pages/Notes";
+// import Practice from "./pages/Practice";
+// import Insights from "./pages/Insights";
+// import ProtectedRoute from "./components/ProtectedRoute";
+// import Sidebar from "./components/Sidebar";
+// import BottomNav from "./components/BottomNav";
+
+// import ScrollToTop from "./components/ScrollTop.";
+// import Navbar from "./components/Navbar";
+
+// const AppLayout = () => {
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white">
+//       <ScrollToTop />
+//       <Navbar />
+//       <div className="flex">
+//         <Sidebar />
+//         <main className="flex-1 p-4 sm:p-6 lg:p-8">
+//           <Outlet />
+//         </main>
+//       </div>
+//       <BottomNav />
+//     </div>
+//   );
+// };
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Login />,
+//   },
+//   {
+//     path: "/login",
+//     element: <Login />,
+//   },
+//   {
+//     path: "/onboarding",
+//     element: (
+//       <ProtectedRoute>
+//         <Onboarding />
+//       </ProtectedRoute>
+//     ),
+//   },
+//   {
+//     path: "/",
+//     element: (
+//       <ProtectedRoute>
+//         <AppLayout />
+//       </ProtectedRoute>
+//     ),
+//     children: [
+//       {
+//         path: "dashboard",
+//         element: <Dashboard />,
+//       },
+//       {
+//         path: "timetable",
+//         element: <Timetable />,
+//       },
+//       {
+//         path: "focus",
+//         element: <Focus />,
+//       },
+//       {
+//         path: "notes",
+//         element: <Notes />,
+//       },
+//       {
+//         path: "practice",
+//         element: <Practice />,
+//       },
+//       {
+//         path: "insights",
+//         element: <Insights />,
+//       },
+//     ],
+//   },
+// ]);
+
+// const App = () => {
+//   return <RouterProvider router={router} />;
+// };
+
+// App.router = router;
+
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
@@ -222,17 +313,20 @@ import Insights from "./pages/Insights";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 import BottomNav from "./components/BottomNav";
+import ScrollToTop from "./components/ScrollTop";
+import Navbar from "./components/Navbar";
 
 const AppLayout = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white">
+      <ScrollToTop />
+      <Navbar />
       <div className="flex">
         <Sidebar />
         <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <Outlet />
         </main>
       </div>
-
       <BottomNav />
     </div>
   );
@@ -240,52 +334,57 @@ const AppLayout = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Login />,
-  },
-  {
     path: "/login",
     element: <Login />,
   },
   {
     path: "/onboarding",
-    element: (
-      <ProtectedRoute>
-        <Onboarding />
-      </ProtectedRoute>
-    ),
+    element: <ProtectedRoute />,
+    children: [
+      {
+        index: true,
+        element: <Onboarding />,
+      },
+    ],
   },
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <AppLayout />
-      </ProtectedRoute>
-    ),
+    element: <ProtectedRoute />,
     children: [
       {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "timetable",
-        element: <Timetable />,
-      },
-      {
-        path: "focus",
-        element: <Focus />,
-      },
-      {
-        path: "notes",
-        element: <Notes />,
-      },
-      {
-        path: "practice",
-        element: <Practice />,
-      },
-      {
-        path: "insights",
-        element: <Insights />,
+        element: <AppLayout />,
+        children: [
+          {
+            index: true,
+            // path: "dashboard",
+            element: <Dashboard />,
+          },
+          {
+            // index: true,
+            path: "dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "timetable",
+            element: <Timetable />,
+          },
+          {
+            path: "focus",
+            element: <Focus />,
+          },
+          {
+            path: "notes",
+            element: <Notes />,
+          },
+          {
+            path: "practice",
+            element: <Practice />,
+          },
+          {
+            path: "insights",
+            element: <Insights />,
+          },
+        ],
       },
     ],
   },
@@ -294,7 +393,5 @@ const router = createBrowserRouter([
 const App = () => {
   return <RouterProvider router={router} />;
 };
-
-App.router = router;
 
 export default App;
