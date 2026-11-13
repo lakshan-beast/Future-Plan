@@ -7,7 +7,7 @@ const LastActivityCard = ({ activity }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 0.2 }}
-    className="rounded-t-3xl rounded-b-md border border-white/10 bg-white/5 backdrop-blur-xl p-5">
+    className="rounded-t-3xl rounded-b-md lg:rounded-b-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
     <div className="flex items-center gap-2 text-sm text-white/50 mb-3">
       <Clock size={16} className="text-indigo-300" />
       Last Activity

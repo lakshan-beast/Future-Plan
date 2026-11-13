@@ -4,16 +4,18 @@ import { motion } from "motion/react";
 import {
   //   BookOpen,
   LogOut,
-  //   ChevronRight,
-  //   Sparkles,
+  // ChevronRight,
+  // Sparkles,
   Mail,
   Flame,
   Pencil,
-  //   GraduationCap,
+  // GraduationCap,
 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
-// const MAX_SUBJECTS = 4;
+// const MAX_SUBJECTS = 9;
+
+//  const [profile, setProfile] = useState(null);
 
 const Avatar = ({ user }) =>
   user.photoURL ? (
@@ -155,15 +157,32 @@ const ProfileCard = ({ user, streak, onLogout }) => {
         </div>
       </div>
 
+      {/* Subjects — chips */}
+      {/* <div className="flex flex-wrap gap-1.5">
+        {(profile.subjects || []).slice(0, 4).map((subject) => (
+          <span
+            key={subject}
+            className="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2.5 py-1">
+            <BookOpen size={11} className="text-white/40" />
+            <span className="font-body text-[11px] text-white/60 truncate max-w-[110px]">
+              {subject}
+            </span>
+          </span>
+        ))}
+        {(profile.subjects || []).length > 4 && (
+          <span className="...">+X more</span>
+        )}
+      </div> */}
+
       {/* Bottom — level + subjects + streak */}
-      <div className="border-none p-2 pt-0 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="border-none p-3 pt-0 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="shrink-0 rounded-full border border-white/10 bg-gradient-to-br from-orange-500/20 to-transparent p-4 flex items-center justify-between gap-2">
           <div className="flex gap-1">
             <Flame size={24} className="text-orange-400 " />
             <div className="font-heading text-2xl font-bold leading-none text-center border-l border-l-white/30 pl-3">
               {streak}
             </div>
-            <div className="font-body text-[10px] text-white/40 flex items-end">
+            <div className="font-body text-[10px] text-white/40 flex items-end ml-1">
               day streaks
             </div>
           </div>

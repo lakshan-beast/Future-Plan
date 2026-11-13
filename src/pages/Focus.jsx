@@ -1017,8 +1017,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 import { saveFocusToFirestore } from "../utils/focusStats";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import Loader from "../components/Loader";
+import { Link } from "react-router-dom";
 import {
   Play,
   Pause,
@@ -1039,7 +1043,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const FOCUS_MINUTES = 1;
+const FOCUS_MINUTES = 25;
 const FOCUS_SECONDS = FOCUS_MINUTES * 60;
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -1058,19 +1062,48 @@ const Focus = () => {
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
 
-  // ---------------- Auth + data load ----------------
+  // // ---------------- Auth + data load ----------------
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+
+  //     if (currentUser) {
+  //       const uid = currentUser.uid;
+
+  //       const setup = JSON.parse(
+  //         localStorage.getItem(`dreamutrack-setup-${uid}`) || "{}",
+  //       );
+  //       setSubjects(setup?.subjects || []);
+
+  //       const saved = localStorage.getItem(`dreamutrack-focus-history-${uid}`);
+  //       setFocusHistory(saved ? JSON.parse(saved) : []);
+  //     } else {
+  //       setSubjects([]);
+  //       setFocusHistory([]);
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
+  // Auth + data load useEffect එකේ — subjects section එක replace කරන්න
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
 
       if (currentUser) {
         const uid = currentUser.uid;
 
-        const setup = JSON.parse(
-          localStorage.getItem(`dreamutrack-setup-${uid}`) || "{}",
-        );
-        setSubjects(setup?.subjects || []);
+        // Subjects — Firestore profile එකෙන් (O/L + A/L)
+        try {
+          const snapshot = await getDoc(doc(db, "users", uid));
+          const data = snapshot.exists() ? snapshot.data() : {};
+          setSubjects(data.profile?.subjects || []);
+        } catch (err) {
+          console.error("Failed to load subjects:", err);
+        }
 
+        // Focus history — user-scoped localStorage (existing)
         const saved = localStorage.getItem(`dreamutrack-focus-history-${uid}`);
         setFocusHistory(saved ? JSON.parse(saved) : []);
       } else {
@@ -1295,11 +1328,10 @@ const Focus = () => {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
-        <p className="font-body text-white/60">Loading...</p>
+        <Loader size="md" />
       </div>
     );
   }
-
   return (
     <div className="pb-24 md:pb-8 mt-24">
       {/* Header */}
@@ -1584,8 +1616,8 @@ const Focus = () => {
         {/* Right — Stats + Weekly chart */}
         <div className="space-y-4">
           {/* Streak card */}
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-orange-500/15 to-transparent backdrop-blur-xl p-5">
-            <div className="flex items-center gap-2 text-sm text-white/50 mb-2">
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-orange-500/15 to-transparent backdrop-blur-xl p-5 flex items-center justify-between">
+            <div className="flex items-center justify-between gap-2 text-sm text-white/50 mb-2">
               <Flame size={16} className="text-orange-400" />
               Current Streak
             </div>
@@ -1595,6 +1627,12 @@ const Focus = () => {
                 day{currentStreak === 1 ? "" : "s"}
               </span>
             </div>
+
+            <Link
+              to="/leaderboard"
+              className="font-body text-xs text-orange-400/70 hover:text-orange-400/50">
+              Go to Leader Board
+            </Link>
           </div>
 
           {/* Weekly chart */}

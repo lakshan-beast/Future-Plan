@@ -12,6 +12,7 @@ import {
 import { auth, db } from "../firebase/firebase";
 import { motion } from "motion/react";
 import { Trophy, Flame, Clock, Crown } from "lucide-react";
+import Loader from "../components/Loader";
 
 const Leaderboard = () => {
   const [user, setUser] = useState(null);
@@ -112,7 +113,7 @@ const Leaderboard = () => {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
-        <p className="font-body text-white/60">Loading...</p>
+        <Loader size="md" />
       </div>
     );
   }
@@ -150,7 +151,7 @@ const Leaderboard = () => {
       {/* Loading */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 rounded-full border-2 border-emerald-400/30 border-t-emerald-400 animate-spin" />
+          <Loader />
         </div>
       ) : leaders.length === 0 ? (
         <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-center">

@@ -811,7 +811,7 @@ const Notes = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e1424] p-6 max-h-[70vh] overflow-y-auto">
+              className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e1424] p-6 max-h-[70vh] overflow-y-auto scrollbar-none">
               {/* Modal header */}
               <div className="flex items-center justify-between mb-5">
                 <h2 className="font-heading text-xl font-bold">

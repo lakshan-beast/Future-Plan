@@ -1054,7 +1054,7 @@ import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
-import GridMatrixLoader from "../components/Loader";
+import Loader from "../components/Loader";
 import ProfileCard from "../components/dashboard/ProfileCard";
 import ExamCountdownCard from "../components/dashboard/ExamCountdownCard";
 import LastActivityCard from "../components/dashboard/LastActivityCard";
@@ -1108,7 +1108,7 @@ const Dashboard = () => {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
-        <GridMatrixLoader />
+        <Loader size="md" />
       </div>
     );
   }
