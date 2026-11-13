@@ -128,7 +128,7 @@ const Leaderboard = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className={`rounded-2xl border p-3 sm:p-4 text-center backdrop-blur-xl ${
+                  className={`rounded-2xl border p-3 sm:p-4 text-center backdrop-blur-xl flex items-center justify-between gap-6 text-2xl ${
                     rank === 1
                       ? "border-amber-400/40 bg-gradient-to-b from-amber-400/15 to-transparent"
                       : rank === 2

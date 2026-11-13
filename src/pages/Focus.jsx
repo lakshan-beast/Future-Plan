@@ -1239,6 +1239,59 @@ const Focus = () => {
     return `${m}:${s}`;
   };
 
+  // src/pages/Focus.jsx — timer persistence
+
+  const TIMER_KEY = `dreamutrack-timer-${user?.uid || "guest"}`;
+
+  // Restore on mount
+  useEffect(() => {
+    if (!user) return;
+
+    const saved = localStorage.getItem(TIMER_KEY);
+    if (saved) {
+      const { secondsLeft, isRunning, startedAt } = JSON.parse(saved);
+
+      if (isRunning && startedAt) {
+        // Elapsed time calculate කරලා resume
+        const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+        const remaining = FOCUS_SECONDS - elapsed;
+
+        if (remaining <= 0) {
+          setSecondsLeft(0);
+          setCompleted(true);
+        } else {
+          setSecondsLeft(remaining);
+          setIsRunning(true);
+        }
+      } else {
+        setSecondsLeft(secondsLeft);
+      }
+    }
+  }, [user]);
+
+  // Save on every change
+  useEffect(() => {
+    if (!user) return;
+
+    localStorage.setItem(
+      TIMER_KEY,
+      JSON.stringify({
+        secondsLeft,
+        isRunning,
+        startedAt: isRunning
+          ? Date.now() - (FOCUS_SECONDS - secondsLeft) * 1000
+          : null,
+      }),
+    );
+  }, [secondsLeft, isRunning, user]);
+
+  // Clear on complete/reset
+  useEffect(() => {
+    if (completed) {
+      localStorage.removeItem(TIMER_KEY);
+    }
+  }, [completed]);
+
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
@@ -1370,10 +1423,17 @@ const Focus = () => {
             <div className="h-48 w-44 flex items-end justify-center mb-4 relative">
               <svg viewBox="0 0 120 160" className="w-full h-full">
                 {/* Soil */}
-                <ellipse className="animate-pulse" cx="60" cy="152" rx="34" ry="7" fill="#3b2a1a" />
+                <ellipse
+                  className="animate-pulse"
+                  cx="60"
+                  cy="152"
+                  rx="34"
+                  ry="7"
+                  fill="#3b2a1a"
+                />
 
                 {/* Stem — grows with progress */}
-                <motion.path 
+                <motion.path
                   d="M60 150 C 60 120, 60 100, 60 70"
                   stroke="#22c55e"
                   strokeWidth="5"
@@ -1391,11 +1451,13 @@ const Focus = () => {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.6 }}
                     style={{ transformOrigin: "60px 110px" }}>
-                    <path className="animate-pulse"
+                    <path
+                      className="animate-pulse"
                       d="M60 110 C 40 105, 30 95, 32 85 C 45 88, 55 98, 60 110 Z"
                       fill="#4ade80"
                     />
-                    <path className="animate-pulse delay-150"
+                    <path
+                      className="animate-pulse delay-150"
                       d="M60 110 C 80 105, 90 95, 88 85 C 75 88, 65 98, 60 110 Z"
                       fill="#4ade80"
                     />
@@ -1413,7 +1475,8 @@ const Focus = () => {
                     {[
                       0, 60, 120, 180, 240, 300, 330, 390, 450, 510, 570, 630,
                     ].map((deg) => (
-                      <ellipse className="animate-pulse"
+                      <ellipse
+                        className="animate-pulse"
                         key={deg}
                         cx="60"
                         cy="42"

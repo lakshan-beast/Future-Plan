@@ -27,6 +27,7 @@ const getYesterdayStr = () => {
  *
  * Only saves focus stats — never marks, papers, or tasks.
  */
+// src/utils/focusStats.js — updated saveFocusToFirestore
 export const saveFocusToFirestore = async (user, minutes) => {
   if (!user || !minutes || minutes <= 0) return;
 
@@ -44,19 +45,21 @@ export const saveFocusToFirestore = async (user, minutes) => {
     let newStreak;
 
     if (lastFocusDate === today) {
-      // Already focused today — streak stays the same
       newStreak = stats.currentStreak || 1;
     } else if (lastFocusDate === yesterday) {
-      // Focused yesterday — streak continues
       newStreak = (stats.currentStreak || 0) + 1;
     } else {
-      // Gap — streak resets to 1
       newStreak = 1;
     }
 
     await setDoc(
       userRef,
       {
+        // Profile fields — Google photo + name save
+        displayName: user.displayName || "Student",
+        photoURL: user.photoURL || null,
+        email: user.email || null,
+
         focusStats: {
           totalMinutes: increment(minutes),
           currentStreak: newStreak,
@@ -67,6 +70,5 @@ export const saveFocusToFirestore = async (user, minutes) => {
     );
   } catch (err) {
     console.error("Failed to save focus stats:", err);
-    // Don't block the app — focus session still saved in localStorage
   }
 };
