@@ -1110,7 +1110,7 @@ const Timetable = () => {
 
     return (
       <div
-        className={`rounded-3xl border p-4 sm:p-5 ${
+        className={`rounded-3xl border p-4 sm:p-5 w-70 mx-auto lg:w-full ${
           isToday
             ? "border-emerald-400/50 bg-emerald-400/5"
             : "border-white/10 bg-white/[0.03]"
@@ -1258,7 +1258,7 @@ const Timetable = () => {
 
       {/* Mobile — day pills + selected day */}
       <div className="lg:hidden">
-        <div className="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1">
+        <div className="flex gap-2 overflow-scroll scrollbar-none pb-3 -mx-1 px-1">
           {DAYS.map((_, i) => {
             const d = new Date(weekStart);
             d.setDate(d.getDate() + i);

@@ -61,7 +61,7 @@ import { auth } from "../firebase/firebase";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
-  CalendarDays,
+  // CalendarDays,
   Timer,
   BookOpen,
   FileText,
@@ -76,7 +76,7 @@ import { MdOutlineMail } from "react-icons/md";
 
 const LINKS = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/timetable", label: "Timetable", icon: CalendarDays },
+  // { to: "/timetable", label: "Timetable", icon: CalendarDays },
   { to: "/focus", label: "Focus", icon: Timer },
   { to: "/notes", label: "Notes", icon: BookOpen },
   { to: "/practice", label: "Practice", icon: FileText },

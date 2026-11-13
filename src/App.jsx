@@ -305,7 +305,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
-import Timetable from "./pages/Timetable";
+// import Timetable from "./pages/Timetable";
 import Focus from "./pages/Focus";
 import Notes from "./pages/Notes";
 import Practice from "./pages/Practice";
@@ -359,18 +359,16 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            // path: "dashboard",
             element: <Dashboard />,
           },
           {
-            // index: true,
             path: "dashboard",
             element: <Dashboard />,
           },
-          {
-            path: "timetable",
-            element: <Timetable />,
-          },
+          // {
+          //   path: "timetable",
+          //   element: <Timetable />,
+          // },
           {
             path: "focus",
             element: <Focus />,

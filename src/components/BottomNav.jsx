@@ -3,7 +3,7 @@
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
-  CalendarDays,
+  // CalendarDays,
   Timer,
   BookOpen,
   FileText,
@@ -13,7 +13,7 @@ import {
 const BottomNav = () => {
   const links = [
     { to: "/dashboard", label: "Home", icon: LayoutDashboard },
-    { to: "/timetable", label: "Plan", icon: CalendarDays },
+    // { to: "/timetable", label: "Plan", icon: CalendarDays },
     { to: "/focus", label: "Focus", icon: Timer },
     { to: "/notes", label: "Notes", icon: BookOpen },
     { to: "/practice", label: "Practice", icon: FileText },

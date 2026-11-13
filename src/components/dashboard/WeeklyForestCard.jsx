@@ -1,7 +1,7 @@
 // src/components/dashboard/WeeklyForestPreview.jsx
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { Sparkles, ChevronRight } from "lucide-react";
+import { Trees, ChevronRight } from "lucide-react";
 
 // days: [{ key, label, count }] — last 7 days, oldest first
 const WeeklyForestPreview = ({ days }) => {
@@ -16,7 +16,8 @@ const WeeklyForestPreview = ({ days }) => {
       className="rounded-b-3xl rounded-t-md lg:rounded-b-3xl border border-white/10 bg-gradient-to-br from-emerald-500/30 to-teal-500/5 backdrop-blur-xl p-5">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2 text-sm text-white/50">
-          <Sparkles size={16} className="text-emerald-300" />
+          <
+            Trees size={16} className="text-emerald-300" />
           Weekly Forest
         </div>
         <Link

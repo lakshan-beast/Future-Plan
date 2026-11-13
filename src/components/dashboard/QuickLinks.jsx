@@ -16,10 +16,10 @@ const QuickLinks = () => (
         <Link
           key={path}
           to={path}
-          className={`rounded-2xl border border-white/10 bg-gradient-to-br ${color} backdrop-blur-xl p-4 hover:border-white/20 transition group`}>
-          <Icon size={22} className={`${iconColor} mb-2`} />
+          className={`rounded-2xl border border-white/5 bg-gradient-to-br ${color} backdrop-blur-xl p-4 hover:border-white/20 transition group`}>
+          <Icon size={26} className={`${iconColor} mb-2`} />
           <p className="font-body text-sm font-medium">{label}</p>
-          <span className="text-white/50 flex items-center justify-between text-[11px] mt-4 pt-1 border-t border-t-slate-50/10">
+          <span className="text-white/50 flex items-center justify-center gap-3 text-[11px] mt-4 pt-1">
             Open Page{" "}
             <ChevronRight
               size={14}
