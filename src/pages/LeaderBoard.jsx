@@ -123,10 +123,10 @@ const Leaderboard = () => {
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
-          <Trophy size={22} className="text-amber-300" />
+          {/* <Trophy size={22} className="text-amber-300" /> */}
           <h1 className="font-heading text-2xl font-bold">Leaderboard</h1>
         </div>
-        <p className="font-body text-sm text-white/50">
+        <p className="font-body text-sm text-white/50 leading-tight">
           See how your focus time compares with the DreamUTrack community.
         </p>
 

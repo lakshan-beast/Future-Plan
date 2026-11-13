@@ -117,7 +117,7 @@ const ProfileCard = ({ user, streak, onLogout }) => {
             <h2 className="font-heading text-xl font-bold truncate">
               {user.displayName || "Student"}
             </h2>
-            <p className="font-body text-sm text-white/50 truncate pt-1">
+            <p className="font-body text-sm text-white/50 truncate">
               {user.email}
             </p>
             <p className="font-body text-xs text-white/30 mt-2 pt-2 border-t ">
@@ -156,17 +156,24 @@ const ProfileCard = ({ user, streak, onLogout }) => {
       </div>
 
       {/* Bottom — level + subjects + streak */}
-      <div className="border-none p-2 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="border-none p-2 pt-0 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="shrink-0 rounded-2xl border border-white/10 bg-gradient-to-br from-orange-500/20 to-transparent px-6 py-3 flex items-center justify-between gap-3">
-          <Flame size={24} className="text-orange-400 animate-pulse" />
+          <Flame size={24} className="text-orange-400" />
+
           <div>
-            <div className="font-heading text-2xl font-bold leading-none text-right">
+            <div className="font-heading text-2xl font-bold leading-none text-center">
               {streak}
             </div>
             <div className="font-body text-[10px] text-white/40 mt-0.5">
               day streaks
             </div>
           </div>
+
+          <Link
+            to="/leaderboard"
+            className="font-body text-xs flex items-center gap-1">
+            Go Leader Board
+          </Link>
         </div>
       </div>
     </motion.div>

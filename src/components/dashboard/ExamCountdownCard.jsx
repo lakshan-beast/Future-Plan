@@ -42,7 +42,7 @@ const ExamCountdownCard = ({ examDate }) => {
   } else {
     body = (
       <>
-        <div className="font-body text-4xl font-bold tabular-nums text-center py-3 animate-pulse">
+        <div className="font-body text-4xl font-bold tabular-nums text-center py-3">
           {daysLeft}
           <span className="font-body ml-2 text-base font-medium text-white/50">
             {daysLeft === 1 ? "day left" : "days left"}
