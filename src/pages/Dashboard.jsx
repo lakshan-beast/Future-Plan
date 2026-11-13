@@ -607,7 +607,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="pb-24 md:pb-8">
+    <div className="pb-24 md:pb-8 pt-24">
       {/* Profile card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
