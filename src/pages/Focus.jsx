@@ -1288,7 +1288,7 @@ const Focus = () => {
           {/* Plant + Timer */}
           <div className="flex flex-col items-center py-4">
             {/* Plant */}
-            <div className="h-44 w-44 flex items-end justify-center mb-4">
+            {/* <div className="h-44 w-44 flex items-end justify-center mb-4">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={stage}
@@ -1339,7 +1339,7 @@ const Focus = () => {
                       transition={{ type: "spring", stiffness: 200 }}
                       className="flex flex-col items-center">
                       <div className="relative">
-                        {/* Petals */}
+                        {/* Petals *
                         {[0, 60, 120, 180, 240, 300].map((deg) => (
                           <div
                             key={deg}
@@ -1350,7 +1350,7 @@ const Focus = () => {
                             }}
                           />
                         ))}
-                        {/* Center */}
+                        {/* Center 
                         <div className="mb-12 w-5 h-5 rounded-full bg-amber-300 relative z-10 shadow-lg shadow-amber-300/50" />
                       </div>
                       <div className="w-2 h-20 bg-emerald-500 rounded-full mt-3" />
@@ -1362,9 +1362,86 @@ const Focus = () => {
                   )}
                 </motion.div>
               </AnimatePresence>
-
-              {/* Soil */}
+              {/* Soil *
               <div className="absolute bottom-0 w-32 h-3 rounded-full bg-gradient-to-r from-amber-900/60 to-amber-800/60" />
+            </div> 
+
+            {/* Plant — SVG */}
+            <div className="h-48 w-44 flex items-end justify-center mb-4 relative">
+              <svg viewBox="0 0 120 160" className="w-full h-full">
+                {/* Soil */}
+                <ellipse className="animate-pulse" cx="60" cy="152" rx="34" ry="7" fill="#3b2a1a" />
+
+                {/* Stem — grows with progress */}
+                <motion.path 
+                  d="M60 150 C 60 120, 60 100, 60 70"
+                  stroke="#22c55e"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: Math.min(progress / 0.7, 1) }}
+                  transition={{ duration: 0.8 }}
+                />
+
+                {/* Leaves — appear after 40% */}
+                {progress > 0.4 && (
+                  <motion.g
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.6 }}
+                    style={{ transformOrigin: "60px 110px" }}>
+                    <path className="animate-pulse"
+                      d="M60 110 C 40 105, 30 95, 32 85 C 45 88, 55 98, 60 110 Z"
+                      fill="#4ade80"
+                    />
+                    <path className="animate-pulse delay-150"
+                      d="M60 110 C 80 105, 90 95, 88 85 C 75 88, 65 98, 60 110 Z"
+                      fill="#4ade80"
+                    />
+                  </motion.g>
+                )}
+
+                {/* Flower — appears at 100% / completed */}
+                {(progress >= 1 || completed) && (
+                  <motion.g
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring", stiffness: 180, damping: 12 }}
+                    style={{ transformOrigin: "60px 60px" }}>
+                    {/* Petals */}
+                    {[
+                      0, 60, 120, 180, 240, 300, 330, 390, 450, 510, 570, 630,
+                    ].map((deg) => (
+                      <ellipse className="animate-pulse"
+                        key={deg}
+                        cx="60"
+                        cy="42"
+                        rx="7"
+                        ry="14"
+                        fill="#f472b6"
+                        transform={`rotate(${deg} 60 60)`}
+                      />
+                    ))}
+                    {/* Center */}
+                    <circle cx="60" cy="60" r="7" fill="#fbbf24" />
+                  </motion.g>
+                )}
+
+                {/* Seed — visible at start */}
+                {progress < 0.15 && !completed && (
+                  <motion.ellipse
+                    cx="60"
+                    cy="148"
+                    rx="6"
+                    ry="8"
+                    fill="#92400e"
+                    initial={{ scale: 1 }}
+                    animate={{ scale: [1, 1.15, 1] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                  />
+                )}
+              </svg>
             </div>
 
             {/* Stage label */}
