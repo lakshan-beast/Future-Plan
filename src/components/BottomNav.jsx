@@ -17,7 +17,7 @@ const BottomNav = () => {
     { to: "/focus", label: "Focus", icon: Timer },
     { to: "/notes", label: "Notes", icon: BookOpen },
     { to: "/practice", label: "Practice", icon: FileText },
-    { to: "/insights", label: "Stats", icon: BarChart3 },
+    { to: "/insights", label: "Stats", icon: BarChart3 }, 
   ];
 
   return (

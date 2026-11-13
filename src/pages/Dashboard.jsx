@@ -488,6 +488,7 @@ import {
   Clock,
   Sparkles,
   Mail,
+  Trophy,
 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import GridMatrixLoader from "../components/Loader";
@@ -527,6 +528,11 @@ const QUICK_LINKS = [
     icon: BarChart3,
     color: "from-pink-500/20 to-pink-500/5",
     iconColor: "text-pink-300",
+  },
+  {
+    path: "/leaderboard",
+    label: "Leaderboard",
+    icon: Trophy, // lucide-react එකෙන් import
   },
 ];
 

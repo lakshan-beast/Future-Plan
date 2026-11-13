@@ -316,6 +316,7 @@ import BottomNav from "./components/BottomNav";
 import ScrollToTop from "./components/ScrollTop";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
+import Leaderboard from "./pages/LeaderBoard";
 
 const AppLayout = () => {
   <Loader />;
@@ -385,6 +386,10 @@ const router = createBrowserRouter([
           {
             path: "insights",
             element: <Insights />,
+          },
+          {
+            path: "leaderboard",
+            element: <Leaderboard />,
           },
         ],
       },

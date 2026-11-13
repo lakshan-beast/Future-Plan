@@ -67,6 +67,7 @@ import {
   FileText,
   BarChart3,
   // Sparkles,
+  Trophy,
   LogOut,
 } from "lucide-react";
 import { GiDreamCatcher } from "react-icons/gi";
@@ -80,6 +81,11 @@ const LINKS = [
   { to: "/notes", label: "Notes", icon: BookOpen },
   { to: "/practice", label: "Practice", icon: FileText },
   { to: "/insights", label: "Insights", icon: BarChart3 },
+  {
+    to: "/leaderboard",
+    label: "Leaderboard",
+    icon: Trophy,
+  },
 ];
 
 const Sidebar = () => {
