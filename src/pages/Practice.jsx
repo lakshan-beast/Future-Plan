@@ -1484,6 +1484,35 @@ const Practice = () => {
   const [error, setError] = useState("");
 
   // ---------------- Auth + load ----------------
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  //     setUser(currentUser);
+
+  //     if (currentUser) {
+  //       const uid = currentUser.uid;
+
+  //       // Subjects — Firestore profile
+  //       try {
+  //         const snapshot = await getDoc(doc(db, "users", uid));
+  //         const data = snapshot.exists() ? snapshot.data() : {};
+  //         setSubjects(data.profile?.subjects || []);
+  //       } catch (err) {
+  //         console.error("Failed to load subjects:", err);
+  //       }
+
+  //       // Papers — user-scoped localStorage
+  //       const saved = localStorage.getItem(`dreamutrack-papers-${uid}`);
+  //       setPapers(saved ? JSON.parse(saved) : []);
+  //     } else {
+  //       setSubjects([]);
+  //       setPapers([]);
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
+  // Practice.jsx — auth + load useEffect එකේ papers section
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -1491,7 +1520,7 @@ const Practice = () => {
       if (currentUser) {
         const uid = currentUser.uid;
 
-        // Subjects — Firestore profile
+        // Subjects — Firestore
         try {
           const snapshot = await getDoc(doc(db, "users", uid));
           const data = snapshot.exists() ? snapshot.data() : {};
@@ -1500,8 +1529,20 @@ const Practice = () => {
           console.error("Failed to load subjects:", err);
         }
 
-        // Papers — user-scoped localStorage
-        const saved = localStorage.getItem(`dreamutrack-papers-${uid}`);
+        // Papers — migration: old global key → new user-scoped key
+        const newKey = `dreamutrack-papers-${uid}`;
+        const oldKey = "dreamutrack-papers";
+
+        let saved = localStorage.getItem(newKey);
+
+        if (!saved) {
+          const old = localStorage.getItem(oldKey);
+          if (old) {
+            localStorage.setItem(newKey, old);
+            saved = old;
+          }
+        }
+
         setPapers(saved ? JSON.parse(saved) : []);
       } else {
         setSubjects([]);
@@ -1513,13 +1554,13 @@ const Practice = () => {
   }, []);
 
   // ---------------- Save papers ----------------
-  useEffect(() => {
-    if (!user) return;
-    localStorage.setItem(
-      `dreamutrack-papers-${user.uid}`,
-      JSON.stringify(papers),
-    );
-  }, [papers, user]);
+  // useEffect(() => {
+  //   if (!user) return;
+  //   localStorage.setItem(
+  //     `dreamutrack-papers-${user.uid}`,
+  //     JSON.stringify(papers),
+  //   );
+  // }, [papers, user]);
 
   // ---------------- Stats ----------------
   const stats = useMemo(() => {
@@ -1618,6 +1659,43 @@ const Practice = () => {
     );
   };
 
+  // const handleSave = () => {
+  //   if (!subject) {
+  //     setError("Please select a subject.");
+  //     return;
+  //   }
+  //   if (marks === "" || marks < 0 || marks > 100) {
+  //     setError("Please enter marks between 0 and 100.");
+  //     return;
+  //   }
+
+  //   const newPaper = {
+  //     id: editingId || `paper-${Date.now()}`,
+  //     paperType,
+  //     subject,
+  //     paperName: paperName.trim(),
+  //     marks: Number(marks),
+  //     errors,
+  //     createdAt: editingId
+  //       ? papers.find((p) => p.id === editingId)?.createdAt
+  //       : new Date().toISOString(),
+  //   };
+
+  //   setPapers((prev) =>
+  //     editingId
+  //       ? prev.map((p) => (p.id === editingId ? newPaper : p))
+  //       : [...prev, newPaper],
+  //   );
+
+  //   setIsModalOpen(false);
+  //   setEditingId(null);
+  // };
+
+  // const handleDelete = (id) => {
+  //   setPapers((prev) => prev.filter((p) => p.id !== id));
+  // };
+
+  // ✅ අලුත් handleSave — direct localStorage write
   const handleSave = () => {
     if (!subject) {
       setError("Please select a subject.");
@@ -1640,18 +1718,28 @@ const Practice = () => {
         : new Date().toISOString(),
     };
 
-    setPapers((prev) =>
-      editingId
-        ? prev.map((p) => (p.id === editingId ? newPaper : p))
-        : [...prev, newPaper],
+    const updated = editingId
+      ? papers.map((p) => (p.id === editingId ? newPaper : p))
+      : [...papers, newPaper];
+
+    // Direct write — guaranteed persistence
+    localStorage.setItem(
+      `dreamutrack-papers-${user.uid}`,
+      JSON.stringify(updated),
     );
+    setPapers(updated);
 
     setIsModalOpen(false);
     setEditingId(null);
   };
 
   const handleDelete = (id) => {
-    setPapers((prev) => prev.filter((p) => p.id !== id));
+    const updated = papers.filter((p) => p.id !== id);
+    localStorage.setItem(
+      `dreamutrack-papers-${user.uid}`,
+      JSON.stringify(updated),
+    );
+    setPapers(updated);
   };
 
   const inputClass =
@@ -1671,7 +1759,7 @@ const Practice = () => {
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-            <FileText size={24} className="text-emerald-300" />
+            {/* <FileText size={24} className="text-emerald-300" /> */}
             Practice
           </h1>
           <p className="font-body text-sm text-white/50 mt-1">
@@ -1689,7 +1777,7 @@ const Practice = () => {
       </div>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
         {[
           {
             icon: <FileText size={16} className="text-emerald-300" />,
@@ -1818,7 +1906,7 @@ const Practice = () => {
             </ResponsiveContainer>
           </div>
         ) : (
-          <p className="font-body text-sm text-white/40 py-8 text-center">
+          <p className="font-body text-sm text-white/40 py-8 text-center pl-2">
             {selectedSubject
               ? "No papers yet for this subject. Add one to see the trend."
               : "Select a subject to see its marks trend."}
@@ -1833,7 +1921,7 @@ const Practice = () => {
         </h3>
 
         {subjectPerformance.length === 0 ? (
-          <p className="font-body text-sm text-white/40">
+          <p className="font-body text-sm text-white/40 pl-2">
             No papers yet. Add your first paper.
           </p>
         ) : (
@@ -1871,7 +1959,7 @@ const Practice = () => {
         <h3 className="font-heading font-semibold mb-4">All Papers</h3>
 
         {papers.length === 0 ? (
-          <p className="font-body text-sm text-white/40">
+          <p className="font-body text-sm text-white/40 pl-2">
             No papers yet. Add your first past paper or model paper.
           </p>
         ) : (
@@ -1969,7 +2057,7 @@ const Practice = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e1424] p-6 max-h-[90vh] overflow-y-auto">
+              className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e1424] p-6 max-h-[60vh] overflow-y-auto">
               {/* Modal header */}
               <div className="flex items-center justify-between mb-5">
                 <h2 className="font-heading text-xl font-bold">
