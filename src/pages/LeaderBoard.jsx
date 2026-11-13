@@ -110,72 +110,149 @@ const Leaderboard = () => {
         <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-center">
           <Trophy size={40} className="text-white/20 mx-auto mb-3" />
           <p className="font-body text-sm text-white/50">
-            තවම leaderboard එකේ කවුරුත් නැහැ. Focus session එකක් complete කරලා
-            පළවෙනි තැනට යන්න!
+            There is no one on the leaderboard yet. Complete a focus session and
+            take the top spot!
           </p>
         </div>
       ) : (
         <>
-          {/* Top 3 — podium cards */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
-            {leaders.slice(0, 3).map((leader, i) => {
-              const rank = i + 1;
-              const isMe = isCurrentUser(leader.id);
+          {/* Top 3 — podium */}
+          <div className="grid grid-cols-3 items-end gap-2 sm:gap-4 mb-6">
+            {/* 2nd place — left */}
+            {leaders[1] && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="order-2 rounded-2xl border border-white/20 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl mb-1">🥈</div>
 
-              return (
-                <motion.div
-                  key={leader.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className={`rounded-2xl border p-3 sm:p-4 text-center backdrop-blur-xl flex items-center justify-between gap-6 text-2xl ${
-                    rank === 1
-                      ? "border-amber-400/40 bg-gradient-to-b from-amber-400/15 to-transparent"
-                      : rank === 2
-                        ? "border-white/20 bg-gradient-to-b from-white/10 to-transparent"
-                        : "border-orange-400/30 bg-gradient-to-b from-orange-400/10 to-transparent"
-                  }`}>
-                  {/* Medal */}
-                  <div className="text-2xl sm:text-3xl mb-2">
-                    {getRankBadge(rank)}
+                {leaders[1].photoURL ? (
+                  <img
+                    src={leaders[1].photoURL}
+                    alt={leaders[1].displayName || "User"}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mx-auto mb-2 border-2 border-white/30"
+                  />
+                ) : (
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
+                    <span className="font-heading text-sm font-bold text-emerald-950">
+                      {(leaders[1].displayName ||
+                        leaders[1].email ||
+                        "U")[0].toUpperCase()}
+                    </span>
                   </div>
+                )}
 
-                  {/* Avatar */}
-                  {leader.photoURL ? (
-                    <img
-                      src={leader.photoURL}
-                      alt={leader.displayName || "User"}
-                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mx-auto mb-2 border-2 border-emerald-400/30"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
-                      <span className="font-heading text-sm font-bold text-emerald-950">
-                        {(leader.displayName ||
-                          leader.email ||
-                          "U")[0].toUpperCase()}
-                      </span>
-                    </div>
+                <p className="font-body text-xs sm:text-sm font-medium truncate">
+                  {leaders[1].displayName || "Student"}
+                  {isCurrentUser(leaders[1].id) && (
+                    <span className="text-emerald-300"> (You)</span>
                   )}
+                </p>
 
-                  {/* Name */}
-                  <p className="font-body text-xs sm:text-sm font-medium truncate">
-                    {leader.displayName || "Student"}
-                    {isMe && <span className="text-emerald-300"> (You)</span>}
-                  </p>
+                <p className="font-heading text-sm sm:text-base font-bold text-emerald-300 mt-1">
+                  {formatMinutes(leaders[1].focusStats?.totalMinutes || 0)}
+                </p>
 
-                  {/* Minutes */}
-                  <p className="font-heading text-base sm:text-lg font-bold text-emerald-300 mt-1">
-                    {formatMinutes(leader.focusStats?.totalMinutes || 0)}
-                  </p>
+                <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
+                  <Flame size={11} className="text-orange-400" />
+                  {leaders[1].focusStats?.currentStreak || 0}
+                </p>
+              </motion.div>
+            )}
 
-                  {/* Streak */}
-                  <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
-                    <Flame size={11} className="text-orange-400" />
-                    {leader.focusStats?.currentStreak || 0} day streak
-                  </p>
-                </motion.div>
-              );
-            })}
+            {/* 1st place — center, bigger + raised */}
+            {leaders[0] && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0 }}
+                className="order-1 relative rounded-2xl border border-amber-400/50 bg-gradient-to-b from-amber-400/20 to-transparent backdrop-blur-xl p-4 sm:p-5 text-center -translate-y-2 sm:-translate-y-4">
+                {/* Crown badge */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <div className="w-8 h-8 rounded-full bg-amber-400 flex items-center justify-center shadow-lg shadow-amber-400/40">
+                    <Crown size={16} className="text-amber-950" />
+                  </div>
+                </div>
+
+                <div className="text-2xl sm:text-3xl mb-1 mt-2">🥇</div>
+
+                {leaders[0].photoURL ? (
+                  <img
+                    src={leaders[0].photoURL}
+                    alt={leaders[0].displayName || "User"}
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover mx-auto mb-2 border-2 border-amber-400/50"
+                  />
+                ) : (
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
+                    <span className="font-heading text-base font-bold text-emerald-950">
+                      {(leaders[0].displayName ||
+                        leaders[0].email ||
+                        "U")[0].toUpperCase()}
+                    </span>
+                  </div>
+                )}
+
+                <p className="font-body text-sm sm:text-base font-semibold truncate">
+                  {leaders[0].displayName || "Student"}
+                  {isCurrentUser(leaders[0].id) && (
+                    <span className="text-emerald-300"> (You)</span>
+                  )}
+                </p>
+
+                <p className="font-heading text-lg sm:text-xl font-bold text-amber-300 mt-1">
+                  {formatMinutes(leaders[0].focusStats?.totalMinutes || 0)}
+                </p>
+
+                <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
+                  <Flame size={11} className="text-orange-400" />
+                  {leaders[0].focusStats?.currentStreak || 0} day streak
+                </p>
+              </motion.div>
+            )}
+
+            {/* 3rd place — right */}
+            {leaders[2] && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="order-3 rounded-2xl border border-orange-400/30 bg-gradient-to-b from-orange-400/10 to-transparent backdrop-blur-xl p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl mb-1">🥉</div>
+
+                {leaders[2].photoURL ? (
+                  <img
+                    src={leaders[2].photoURL}
+                    alt={leaders[2].displayName || "User"}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mx-auto mb-2 border-2 border-orange-400/30"
+                  />
+                ) : (
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
+                    <span className="font-heading text-sm font-bold text-emerald-950">
+                      {(leaders[2].displayName ||
+                        leaders[2].email ||
+                        "U")[0].toUpperCase()}
+                    </span>
+                  </div>
+                )}
+
+                <p className="font-body text-xs sm:text-sm font-medium truncate">
+                  {leaders[2].displayName || "Student"}
+                  {isCurrentUser(leaders[2].id) && (
+                    <span className="text-emerald-300"> (You)</span>
+                  )}
+                </p>
+
+                <p className="font-heading text-sm sm:text-base font-bold text-emerald-300 mt-1">
+                  {formatMinutes(leaders[2].focusStats?.totalMinutes || 0)}
+                </p>
+
+                <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
+                  <Flame size={11} className="text-orange-400" />
+                  {leaders[2].focusStats?.currentStreak || 0}
+                </p>
+              </motion.div>
+            )}
           </div>
 
           {/* Rest — 4 onwards */}
