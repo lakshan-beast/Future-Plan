@@ -145,10 +145,10 @@ const Leaderboard = () => {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.06 }}
-                  className={`group flex items-center gap-3 rounded-2xl border p-3 sm:p-4 backdrop-blur-xl transition-colors ${
+                  className={`group flex items-center gap-3 rounded-2xl border p-3 sm:p-4 backdrop-blur-xl transition-colors ${rankBadgeClass} ${
                     isMe
-                      ? "border-emerald-400/50 bg-emerald-400/10"
-                      : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.07]"
+                      ? "border-emerald-400/40 bg-emerald-400/10"
+                      : "hover:border-white/20 hover:bg-white/[0.07]"
                   }`}>
                   {/* Rank badge — medal circle */}
                   <div
@@ -185,10 +185,10 @@ const Leaderboard = () => {
                     </p>
 
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/10 px-2 py-0.5">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-orange-300/10 px-2.5 py-0.5">
                         <Flame size={11} className="text-orange-400" />
                         <span className="font-body text-[10px] sm:text-xs text-orange-200">
-                          {leader.focusStats?.currentStreak || 0} day
+                          {leader.focusStats?.currentStreak || 0} day streak
                         </span>
                       </span>
                     </div>
