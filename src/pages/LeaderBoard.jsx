@@ -64,12 +64,12 @@ const Leaderboard = () => {
     return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
   };
 
-  const getRankBadge = (rank) => {
-    if (rank === 1) return "🥇";
-    if (rank === 2) return "🥈";
-    if (rank === 3) return "🥉";
-    return `#${rank}`;
-  };
+//   const getRankBadge = (rank) => {
+//     if (rank === 1) return "🥇";
+//     if (rank === 2) return "🥈";
+//     if (rank === 3) return "🥉";
+//     return `#${rank}`;
+//   };
 
   const isCurrentUser = (leaderId) => user?.uid === leaderId;
 
@@ -86,11 +86,11 @@ const Leaderboard = () => {
       {/* Header */}
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-          <Trophy size={24} className="text-amber-300" />
+          {/* <Trophy size={24} className="text-amber-300" /> */}
           Leaderboard
         </h1>
-        <p className="font-body text-sm text-white/50 mt-1">
-          All-time focus time ranking — DreamUTrack community.
+        <p className="font-body text-sm text-white/50 mt-1 leading-tight">
+          See how your focus time compares with the DreamUTrack community.
         </p>
       </div>
 
@@ -116,146 +116,106 @@ const Leaderboard = () => {
         </div>
       ) : (
         <>
-          {/* Top 3 — podium */}
-          <div className="grid grid-cols-3 items-end gap-2 sm:gap-4 mb-6">
-            {/* 2nd place — left */}
-            {leaders[1] && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 }}
-                className="order-2 rounded-2xl border border-white/20 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-xl p-3 sm:p-4 text-center">
-                <div className="text-xl sm:text-2xl mb-1">🥈</div>
+          {/* Top 03 label */}
+          <div className="flex items-center gap-2 mb-3">
+            <span className="font-body text-[11px] uppercase tracking-[0.2em] text-white/40">
+              Top 03
+            </span>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
 
-                {leaders[1].photoURL ? (
-                  <img
-                    src={leaders[1].photoURL}
-                    alt={leaders[1].displayName || "User"}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mx-auto mb-2 border-2 border-white/30"
-                  />
-                ) : (
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-heading text-sm font-bold text-emerald-950">
-                      {(leaders[1].displayName ||
-                        leaders[1].email ||
-                        "U")[0].toUpperCase()}
-                    </span>
+          {/* Top 3 */}
+          <div className="space-y-1.5 mb-8">
+            {leaders.slice(0, 3).map((leader, i) => {
+              const rank = i + 1;
+              const isMe = isCurrentUser(leader.id);
+
+              const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉";
+
+              const rankBadgeClass =
+                rank === 1
+                  ? "bg-amber-400/20 text-amber-300 border-amber-400/40"
+                  : rank === 2
+                    ? "bg-white/10 text-white/70 border-white/20"
+                    : "bg-orange-400/15 text-orange-300 border-orange-400/30";
+
+              return (
+                <motion.div
+                  key={leader.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  className={`group flex items-center gap-3 rounded-2xl border p-3 sm:p-4 backdrop-blur-xl transition-colors ${
+                    isMe
+                      ? "border-emerald-400/50 bg-emerald-400/10"
+                      : "border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.07]"
+                  }`}>
+                  {/* Rank badge — medal circle */}
+                  <div
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 border ${rankBadgeClass}`}>
+                    <span className="text-base sm:text-lg">{medal}</span>
                   </div>
-                )}
 
-                <p className="font-body text-xs sm:text-sm font-medium truncate">
-                  {leaders[1].displayName || "Student"}
-                  {isCurrentUser(leaders[1].id) && (
-                    <span className="text-emerald-300"> (You)</span>
+                  {/* Avatar */}
+                  {leader.photoURL ? (
+                    <img
+                      src={leader.photoURL}
+                      alt={leader.displayName || "User"}
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover shrink-0 ring-2 ring-white/10"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shrink-0 ring-2 ring-white/10">
+                      <span className="font-heading text-sm font-bold text-emerald-950">
+                        {(leader.displayName ||
+                          leader.email ||
+                          "U")[0].toUpperCase()}
+                      </span>
+                    </div>
                   )}
-                </p>
 
-                <p className="font-heading text-sm sm:text-base font-bold text-emerald-300 mt-1">
-                  {formatMinutes(leaders[1].focusStats?.totalMinutes || 0)}
-                </p>
+                  {/* Name + streak */}
+                  <div className="flex-1 min-w-0">
+                    <p className="font-body text-sm sm:text-[15px] font-medium truncate">
+                      {leader.displayName || "Student"}
+                      {isMe && (
+                        <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 align-middle">
+                          You
+                        </span>
+                      )}
+                    </p>
 
-                <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
-                  <Flame size={11} className="text-orange-400" />
-                  {leaders[1].focusStats?.currentStreak || 0}
-                </p>
-              </motion.div>
-            )}
-
-            {/* 1st place — center, bigger + raised */}
-            {leaders[0] && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0 }}
-                className="order-1 relative rounded-2xl border border-amber-400/50 bg-gradient-to-b from-amber-400/20 to-transparent backdrop-blur-xl p-4 sm:p-5 text-center -translate-y-2 sm:-translate-y-4">
-                {/* Crown badge */}
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <div className="w-8 h-8 rounded-full bg-amber-400 flex items-center justify-center shadow-lg shadow-amber-400/40">
-                    <Crown size={16} className="text-amber-950" />
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/10 px-2 py-0.5">
+                        <Flame size={11} className="text-orange-400" />
+                        <span className="font-body text-[10px] sm:text-xs text-orange-200">
+                          {leader.focusStats?.currentStreak || 0} day
+                        </span>
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="text-2xl sm:text-3xl mb-1 mt-2">🥇</div>
-
-                {leaders[0].photoURL ? (
-                  <img
-                    src={leaders[0].photoURL}
-                    alt={leaders[0].displayName || "User"}
-                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover mx-auto mb-2 border-2 border-amber-400/50"
-                  />
-                ) : (
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-heading text-base font-bold text-emerald-950">
-                      {(leaders[0].displayName ||
-                        leaders[0].email ||
-                        "U")[0].toUpperCase()}
-                    </span>
+                  {/* Minutes — right */}
+                  <div className="text-right shrink-0">
+                    <p className="font-heading text-sm sm:text-base font-bold text-emerald-300">
+                      {formatMinutes(leader.focusStats?.totalMinutes || 0)}
+                    </p>
+                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-2">
+                      <Clock size={10} />
+                      focus time
+                    </p>
                   </div>
-                )}
-
-                <p className="font-body text-sm sm:text-base font-semibold truncate">
-                  {leaders[0].displayName || "Student"}
-                  {isCurrentUser(leaders[0].id) && (
-                    <span className="text-emerald-300"> (You)</span>
-                  )}
-                </p>
-
-                <p className="font-heading text-lg sm:text-xl font-bold text-amber-300 mt-1">
-                  {formatMinutes(leaders[0].focusStats?.totalMinutes || 0)}
-                </p>
-
-                <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
-                  <Flame size={11} className="text-orange-400" />
-                  {leaders[0].focusStats?.currentStreak || 0} day streak
-                </p>
-              </motion.div>
-            )}
-
-            {/* 3rd place — right */}
-            {leaders[2] && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="order-3 rounded-2xl border border-orange-400/30 bg-gradient-to-b from-orange-400/10 to-transparent backdrop-blur-xl p-3 sm:p-4 text-center">
-                <div className="text-xl sm:text-2xl mb-1">🥉</div>
-
-                {leaders[2].photoURL ? (
-                  <img
-                    src={leaders[2].photoURL}
-                    alt={leaders[2].displayName || "User"}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover mx-auto mb-2 border-2 border-orange-400/30"
-                  />
-                ) : (
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center mx-auto mb-2">
-                    <span className="font-heading text-sm font-bold text-emerald-950">
-                      {(leaders[2].displayName ||
-                        leaders[2].email ||
-                        "U")[0].toUpperCase()}
-                    </span>
-                  </div>
-                )}
-
-                <p className="font-body text-xs sm:text-sm font-medium truncate">
-                  {leaders[2].displayName || "Student"}
-                  {isCurrentUser(leaders[2].id) && (
-                    <span className="text-emerald-300"> (You)</span>
-                  )}
-                </p>
-
-                <p className="font-heading text-sm sm:text-base font-bold text-emerald-300 mt-1">
-                  {formatMinutes(leaders[2].focusStats?.totalMinutes || 0)}
-                </p>
-
-                <p className="font-body text-[10px] sm:text-xs text-white/40 mt-0.5 flex items-center justify-center gap-1">
-                  <Flame size={11} className="text-orange-400" />
-                  {leaders[2].focusStats?.currentStreak || 0}
-                </p>
-              </motion.div>
-            )}
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Rest — 4 onwards */}
+          <div className="flex items-center gap-2 mb-3">
+            <span className="font-body text-[11px] uppercase tracking-[0.2em] text-white/40">
+              Rankings
+            </span>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
           <div className="space-y-2">
             {leaders.slice(3).map((leader, i) => {
               const rank = i + 4;
@@ -314,7 +274,7 @@ const Leaderboard = () => {
                     <p className="font-heading text-sm font-bold text-emerald-300">
                       {formatMinutes(leader.focusStats?.totalMinutes || 0)}
                     </p>
-                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-1">
+                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-2">
                       <Clock size={10} />
                       focus time
                     </p>
@@ -329,8 +289,8 @@ const Leaderboard = () => {
             <div className="mt-4 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-center">
               <Crown size={20} className="text-emerald-300 mx-auto mb-2" />
               <p className="font-body text-sm text-white/60">
-                ඔයා තවම top 50 ඇතුළේ නැහැ. Focus sessions වැඩි කරලා rank එක උඩට
-                යන්න!
+                You aren't in the top 50 yet. Increase your focus sessions to
+                move up in the rankings!
               </p>
             </div>
           )}
