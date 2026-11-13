@@ -118,7 +118,7 @@ const Leaderboard = () => {
   }
 
   return (
-    <div className="pb-24 md:pb-8 mt-24">
+    <div className="pb-24 md:pb-8 mt-20">
       {/* Header */}
       {/* Header */}
       <div className="mb-6">
@@ -245,7 +245,7 @@ const Leaderboard = () => {
                     <p className="font-heading text-sm sm:text-base font-bold text-emerald-300">
                       {formatMinutes(leader.focusStats?.totalMinutes || 0)}
                     </p>
-                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-2">
+                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-1">
                       <Clock size={10} />
                       focus time
                     </p>
@@ -320,7 +320,7 @@ const Leaderboard = () => {
                     <p className="font-heading text-sm font-bold text-emerald-300">
                       {formatMinutes(leader.focusStats?.totalMinutes || 0)}
                     </p>
-                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-2">
+                    <p className="font-body text-[10px] text-white/30 flex items-center justify-end gap-1">
                       <Clock size={10} />
                       focus time
                     </p>
