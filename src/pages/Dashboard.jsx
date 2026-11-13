@@ -472,6 +472,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+// import { saveFocusToFirestore } from "../utils/focusStats";
 import { motion } from "motion/react";
 import {
   CalendarDays,
@@ -489,6 +490,8 @@ import {
   Sparkles,
   Mail,
   Trophy,
+  Flame,
+  Pin,
 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import GridMatrixLoader from "../components/Loader";
@@ -498,46 +501,50 @@ const QUICK_LINKS = [
     path: "/timetable",
     label: "Timetable",
     icon: CalendarDays,
-    color: "from-indigo-500/20 to-indigo-500/5",
+    color: "from-indigo-500/30 to-indigo-500/3",
     iconColor: "text-indigo-300",
   },
   {
     path: "/focus",
     label: "Focus",
     icon: Timer,
-    color: "from-emerald-500/20 to-emerald-500/5",
+    color: "from-emerald-500/30 to-emerald-500/3",
     iconColor: "text-emerald-300",
   },
   {
     path: "/notes",
     label: "Notes",
     icon: BookOpen,
-    color: "from-purple-500/20 to-purple-500/5",
+    color: "from-purple-500/30 to-purple-500/3",
     iconColor: "text-purple-300",
   },
   {
     path: "/practice",
     label: "Practice",
     icon: FileText,
-    color: "from-orange-500/20 to-orange-500/5",
+    color: "from-orange-500/30 to-orange-500/3",
     iconColor: "text-orange-300",
   },
   {
     path: "/insights",
     label: "Insights",
     icon: BarChart3,
-    color: "from-pink-500/20 to-pink-500/5",
+    color: "from-pink-500/30 to-pink-500/3",
     iconColor: "text-pink-300",
   },
   {
     path: "/leaderboard",
     label: "Leaderboard",
-    icon: Trophy, // lucide-react එකෙන් import
+    icon: Trophy,
+    color: "from-slate-500/30 to-slate-500/3",
+    iconColor: "text-slate-300",
   },
   {
     path: "/onboarding",
     label: "OnBoarding",
-    icon: Trophy, // lucide-react එකෙන් import
+    icon: Pin,
+    color: "from-yellow-500/30 to-yellow-500/5",
+    iconColor: "text-yellow-300",
   },
 ];
 
@@ -572,6 +579,7 @@ const Dashboard = () => {
   const [examDate, setExamDate] = useState(null);
   const [lastActivity, setLastActivity] = useState(null);
   const [weekSessions, setWeekSessions] = useState(0);
+  const [focusHistory, setFocusHistory] = useState([]);
 
   // ---------------- Auth state ----------------
   useEffect(() => {
@@ -653,11 +661,36 @@ const Dashboard = () => {
   const provider = user?.providerData?.[0]?.providerId;
   const isGoogle = provider === "google.com";
 
+  // ---------------- Streak ----------------
+  const currentStreak = useMemo(() => {
+    let streak = 0;
+    const d = new Date();
+
+    for (let i = 0; i < 365; i++) {
+      const key = d.toISOString().slice(0, 10);
+      const hasSession = focusHistory.some(
+        (f) => (f.createdAt || "").slice(0, 10) === key,
+      );
+
+      if (hasSession) {
+        streak++;
+        d.setDate(d.getDate() - 1);
+      } else if (i === 0) {
+        // Today no session yet — check yesterday
+        d.setDate(d.getDate() - 1);
+        continue;
+      } else {
+        break;
+      }
+    }
+
+    return streak;
+  }, [focusHistory]);
+
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
         <GridMatrixLoader />
-        <p className="font-body text-white/60">Loading...</p>
       </div>
     );
   }
@@ -711,7 +744,7 @@ const Dashboard = () => {
           </div>
 
           {/* Provider badge + logout */}
-          <div className="flex-col items-center gap-2 border-l border-l-slate-50/20 pl-2">
+          <div className="flex-col items-center gap-2 border-l border-l-slate-50/5 pl-2">
             <div
               className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"
               title={
@@ -732,6 +765,20 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
+
+        {/* Streak card */}
+        <div className="rounded-xl border border-white/10 bg-gradient-to-br from-orange-500/15 to-transparent backdrop-blur-xl py-2 px-4 mt-3 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm text-white/50">
+            <Flame size={16} className="text-orange-400" />
+            Current Streak
+          </div>
+          <div className="font-heading text-3xl font-bold">
+            {currentStreak}
+            <span className="font-body ml-2 text-sm font-medium text-white/50">
+              day{currentStreak === 1 ? "" : "s"}
+            </span>
+          </div>
+        </div>
       </motion.div>
 
       {/* Exam countdown */}
@@ -739,7 +786,7 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5 mb-6">
+        className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5 mb-3">
         <div className="flex items-center gap-2 text-sm text-white/50 mb-2">
           <Target size={16} className="text-emerald-300" />
           Exam Countdown
@@ -770,7 +817,7 @@ const Dashboard = () => {
       </motion.div>
 
       {/* Last activity + Forest preview */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 border border-white/10 p-1.5 rounded-3xl">
         {/* Last activity */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -787,10 +834,10 @@ const Dashboard = () => {
               <p className="font-heading text-lg font-bold truncate">
                 {lastActivity.title}
               </p>
-              <p className="font-body text-sm text-white/50 mt-1">
+              <p className="pl-4 font-body text-sm text-white/50 mt-1">
                 {lastActivity.detail}
               </p>
-              <p className="font-body text-xs text-white/30 mt-2">
+              <p className="text-right font-body text-xs text-white/30 mt-2">
                 {new Date(lastActivity.date).toLocaleDateString()}
               </p>
             </>
@@ -806,7 +853,7 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5">
+          className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/30 to-teal-500/5 backdrop-blur-xl p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2 text-sm text-white/50">
               <Sparkles size={16} className="text-emerald-300" />
@@ -846,7 +893,7 @@ const Dashboard = () => {
         transition={{ delay: 0.4 }}
         className="mb-6">
         <h3 className="font-heading text-lg font-bold mb-3">Quick Links</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {QUICK_LINKS.map((link) => (
             <Link
               key={link.path}
@@ -869,7 +916,7 @@ const Dashboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}>
         <h3 className="font-heading text-lg font-bold mb-3">Tools</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 px-3">
           {TOOLS.map((tool) => (
             <div
               key={tool.label}
