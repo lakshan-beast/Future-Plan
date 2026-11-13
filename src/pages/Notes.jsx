@@ -601,7 +601,7 @@ const Notes = () => {
     "font-body w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 px-4 text-[15px] text-white placeholder-white/30 outline-none transition focus:border-emerald-400/70 focus:bg-white/[0.06] focus:ring-4 focus:ring-emerald-400/10";
 
   return (
-    <div className="pb-24 md:pb-8">
+    <div className="pb-24 md:pb-8 mt-20">
       {/* Header */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -804,7 +804,7 @@ const Notes = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm mb-6 lg:mt-0"
             onClick={() => setIsModalOpen(false)}>
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
