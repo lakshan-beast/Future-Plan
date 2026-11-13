@@ -467,225 +467,643 @@
 
 // export default Dashboard;
 
+// // src/pages/Dashboard.jsx
+// import { useEffect, useMemo, useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import { onAuthStateChanged, signOut } from "firebase/auth";
+// import { auth } from "../firebase/firebase";
+// import { doc, getDoc } from "firebase/firestore";
+// import { db } from "../firebase/firebase";
+// import { motion } from "motion/react";
+// import {
+//   CalendarDays,
+//   Timer,
+//   BookOpen,
+//   FileText,
+//   BarChart3,
+//   Calculator,
+//   Ruler,
+//   Calendar,
+//   LogOut,
+//   ChevronRight,
+//   Target,
+//   Clock,
+//   Sparkles,
+//   Mail,
+//   Trophy,
+//   Flame,
+//   Pin,
+//   Pencil,
+//   GraduationCap,
+// } from "lucide-react";
+// import { FcGoogle } from "react-icons/fc";
+// import GridMatrixLoader from "../components/Loader";
+
+// const QUICK_LINKS = [
+//   {
+//     path: "/timetable",
+//     label: "Timetable",
+//     icon: CalendarDays,
+//     color: "from-indigo-500/30 to-indigo-500/3",
+//     iconColor: "text-indigo-300",
+//   },
+//   {
+//     path: "/focus",
+//     label: "Focus",
+//     icon: Timer,
+//     color: "from-emerald-500/30 to-emerald-500/3",
+//     iconColor: "text-emerald-300",
+//   },
+//   {
+//     path: "/notes",
+//     label: "Notes",
+//     icon: BookOpen,
+//     color: "from-purple-500/30 to-purple-500/3",
+//     iconColor: "text-purple-300",
+//   },
+//   {
+//     path: "/practice",
+//     label: "Practice",
+//     icon: FileText,
+//     color: "from-orange-500/30 to-orange-500/3",
+//     iconColor: "text-orange-300",
+//   },
+//   {
+//     path: "/insights",
+//     label: "Insights",
+//     icon: BarChart3,
+//     color: "from-pink-500/30 to-pink-500/3",
+//     iconColor: "text-pink-300",
+//   },
+//   {
+//     path: "/leaderboard",
+//     label: "Leaderboard",
+//     icon: Trophy,
+//     color: "from-slate-500/30 to-slate-500/3",
+//     iconColor: "text-slate-300",
+//   },
+//   {
+//     path: "/onboarding",
+//     label: "OnBoarding",
+//     icon: Pin,
+//     color: "from-yellow-500/30 to-yellow-500/5",
+//     iconColor: "text-yellow-300",
+//   },
+// ];
+
+// const TOOLS = [
+//   {
+//     label: "Calendar",
+//     icon: Calendar,
+//     color: "from-blue-500/20 to-blue-500/5",
+//     iconColor: "text-blue-300",
+//     comingSoon: true,
+//   },
+//   {
+//     label: "Calculator",
+//     icon: Calculator,
+//     color: "from-teal-500/20 to-teal-500/5",
+//     iconColor: "text-teal-300",
+//     comingSoon: true,
+//   },
+//   {
+//     label: "Unit Converter",
+//     icon: Ruler,
+//     color: "from-amber-500/20 to-amber-500/5",
+//     iconColor: "text-amber-300",
+//     comingSoon: true,
+//   },
+// ];
+
+// const Dashboard = () => {
+//   const navigate = useNavigate();
+
+//   const [user, setUser] = useState(null);
+//   const [examDate, setExamDate] = useState(null);
+//   const [lastActivity, setLastActivity] = useState(null);
+//   const [weekSessions, setWeekSessions] = useState(0);
+//   const [focusHistory, setFocusHistory] = useState([]);
+//   const [profile, setProfile] = useState(null);
+
+//   // ---------------- Auth state ----------------
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+//       setUser(currentUser);
+//     });
+
+//     return () => unsubscribe();
+//   }, []);
+
+//   // ---------------- Local data ----------------
+//   useEffect(() => {
+//     if (!user) return;
+
+//     const uid = user.uid;
+
+//     // Exam date
+//     const savedExamDate = localStorage.getItem(`dreamutrack-exam-date-${uid}`);
+//     if (savedExamDate) {
+//       setExamDate(new Date(savedExamDate));
+//     }
+
+//     // Last activity (latest paper or focus session)
+//     const papers = JSON.parse(
+//       localStorage.getItem(`dreamutrack-papers-${uid}`) || "[]",
+//     );
+//     const focusHistory = JSON.parse(
+//       localStorage.getItem(`dreamutrack-focus-history-${uid}`) || "[]",
+//     );
+
+//     const allActivities = [
+//       ...papers.map((p) => ({
+//         type: "paper",
+//         title: p.paperName || "Past paper",
+//         detail: `${p.subject} · ${p.percentage}%`,
+//         date: p.createdAt,
+//       })),
+//       ...focusHistory.map((f) => ({
+//         type: "focus",
+//         title: "Focus session",
+//         detail: `${f.subject} · ${f.duration} min`,
+//         date: f.createdAt || f.startedAt,
+//       })),
+//     ];
+
+//     const latest = allActivities
+//       .filter((a) => a.date)
+//       .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+
+//     setLastActivity(latest || null);
+
+//     // Weekly sessions (last 7 days)
+//     const weekAgo = new Date();
+//     weekAgo.setDate(weekAgo.getDate() - 7);
+
+//     const recentSessions = focusHistory.filter(
+//       (f) => new Date(f.createdAt || f.startedAt) >= weekAgo,
+//     );
+
+//     setWeekSessions(recentSessions.length);
+//   }, [user]);
+
+//   // ---------------- Countdown ----------------
+//   const countdown = useMemo(() => {
+//     if (!examDate) return null;
+
+//     const diff = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
+
+//     return diff;
+//   }, [examDate]);
+
+//   // ---------------- Logout ----------------
+//   const handleLogout = async () => {
+//     await signOut(auth);
+//     navigate("/login");
+//   };
+
+//   // ✅ Firestore එකෙන් read — useEffect එකේ (user change වෙද්දිම)
+//   useEffect(() => {
+//     if (!user) return;
+
+//     const loadProfile = async () => {
+//       try {
+//         const snapshot = await getDoc(doc(db, "users", user.uid));
+//         if (snapshot.exists()) {
+//           const data = snapshot.data();
+//           setProfile(data.profile || null);
+
+//           if (data.profile?.examDate) {
+//             setExamDate(new Date(data.profile.examDate));
+//           } else {
+//             setExamDate(null);
+//           }
+//         } else {
+//           setProfile(null);
+//           setExamDate(null);
+//         }
+//       } catch (err) {
+//         console.error("Failed to load profile:", err);
+//       }
+//     };
+
+//     loadProfile();
+//   }, [user]);
+
+//   // ---------------- Provider badge ----------------
+//   const provider = user?.providerData?.[0]?.providerId;
+//   const isGoogle = provider === "google.com";
+
+//   // ---------------- Streak ----------------
+//   const currentStreak = useMemo(() => {
+//     let streak = 0;
+//     const d = new Date();
+
+//     for (let i = 0; i < 365; i++) {
+//       const key = d.toISOString().slice(0, 10);
+//       const hasSession = focusHistory.some(
+//         (f) => (f.createdAt || "").slice(0, 10) === key,
+//       );
+
+//       if (hasSession) {
+//         streak++;
+//         d.setDate(d.getDate() - 1);
+//       } else if (i === 0) {
+//         // Today no session yet — check yesterday
+//         d.setDate(d.getDate() - 1);
+//         continue;
+//       } else {
+//         break;
+//       }
+//     }
+
+//     return streak;
+//   }, [focusHistory]);
+
+//   if (!user) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
+//         <GridMatrixLoader />
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="pb-24 md:pb-8 pt-24">
+//       {/* Profile card */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden mb-4">
+//         {/* Top — avatar + name + actions */}
+//         <div className="p-5 flex items-start gap-4">
+//           {/* Avatar */}
+//           {user.photoURL ? (
+//             <img
+//               src={user.photoURL}
+//               alt={user.displayName || "Profile"}
+//               className="w-14 h-14 rounded-full object-cover ring-2 ring-emerald-400/30 shrink-0"
+//             />
+//           ) : (
+//             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shrink-0">
+//               <span className="font-heading text-xl font-bold text-emerald-950">
+//                 {(user.displayName || user.email || "U")[0].toUpperCase()}
+//               </span>
+//             </div>
+//           )}
+
+//           {/* Name + email + member since */}
+//           <div className="flex-1 min-w-0">
+//             <h2 className="font-heading text-lg font-bold truncate">
+//               {user.displayName || "Student"}
+//             </h2>
+//             <p className="font-body text-sm text-white/50 truncate">
+//               {user.email}
+//             </p>
+//             <p className="font-body text-xs text-white/30 mt-1">
+//               Member since{" "}
+//               {user.metadata?.creationTime
+//                 ? new Date(user.metadata.creationTime).toLocaleDateString(
+//                     "en-GB",
+//                     { day: "numeric", month: "short", year: "numeric" },
+//                   )
+//                 : "—"}
+//             </p>
+//           </div>
+
+//           {/* Actions — edit + provider + logout */}
+//           <div className="flex flex-col items-center gap-2 shrink-0">
+//             <Link
+//               to="/onboarding"
+//               aria-label="Edit profile"
+//               title="Edit profile"
+//               className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-emerald-300 hover:bg-emerald-400/10 transition">
+//               <Pencil size={15} />
+//             </Link>
+
+//             <div
+//               className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"
+//               title={
+//                 isGoogle ? "Signed in with Google" : "Signed in with Email"
+//               }>
+//               {isGoogle ? (
+//                 <FcGoogle size={18} />
+//               ) : (
+//                 <Mail size={16} className="text-white/60" />
+//               )}
+//             </div>
+
+//             <button
+//               type="button"
+//               onClick={handleLogout}
+//               aria-label="Log out"
+//               className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition">
+//               <LogOut size={16} />
+//             </button>
+//           </div>
+//         </div>
+
+//         {/* Bottom — level + subjects + streak */}
+//         <div className="border-t border-white/10 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+//           {/* Level + subjects */}
+//           <div className="flex-1 min-w-0">
+//             {profile ? (
+//               <>
+//                 {/* Level badge */}
+//                 <div className="flex items-center gap-2 mb-2">
+//                   <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-1">
+//                     <GraduationCap size={12} className="text-emerald-300" />
+//                     <span className="font-body text-xs font-medium text-emerald-300">
+//                       {profile.level === "AL" ? "A/L" : "O/L"}
+//                       {profile.level === "AL" && profile.alStream
+//                         ? ` · ${profile.alStream}`
+//                         : ""}
+//                       {profile.level === "OL" && profile.olGroup
+//                         ? ` · ${profile.olGroup}`
+//                         : ""}
+//                     </span>
+//                   </span>
+//                 </div>
+
+//                 {/* Subjects — chips */}
+//                 <div className="flex flex-wrap gap-1.5">
+//                   {(profile.subjects || []).slice(0, 4).map((subject) => (
+//                     <span
+//                       key={subject}
+//                       className="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 px-2.5 py-1">
+//                       <BookOpen size={11} className="text-white/40" />
+//                       <span className="font-body text-[11px] text-white/60 truncate max-w-[110px]">
+//                         {subject}
+//                       </span>
+//                     </span>
+//                   ))}
+//                   {(profile.subjects || []).length > 4 && (
+//                     <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-2.5 py-1">
+//                       <span className="font-body text-[11px] text-white/40">
+//                         +{(profile.subjects || []).length - 4} more
+//                       </span>
+//                     </span>
+//                   )}
+//                 </div>
+//               </>
+//             ) : (
+//               <Link
+//                 to="/onboarding"
+//                 className="inline-flex items-center gap-2 font-body text-sm text-amber-300 hover:text-amber-200">
+//                 <Sparkles size={14} />
+//                 Complete your profile to personalize DreamUTrack
+//                 <ChevronRight size={14} />
+//               </Link>
+//             )}
+//           </div>
+
+//           {/* Streak */}
+//           <div className="shrink-0 rounded-2xl border border-white/10 bg-gradient-to-br from-orange-500/15 to-transparent px-4 py-3 flex items-center gap-3">
+//             <Flame size={20} className="text-orange-400" />
+//             <div>
+//               <div className="font-heading text-2xl font-bold leading-none">
+//                 {currentStreak}
+//               </div>
+//               <div className="font-body text-[10px] text-white/40 mt-0.5">
+//                 day streak
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </motion.div>
+
+//       {/* Exam countdown */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.1 }}
+//         className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5 mb-3">
+//         <div className="flex items-center justify-between mb-2">
+//           <div className="flex items-center gap-2 text-sm text-white/50">
+//             <Target size={16} className="text-emerald-300" />
+//             Exam Countdown
+//           </div>
+
+//           {/* Edit link — small */}
+//           <Link
+//             to="/onboarding"
+//             className="font-body text-xs text-white/40 hover:text-emerald-300 flex items-center gap-1">
+//             <Pencil size={12} />
+//             Edit
+//           </Link>
+//         </div>
+
+//         {countdown === null ? (
+//           <div className="flex items-center justify-between gap-3">
+//             <p className="font-body text-sm text-white/40">
+//               Set your exam date to see the countdown.
+//             </p>
+//             <Link
+//               to="/onboarding"
+//               className="font-body text-xs font-medium text-emerald-300 hover:text-emerald-200 shrink-0">
+//               Set date
+//             </Link>
+//           </div>
+//         ) : (
+//           <>
+//             <div className="font-heading text-4xl font-bold tabular-nums">
+//               {countdown}
+//               <span className="font-body ml-2 text-base font-medium text-white/50">
+//                 days left
+//               </span>
+//             </div>
+//             <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+//               <div
+//                 className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-300"
+//                 style={{
+//                   width: `${Math.max(
+//                     0,
+//                     Math.min(100, (countdown / 365) * 100),
+//                   )}%`,
+//                 }}
+//               />
+//             </div>
+//           </>
+//         )}
+//       </motion.div>
+
+//       {/* Last activity + Forest preview */}
+//       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 border border-white/10 p-1.5 rounded-3xl">
+//         {/* Last activity */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.2 }}
+//           className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
+//           <div className="flex items-center gap-2 text-sm text-white/50 mb-3">
+//             <Clock size={16} className="text-indigo-300" />
+//             Last Activity
+//           </div>
+
+//           {lastActivity ? (
+//             <>
+//               <p className="font-heading text-lg font-bold truncate">
+//                 {lastActivity.title}
+//               </p>
+//               <p className="pl-4 font-body text-sm text-white/50 mt-1">
+//                 {lastActivity.detail}
+//               </p>
+//               <p className="text-right font-body text-xs text-white/30 mt-2">
+//                 {new Date(lastActivity.date).toLocaleDateString()}
+//               </p>
+//             </>
+//           ) : (
+//             <p className="font-body text-sm text-white/40">
+//               No activity yet. Start a focus session or add a paper.
+//             </p>
+//           )}
+//         </motion.div>
+
+//         {/* Forest preview */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.3 }}
+//           className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/30 to-teal-500/5 backdrop-blur-xl p-5">
+//           <div className="flex items-center justify-between mb-3">
+//             <div className="flex items-center gap-2 text-sm text-white/50">
+//               <Sparkles size={16} className="text-emerald-300" />
+//               Weekly Forest
+//             </div>
+//             <Link
+//               to="/focus"
+//               className="font-body text-xs text-emerald-300 hover:text-emerald-200 flex items-center gap-1">
+//               Open
+//               <ChevronRight size={14} />
+//             </Link>
+//           </div>
+
+//           <div className="font-heading text-3xl font-bold">
+//             {weekSessions}
+//             <span className="font-body ml-2 text-sm font-medium text-white/50">
+//               sessions this week
+//             </span>
+//           </div>
+
+//           <div className="mt-3 flex items-end gap-1.5 h-12">
+//             {[40, 65, 50, 85, 70, 95, 30].map((h, i) => (
+//               <div
+//                 key={i}
+//                 className="flex-1 rounded-md bg-gradient-to-t from-emerald-500/70 to-emerald-300/90"
+//                 style={{ height: `${h}%` }}
+//               />
+//             ))}
+//           </div>
+//         </motion.div>
+//       </div>
+
+//       {/* Quick links */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.4 }}
+//         className="mb-6">
+//         <h3 className="font-heading text-lg font-bold mb-3">Quick Links</h3>
+//         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+//           {QUICK_LINKS.map((link) => (
+//             <Link
+//               key={link.path}
+//               to={link.path}
+//               className={`rounded-2xl border border-white/10 bg-gradient-to-br ${link.color} backdrop-blur-xl p-4 hover:border-white/20 transition group`}>
+//               <link.icon size={22} className={`${link.iconColor} mb-2`} />
+//               <p className="font-body text-sm font-medium">{link.label}</p>
+//               <ChevronRight
+//                 size={14}
+//                 className="text-white/30 group-hover:text-white/60 transition mt-1"
+//               />
+//             </Link>
+//           ))}
+//         </div>
+//       </motion.div>
+
+//       {/* Tools — coming soon */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 20 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.5 }}>
+//         <h3 className="font-heading text-lg font-bold mb-3">Tools</h3>
+//         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 px-3">
+//           {TOOLS.map((tool) => (
+//             <div
+//               key={tool.label}
+//               className={`rounded-2xl border border-white/10 bg-gradient-to-br ${tool.color} backdrop-blur-xl p-4 opacity-60`}>
+//               <div className="flex items-center justify-between mb-2">
+//                 <tool.icon size={22} className={tool.iconColor} />
+//                 <span className="font-body text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+//                   Coming soon
+//                 </span>
+//               </div>
+//               <p className="font-body text-sm font-medium">{tool.label}</p>
+//             </div>
+//           ))}
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// export default Dashboard;
+
 // src/pages/Dashboard.jsx
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-// import { saveFocusToFirestore } from "../utils/focusStats";
-import { motion } from "motion/react";
-import {
-  CalendarDays,
-  Timer,
-  BookOpen,
-  FileText,
-  BarChart3,
-  Calculator,
-  Ruler,
-  Calendar,
-  LogOut,
-  ChevronRight,
-  Target,
-  Clock,
-  Sparkles,
-  Mail,
-  Trophy,
-  Flame,
-  Pin,
-} from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
+
 import GridMatrixLoader from "../components/Loader";
+import ProfileCard from "../components/dashboard/ProfileCard";
+import ExamCountdownCard from "../components/dashboard/ExamCountdownCard";
+import LastActivityCard from "../components/dashboard/LastActivityCard";
+import WeeklyForestPreview from "../components/dashboard/WeeklyForestCard";
+import QuickLinks from "../components/dashboard/QuickLinks";
+import ToolsSection from "../components/dashboard/ToolsSection";
 
-const QUICK_LINKS = [
-  {
-    path: "/timetable",
-    label: "Timetable",
-    icon: CalendarDays,
-    color: "from-indigo-500/30 to-indigo-500/3",
-    iconColor: "text-indigo-300",
-  },
-  {
-    path: "/focus",
-    label: "Focus",
-    icon: Timer,
-    color: "from-emerald-500/30 to-emerald-500/3",
-    iconColor: "text-emerald-300",
-  },
-  {
-    path: "/notes",
-    label: "Notes",
-    icon: BookOpen,
-    color: "from-purple-500/30 to-purple-500/3",
-    iconColor: "text-purple-300",
-  },
-  {
-    path: "/practice",
-    label: "Practice",
-    icon: FileText,
-    color: "from-orange-500/30 to-orange-500/3",
-    iconColor: "text-orange-300",
-  },
-  {
-    path: "/insights",
-    label: "Insights",
-    icon: BarChart3,
-    color: "from-pink-500/30 to-pink-500/3",
-    iconColor: "text-pink-300",
-  },
-  {
-    path: "/leaderboard",
-    label: "Leaderboard",
-    icon: Trophy,
-    color: "from-slate-500/30 to-slate-500/3",
-    iconColor: "text-slate-300",
-  },
-  {
-    path: "/onboarding",
-    label: "OnBoarding",
-    icon: Pin,
-    color: "from-yellow-500/30 to-yellow-500/5",
-    iconColor: "text-yellow-300",
-  },
-];
-
-const TOOLS = [
-  {
-    label: "Calendar",
-    icon: Calendar,
-    color: "from-blue-500/20 to-blue-500/5",
-    iconColor: "text-blue-300",
-    comingSoon: true,
-  },
-  {
-    label: "Calculator",
-    icon: Calculator,
-    color: "from-teal-500/20 to-teal-500/5",
-    iconColor: "text-teal-300",
-    comingSoon: true,
-  },
-  {
-    label: "Unit Converter",
-    icon: Ruler,
-    color: "from-amber-500/20 to-amber-500/5",
-    iconColor: "text-amber-300",
-    comingSoon: true,
-  },
-];
+import { useDashboardData } from "../hooks/useDashboardData";
+import {
+  buildLastActivity,
+  computeStreak,
+  getLast7Days,
+} from "../utils/dashboardUtils";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-  const [examDate, setExamDate] = useState(null);
-  const [lastActivity, setLastActivity] = useState(null);
-  const [weekSessions, setWeekSessions] = useState(0);
-  const [focusHistory, setFocusHistory] = useState([]);
+  const [authReady, setAuthReady] = useState(false);
 
   // ---------------- Auth state ----------------
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setAuthReady(true);
     });
-
-    return () => unsubscribe();
+    return unsubscribe;
   }, []);
 
-  // ---------------- Local data ----------------
+  // Not signed in → go to login (instead of showing the loader forever)
   useEffect(() => {
-    if (!user) return;
+    if (authReady && !user) navigate("/login", { replace: true });
+  }, [authReady, user, navigate]);
 
-    const uid = user.uid;
+  // ---------------- Data ----------------
+  const { profile, examDate, papers, focusHistory, profileLoading } =
+    useDashboardData(user);
 
-    // Exam date
-    const savedExamDate = localStorage.getItem(`dreamutrack-exam-date-${uid}`);
-    if (savedExamDate) {
-      setExamDate(new Date(savedExamDate));
-    }
+  const streak = useMemo(() => computeStreak(focusHistory), [focusHistory]);
+  const weekDays = useMemo(() => getLast7Days(focusHistory), [focusHistory]);
+  const lastActivity = useMemo(
+    () => buildLastActivity(papers, focusHistory),
+    [papers, focusHistory],
+  );
 
-    // Last activity (latest paper or focus session)
-    const papers = JSON.parse(
-      localStorage.getItem(`dreamutrack-papers-${uid}`) || "[]",
-    );
-    const focusHistory = JSON.parse(
-      localStorage.getItem(`dreamutrack-focus-history-${uid}`) || "[]",
-    );
-
-    const allActivities = [
-      ...papers.map((p) => ({
-        type: "paper",
-        title: p.paperName || "Past paper",
-        detail: `${p.subject} · ${p.percentage}%`,
-        date: p.createdAt,
-      })),
-      ...focusHistory.map((f) => ({
-        type: "focus",
-        title: "Focus session",
-        detail: `${f.subject} · ${f.duration} min`,
-        date: f.createdAt || f.startedAt,
-      })),
-    ];
-
-    const latest = allActivities
-      .filter((a) => a.date)
-      .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
-
-    setLastActivity(latest || null);
-
-    // Weekly sessions (last 7 days)
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-
-    const recentSessions = focusHistory.filter(
-      (f) => new Date(f.createdAt || f.startedAt) >= weekAgo,
-    );
-
-    setWeekSessions(recentSessions.length);
-  }, [user]);
-
-  // ---------------- Countdown ----------------
-  const countdown = useMemo(() => {
-    if (!examDate) return null;
-
-    const diff = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
-
-    return diff;
-  }, [examDate]);
-
-  // ---------------- Logout ----------------
   const handleLogout = async () => {
     await signOut(auth);
     navigate("/login");
   };
-
-  // ---------------- Provider badge ----------------
-  const provider = user?.providerData?.[0]?.providerId;
-  const isGoogle = provider === "google.com";
-
-  // ---------------- Streak ----------------
-  const currentStreak = useMemo(() => {
-    let streak = 0;
-    const d = new Date();
-
-    for (let i = 0; i < 365; i++) {
-      const key = d.toISOString().slice(0, 10);
-      const hasSession = focusHistory.some(
-        (f) => (f.createdAt || "").slice(0, 10) === key,
-      );
-
-      if (hasSession) {
-        streak++;
-        d.setDate(d.getDate() - 1);
-      } else if (i === 0) {
-        // Today no session yet — check yesterday
-        d.setDate(d.getDate() - 1);
-        continue;
-      } else {
-        break;
-      }
-    }
-
-    return streak;
-  }, [focusHistory]);
 
   if (!user) {
     return (
@@ -696,242 +1114,24 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="pb-24 md:pb-8 pt-24">
-      {/* Profile card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 mb-6">
-        <div className="flex items-center gap-4">
-          {/* Avatar */}
-          {user.photoURL ? (
-            <img
-              src={user.photoURL}
-              alt={user.displayName || "Profile"}
-              className="w-14 h-14 rounded-full object-cover border-2 border-emerald-400/30"
-            />
-          ) : (
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
-              <span className="font-heading text-xl font-bold text-emerald-950">
-                {(user.displayName || user.email || "U")[0].toUpperCase()}
-              </span>
-            </div>
-          )}
+    <div className="pb-24 md:pb-8 pt-20">
+      <ProfileCard
+        user={user}
+        profile={profile}
+        profileLoading={profileLoading}
+        streak={streak}
+        onLogout={handleLogout}
+      />
 
-          {/* Name + email */}
-          <div className="flex-1 min-w-0">
-            <h2 className="font-heading text-lg font-bold truncate">
-              {user.displayName || "Student"}
-            </h2>
-            <p className="font-body text-sm text-white/50 truncate">
-              {user.email}
-            </p>
+      <ExamCountdownCard examDate={examDate} />
 
-            {/* Member since — NEW */}
-            <p className="font-body text-xs text-white/30 mt-1 border-t pt-2">
-              Member since{" "}
-              {user.metadata?.creationTime
-                ? new Date(user.metadata.creationTime).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    },
-                  )
-                : "—"}
-            </p>
-          </div>
-
-          {/* Provider badge + logout */}
-          <div className="flex-col items-center gap-2 border-l border-l-slate-50/5 pl-2">
-            <div
-              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"
-              title={
-                isGoogle ? "Signed in with Google" : "Signed in with Email"
-              }>
-              {isGoogle ? (
-                <FcGoogle size={18} />
-              ) : (
-                <Mail size={16} className="text-white/60" />
-              )}
-            </div>
-            <button
-              type="button"
-              onClick={handleLogout}
-              aria-label="Log out"
-              className="w-8 h-8 mt-3 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition">
-              <LogOut size={16} />
-            </button>
-          </div>
-        </div>
-
-        {/* Streak card */}
-        <div className="rounded-xl border border-white/10 bg-gradient-to-br from-orange-500/15 to-transparent backdrop-blur-xl py-2 px-4 mt-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm text-white/50">
-            <Flame size={16} className="text-orange-400" />
-            Current Streak
-          </div>
-          <div className="font-heading text-3xl font-bold">
-            {currentStreak}
-            <span className="font-body ml-2 text-sm font-medium text-white/50">
-              day{currentStreak === 1 ? "" : "s"}
-            </span>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Exam countdown */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5 mb-3">
-        <div className="flex items-center gap-2 text-sm text-white/50 mb-2">
-          <Target size={16} className="text-emerald-300" />
-          Exam Countdown
-        </div>
-
-        {countdown === null ? (
-          <p className="font-body text-sm text-white/40">
-            Set your exam date in Onboarding to see countdown.
-          </p>
-        ) : (
-          <>
-            <div className="font-heading text-4xl font-bold tabular-nums">
-              {countdown}
-              <span className="font-body ml-2 text-base font-medium text-white/50">
-                days left
-              </span>
-            </div>
-            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-300"
-                style={{
-                  width: `${Math.max(0, Math.min(100, (countdown / 365) * 100))}%`,
-                }}
-              />
-            </div>
-          </>
-        )}
-      </motion.div>
-
-      {/* Last activity + Forest preview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 border border-white/10 p-1.5 rounded-3xl">
-        {/* Last activity */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
-          <div className="flex items-center gap-2 text-sm text-white/50 mb-3">
-            <Clock size={16} className="text-indigo-300" />
-            Last Activity
-          </div>
-
-          {lastActivity ? (
-            <>
-              <p className="font-heading text-lg font-bold truncate">
-                {lastActivity.title}
-              </p>
-              <p className="pl-4 font-body text-sm text-white/50 mt-1">
-                {lastActivity.detail}
-              </p>
-              <p className="text-right font-body text-xs text-white/30 mt-2">
-                {new Date(lastActivity.date).toLocaleDateString()}
-              </p>
-            </>
-          ) : (
-            <p className="font-body text-sm text-white/40">
-              No activity yet. Start a focus session or add a paper.
-            </p>
-          )}
-        </motion.div>
-
-        {/* Forest preview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/30 to-teal-500/5 backdrop-blur-xl p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2 text-sm text-white/50">
-              <Sparkles size={16} className="text-emerald-300" />
-              Weekly Forest
-            </div>
-            <Link
-              to="/focus"
-              className="font-body text-xs text-emerald-300 hover:text-emerald-200 flex items-center gap-1">
-              Open
-              <ChevronRight size={14} />
-            </Link>
-          </div>
-
-          <div className="font-heading text-3xl font-bold">
-            {weekSessions}
-            <span className="font-body ml-2 text-sm font-medium text-white/50">
-              sessions this week
-            </span>
-          </div>
-
-          <div className="mt-3 flex items-end gap-1.5 h-12">
-            {[40, 65, 50, 85, 70, 95, 30].map((h, i) => (
-              <div
-                key={i}
-                className="flex-1 rounded-md bg-gradient-to-t from-emerald-500/70 to-emerald-300/90"
-                style={{ height: `${h}%` }}
-              />
-            ))}
-          </div>
-        </motion.div>
+        <LastActivityCard activity={lastActivity} />
+        <WeeklyForestPreview days={weekDays} />
       </div>
 
-      {/* Quick links */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mb-6">
-        <h3 className="font-heading text-lg font-bold mb-3">Quick Links</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-          {QUICK_LINKS.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`rounded-2xl border border-white/10 bg-gradient-to-br ${link.color} backdrop-blur-xl p-4 hover:border-white/20 transition group`}>
-              <link.icon size={22} className={`${link.iconColor} mb-2`} />
-              <p className="font-body text-sm font-medium">{link.label}</p>
-              <ChevronRight
-                size={14}
-                className="text-white/30 group-hover:text-white/60 transition mt-1"
-              />
-            </Link>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Tools — coming soon */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}>
-        <h3 className="font-heading text-lg font-bold mb-3">Tools</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 px-3">
-          {TOOLS.map((tool) => (
-            <div
-              key={tool.label}
-              className={`rounded-2xl border border-white/10 bg-gradient-to-br ${tool.color} backdrop-blur-xl p-4 opacity-60`}>
-              <div className="flex items-center justify-between mb-2">
-                <tool.icon size={22} className={tool.iconColor} />
-                <span className="font-body text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
-                  Coming soon
-                </span>
-              </div>
-              <p className="font-body text-sm font-medium">{tool.label}</p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+      <QuickLinks />
+      <ToolsSection />
     </div>
   );
 };

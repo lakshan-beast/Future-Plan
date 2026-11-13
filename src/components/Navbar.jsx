@@ -405,7 +405,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="lg:hidden fixed top-3 left-0 right-0 z-40 px-2 pb-2 bg-gradient-to-b from-[#0b1020] to-transparent pointer-events-none">
+    <div className="lg:hidden fixed top-3 left-0 right-0 z-40 px-3 pb-2 bg-gradient-to-b from-[#0b1020] to-transparent pointer-events-none">
       <div className="pointer-events-auto flex items-center justify-between rounded-full border border-white/15 bg-[#0e1424]/10 backdrop-blur-xl shadow-lg shadow-black/20 pr-3 pl-5 py-3">
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-2">
