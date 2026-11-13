@@ -714,6 +714,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+// import Loader from "../components/Loader";
 
 /* ----------------------------- helpers ----------------------------- */
 

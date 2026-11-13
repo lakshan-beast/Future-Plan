@@ -21,8 +21,8 @@ const BottomNav = () => {
   ];
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#0e1424]/95 backdrop-blur-xl">
-      <div className="flex items-center justify-around px-2 py-2">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#0e1424]/95 backdrop-blur-xl py-2 rounded-t-3xl">
+      <div className="flex items-center justify-around px-2 py-2 ">
         {links.map((link) => (
           <NavLink
             key={link.to}

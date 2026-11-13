@@ -467,7 +467,6 @@
 
 // export default Dashboard;
 
-
 // src/pages/Dashboard.jsx
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -491,19 +490,68 @@ import {
   Mail,
 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import GridMatrixLoader from "../components/Loader";
 
 const QUICK_LINKS = [
-  { path: "/timetable", label: "Timetable", icon: CalendarDays, color: "from-indigo-500/20 to-indigo-500/5", iconColor: "text-indigo-300" },
-  { path: "/focus", label: "Focus", icon: Timer, color: "from-emerald-500/20 to-emerald-500/5", iconColor: "text-emerald-300" },
-  { path: "/notes", label: "Notes", icon: BookOpen, color: "from-purple-500/20 to-purple-500/5", iconColor: "text-purple-300" },
-  { path: "/practice", label: "Practice", icon: FileText, color: "from-orange-500/20 to-orange-500/5", iconColor: "text-orange-300" },
-  { path: "/insights", label: "Insights", icon: BarChart3, color: "from-pink-500/20 to-pink-500/5", iconColor: "text-pink-300" },
+  {
+    path: "/timetable",
+    label: "Timetable",
+    icon: CalendarDays,
+    color: "from-indigo-500/20 to-indigo-500/5",
+    iconColor: "text-indigo-300",
+  },
+  {
+    path: "/focus",
+    label: "Focus",
+    icon: Timer,
+    color: "from-emerald-500/20 to-emerald-500/5",
+    iconColor: "text-emerald-300",
+  },
+  {
+    path: "/notes",
+    label: "Notes",
+    icon: BookOpen,
+    color: "from-purple-500/20 to-purple-500/5",
+    iconColor: "text-purple-300",
+  },
+  {
+    path: "/practice",
+    label: "Practice",
+    icon: FileText,
+    color: "from-orange-500/20 to-orange-500/5",
+    iconColor: "text-orange-300",
+  },
+  {
+    path: "/insights",
+    label: "Insights",
+    icon: BarChart3,
+    color: "from-pink-500/20 to-pink-500/5",
+    iconColor: "text-pink-300",
+  },
 ];
 
 const TOOLS = [
-  { label: "Calendar", icon: Calendar, color: "from-blue-500/20 to-blue-500/5", iconColor: "text-blue-300", comingSoon: true },
-  { label: "Calculator", icon: Calculator, color: "from-teal-500/20 to-teal-500/5", iconColor: "text-teal-300", comingSoon: true },
-  { label: "Unit Converter", icon: Ruler, color: "from-amber-500/20 to-amber-500/5", iconColor: "text-amber-300", comingSoon: true },
+  {
+    label: "Calendar",
+    icon: Calendar,
+    color: "from-blue-500/20 to-blue-500/5",
+    iconColor: "text-blue-300",
+    comingSoon: true,
+  },
+  {
+    label: "Calculator",
+    icon: Calculator,
+    color: "from-teal-500/20 to-teal-500/5",
+    iconColor: "text-teal-300",
+    comingSoon: true,
+  },
+  {
+    label: "Unit Converter",
+    icon: Ruler,
+    color: "from-amber-500/20 to-amber-500/5",
+    iconColor: "text-amber-300",
+    comingSoon: true,
+  },
 ];
 
 const Dashboard = () => {
@@ -530,19 +578,17 @@ const Dashboard = () => {
     const uid = user.uid;
 
     // Exam date
-    const savedExamDate = localStorage.getItem(
-      `dreamutrack-exam-date-${uid}`
-    );
+    const savedExamDate = localStorage.getItem(`dreamutrack-exam-date-${uid}`);
     if (savedExamDate) {
       setExamDate(new Date(savedExamDate));
     }
 
     // Last activity (latest paper or focus session)
     const papers = JSON.parse(
-      localStorage.getItem(`dreamutrack-papers-${uid}`) || "[]"
+      localStorage.getItem(`dreamutrack-papers-${uid}`) || "[]",
     );
     const focusHistory = JSON.parse(
-      localStorage.getItem(`dreamutrack-focus-history-${uid}`) || "[]"
+      localStorage.getItem(`dreamutrack-focus-history-${uid}`) || "[]",
     );
 
     const allActivities = [
@@ -571,7 +617,7 @@ const Dashboard = () => {
     weekAgo.setDate(weekAgo.getDate() - 7);
 
     const recentSessions = focusHistory.filter(
-      (f) => new Date(f.createdAt || f.startedAt) >= weekAgo
+      (f) => new Date(f.createdAt || f.startedAt) >= weekAgo,
     );
 
     setWeekSessions(recentSessions.length);
@@ -581,9 +627,7 @@ const Dashboard = () => {
   const countdown = useMemo(() => {
     if (!examDate) return null;
 
-    const diff = Math.ceil(
-      (examDate - new Date()) / (1000 * 60 * 60 * 24)
-    );
+    const diff = Math.ceil((examDate - new Date()) / (1000 * 60 * 60 * 24));
 
     return diff;
   }, [examDate]);
@@ -601,6 +645,7 @@ const Dashboard = () => {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
+        <GridMatrixLoader />
         <p className="font-body text-white/60">Loading...</p>
       </div>
     );
@@ -612,8 +657,7 @@ const Dashboard = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 mb-6"
-      >
+        className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 mb-6">
         <div className="flex items-center gap-4">
           {/* Avatar */}
           {user.photoURL ? (
@@ -644,8 +688,9 @@ const Dashboard = () => {
           <div className="flex items-center gap-2">
             <div
               className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"
-              title={isGoogle ? "Signed in with Google" : "Signed in with Email"}
-            >
+              title={
+                isGoogle ? "Signed in with Google" : "Signed in with Email"
+              }>
               {isGoogle ? (
                 <FcGoogle size={18} />
               ) : (
@@ -656,8 +701,7 @@ const Dashboard = () => {
               type="button"
               onClick={handleLogout}
               aria-label="Log out"
-              className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition"
-            >
+              className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition">
               <LogOut size={16} />
             </button>
           </div>
@@ -669,8 +713,7 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5 mb-6"
-      >
+        className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5 mb-6">
         <div className="flex items-center gap-2 text-sm text-white/50 mb-2">
           <Target size={16} className="text-emerald-300" />
           Exam Countdown
@@ -707,8 +750,7 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5"
-        >
+          className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5">
           <div className="flex items-center gap-2 text-sm text-white/50 mb-3">
             <Clock size={16} className="text-indigo-300" />
             Last Activity
@@ -738,8 +780,7 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5"
-        >
+          className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 to-teal-500/5 backdrop-blur-xl p-5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2 text-sm text-white/50">
               <Sparkles size={16} className="text-emerald-300" />
@@ -747,8 +788,7 @@ const Dashboard = () => {
             </div>
             <Link
               to="/focus"
-              className="font-body text-xs text-emerald-300 hover:text-emerald-200 flex items-center gap-1"
-            >
+              className="font-body text-xs text-emerald-300 hover:text-emerald-200 flex items-center gap-1">
               Open
               <ChevronRight size={14} />
             </Link>
@@ -778,16 +818,14 @@ const Dashboard = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="mb-6"
-      >
+        className="mb-6">
         <h3 className="font-heading text-lg font-bold mb-3">Quick Links</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {QUICK_LINKS.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`rounded-2xl border border-white/10 bg-gradient-to-br ${link.color} backdrop-blur-xl p-4 hover:border-white/20 transition group`}
-            >
+              className={`rounded-2xl border border-white/10 bg-gradient-to-br ${link.color} backdrop-blur-xl p-4 hover:border-white/20 transition group`}>
               <link.icon size={22} className={`${link.iconColor} mb-2`} />
               <p className="font-body text-sm font-medium">{link.label}</p>
               <ChevronRight
@@ -803,15 +841,13 @@ const Dashboard = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
+        transition={{ delay: 0.5 }}>
         <h3 className="font-heading text-lg font-bold mb-3">Tools</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {TOOLS.map((tool) => (
             <div
               key={tool.label}
-              className={`rounded-2xl border border-white/10 bg-gradient-to-br ${tool.color} backdrop-blur-xl p-4 opacity-60`}
-            >
+              className={`rounded-2xl border border-white/10 bg-gradient-to-br ${tool.color} backdrop-blur-xl p-4 opacity-60`}>
               <div className="flex items-center justify-between mb-2">
                 <tool.icon size={22} className={tool.iconColor} />
                 <span className="font-body text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">

@@ -315,8 +315,10 @@ import Sidebar from "./components/Sidebar";
 import BottomNav from "./components/BottomNav";
 import ScrollToTop from "./components/ScrollTop";
 import Navbar from "./components/Navbar";
+import Loader from "./components/Loader";
 
 const AppLayout = () => {
+  <Loader />;
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white">
       <ScrollToTop />

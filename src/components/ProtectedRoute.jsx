@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import Loader from "../components/Loader";
 
 const ProtectedRoute = () => {
   const [user, setUser] = useState(null);
@@ -21,7 +22,7 @@ const ProtectedRoute = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
-        <p className="font-body text-white/60">Loading...</p>
+        <Loader />
       </div>
     );
   }
