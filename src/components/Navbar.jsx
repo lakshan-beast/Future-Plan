@@ -406,7 +406,7 @@ const Navbar = () => {
 
   return (
     <div className="lg:hidden fixed top-3 left-0 right-0 z-40 px-4 pb-2 bg-gradient-to-b from-[#0b1020] to-transparent pointer-events-none">
-      <div className="pointer-events-auto flex items-center justify-between rounded-full border border-white/15 bg-[#0e1424]/10 backdrop-blur-xl shadow-lg shadow-black/20 px-5 py-4">
+      <div className="pointer-events-auto flex items-center justify-between rounded-full border border-white/15 bg-[#0e1424]/10 backdrop-blur-xl shadow-lg shadow-black/20 pr-3 pl-5 py-3">
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-bl-2xl rounded-tr-2xl rounded-br-md rounded-tl-md bg-gradient-to-br from-emerald-400 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-500/30">
@@ -445,7 +445,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: -8, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                className="absolute right-0 top-12 w-56 rounded-2xl border border-white/10 bg-[#0e1424]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+                className="absolute -right-6 top-14 w-72 rounded-2xl border border-white/10 bg-[#0e1424]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
                 <div className="p-4 border-b border-white/10">
                   <div className="flex items-center gap-3">
                     {user?.photoURL ? (
@@ -473,7 +473,7 @@ const Navbar = () => {
                     </div>
                   </div>
 
-                  <div className="mt-3 flex items-center gap-2">
+                  <div className="mt-3 flex items-center justify-center gap-2">
                     <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
                       {isGoogle ? (
                         <FcGoogle size={14} />
@@ -490,7 +490,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-body text-red-300 hover:bg-red-500/10 transition">
+                  className="w-full flex items-center justify-center gap-3 px-4 py-3 text-sm font-body text-red-300 hover:bg-red-500/10 transition">
                   <LogOut size={16} />
                   Log out
                 </button>
