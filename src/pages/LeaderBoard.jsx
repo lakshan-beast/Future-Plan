@@ -1,7 +1,14 @@
 // src/pages/Leaderboard.jsx
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+  getCountFromServer,
+} from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
 import { motion } from "motion/react";
 import { Trophy, Flame, Clock, Crown } from "lucide-react";
@@ -11,6 +18,7 @@ const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [totalUsers, setTotalUsers] = useState(0);
 
   // ---------------- Auth state ----------------
   useEffect(() => {
@@ -57,6 +65,34 @@ const Leaderboard = () => {
     fetchLeaderboard();
   }, []);
 
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        // Users count
+        const countSnapshot = await getCountFromServer(collection(db, "users"));
+        setTotalUsers(countSnapshot.data().count);
+
+        // Leaderboard query (existing code)
+        const q = query(
+          collection(db, "users"),
+          orderBy("focusStats.totalMinutes", "desc"),
+          limit(50),
+        );
+        const snapshot = await getDocs(q);
+        // ... existing mapping code ...
+      } catch (err) {
+        // ... existing error handling ...
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeaderboard();
+  }, []);
+
   // ---------------- Helpers ----------------
   const formatMinutes = (mins) => {
     const hours = Math.floor(mins / 60);
@@ -64,12 +100,12 @@ const Leaderboard = () => {
     return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
   };
 
-//   const getRankBadge = (rank) => {
-//     if (rank === 1) return "🥇";
-//     if (rank === 2) return "🥈";
-//     if (rank === 3) return "🥉";
-//     return `#${rank}`;
-//   };
+  //   const getRankBadge = (rank) => {
+  //     if (rank === 1) return "🥇";
+  //     if (rank === 2) return "🥈";
+  //     if (rank === 3) return "🥉";
+  //     return `#${rank}`;
+  //   };
 
   const isCurrentUser = (leaderId) => user?.uid === leaderId;
 
@@ -84,14 +120,24 @@ const Leaderboard = () => {
   return (
     <div className="pb-24 md:pb-8 mt-24">
       {/* Header */}
+      {/* Header */}
       <div className="mb-6">
-        <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-          {/* <Trophy size={24} className="text-amber-300" /> */}
-          Leaderboard
-        </h1>
-        <p className="font-body text-sm text-white/50 mt-1 leading-tight">
+        <div className="flex items-center gap-2 mb-1">
+          <Trophy size={22} className="text-amber-300" />
+          <h1 className="font-heading text-2xl font-bold">Leaderboard</h1>
+        </div>
+        <p className="font-body text-sm text-white/50">
           See how your focus time compares with the DreamUTrack community.
         </p>
+
+        {/* Users count — NEW */}
+        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-body text-xs text-white/60">
+            {totalUsers} {totalUsers === 1 ? "student" : "students"} using
+            DreamUTrack
+          </span>
+        </div>
       </div>
 
       {/* Error */}

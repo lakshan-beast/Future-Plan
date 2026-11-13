@@ -445,7 +445,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: -8, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                className="absolute -right-6 top-14 w-72 rounded-2xl border border-white/10 bg-[#0e1424]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+                className="absolute -right-1 top-14 w-80 rounded-2xl border border-white/10 bg-[#0e1424]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
                 <div className="p-4 border-b border-white/10">
                   <div className="flex items-center gap-3">
                     {user?.photoURL ? (
@@ -473,7 +473,22 @@ const Navbar = () => {
                     </div>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-center gap-2">
+                  {/* Member since — NEW */}
+                  <p className="font-body text-[11px] text-white/30 mt-2 pt-2 border-t border-t-slate-100/10">
+                    Member since{" "}  
+                    {user?.metadata?.creationTime
+                      ? new Date(user.metadata.creationTime).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          },
+                        )
+                      : "—"}
+                  </p>
+
+                  <div className="mt-3 flex items-center  gap-2">
                     <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
                       {isGoogle ? (
                         <FcGoogle size={14} />

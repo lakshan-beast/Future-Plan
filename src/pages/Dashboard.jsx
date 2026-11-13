@@ -534,6 +534,11 @@ const QUICK_LINKS = [
     label: "Leaderboard",
     icon: Trophy, // lucide-react එකෙන් import
   },
+  {
+    path: "/onboarding",
+    label: "OnBoarding",
+    icon: Trophy, // lucide-react එකෙන් import
+  },
 ];
 
 const TOOLS = [
@@ -688,10 +693,25 @@ const Dashboard = () => {
             <p className="font-body text-sm text-white/50 truncate">
               {user.email}
             </p>
+
+            {/* Member since — NEW */}
+            <p className="font-body text-xs text-white/30 mt-1 border-t pt-2">
+              Member since{" "}
+              {user.metadata?.creationTime
+                ? new Date(user.metadata.creationTime).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    },
+                  )
+                : "—"}
+            </p>
           </div>
 
           {/* Provider badge + logout */}
-          <div className="flex items-center gap-2">
+          <div className="flex-col items-center gap-2 border-l border-l-slate-50/20 pl-2">
             <div
               className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"
               title={
@@ -707,7 +727,7 @@ const Dashboard = () => {
               type="button"
               onClick={handleLogout}
               aria-label="Log out"
-              className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition">
+              className="w-8 h-8 mt-3 rounded-full bg-white/5 flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition">
               <LogOut size={16} />
             </button>
           </div>
