@@ -1019,7 +1019,7 @@ export default function Insights() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.35 }}
-        className="rounded-xl border-none border-white/10 bg-white/0 backdrop-blur-xl p-4 sm:p-6 mb-4">
+        className="rounded-xl border border-white/5 bg-white/2 backdrop-blur-xl p-4 sm:p-6 mb-4">
         <h3 className="font-heading font-semibold mb-4">
           Marks Trend Over Time
         </h3>
@@ -1112,7 +1112,7 @@ export default function Insights() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          className="rounded-xl border-none border-white/10 bg-white/0 backdrop-blur-xl p-4 sm:p-6">
+          className="rounded-xl border border-white/5 bg-white/3 backdrop-blur-xl p-4 sm:p-6">
           <h3 className="font-heading font-semibold mb-4 flex items-center gap-2">
             <AlertTriangle size={18} className="text-orange-400" />
             Areas Needing Attention
@@ -1200,7 +1200,7 @@ export default function Insights() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.75 }}
-        className="rounded-xl border-none border-white/10 bg-white/0 backdrop-blur-xl p-4 sm:p-6 mb-4">
+        className="rounded-xl border border-white/5 bg-white/3 backdrop-blur-xl p-4 sm:p-6 mb-4">
         <h3 className="font-heading font-semibold mb-4">
           Focus Time by Subject
         </h3>
@@ -1255,7 +1255,7 @@ export default function Insights() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.85 }}
-        className="rounded-xl border-0 border-white/10 bg-white/0 backdrop-blur-xl p-4 sm:p-6">
+        className="rounded-none border-t border-t-white/20 bg-white/3 backdrop-blur-xl p-4 sm:p-6">
         <h3 className="font-heading font-semibold mb-4 flex items-center gap-2">
           <Lightbulb size={18} className="text-yellow-400 animate-bounce" />
           Recommendations
