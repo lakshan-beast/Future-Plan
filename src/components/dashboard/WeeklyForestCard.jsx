@@ -13,7 +13,7 @@ const WeeklyForestPreview = ({ days }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/30 to-teal-500/5 backdrop-blur-xl p-5">
+      className="rounded-b-3xl rounded-t-md border border-white/10 bg-gradient-to-br from-emerald-500/30 to-teal-500/5 backdrop-blur-xl p-5">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2 text-sm text-white/50">
           <Sparkles size={16} className="text-emerald-300" />

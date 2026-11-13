@@ -157,22 +157,21 @@ const ProfileCard = ({ user, streak, onLogout }) => {
 
       {/* Bottom — level + subjects + streak */}
       <div className="border-none p-2 pt-0 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-        <div className="shrink-0 rounded-2xl border border-white/10 bg-gradient-to-br from-orange-500/20 to-transparent px-6 py-3 flex items-center justify-between gap-3">
-          <Flame size={24} className="text-orange-400" />
-
-          <div>
-            <div className="font-heading text-2xl font-bold leading-none text-center">
+        <div className="shrink-0 rounded-full border border-white/10 bg-gradient-to-br from-orange-500/20 to-transparent p-4 flex items-center justify-between gap-2">
+          <div className="flex gap-1">
+            <Flame size={24} className="text-orange-400 " />
+            <div className="font-heading text-2xl font-bold leading-none text-center border-l border-l-white/30 pl-3">
               {streak}
             </div>
-            <div className="font-body text-[10px] text-white/40 mt-0.5">
+            <div className="font-body text-[10px] text-white/40 flex items-end">
               day streaks
             </div>
           </div>
 
           <Link
             to="/leaderboard"
-            className="font-body text-xs flex items-center gap-1">
-            Go Leader Board
+            className="font-body text-xs text-orange-400/70 hover:text-orange-400/50">
+            Go to Leader Board
           </Link>
         </div>
       </div>

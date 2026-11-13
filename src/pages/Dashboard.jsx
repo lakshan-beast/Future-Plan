@@ -1125,7 +1125,7 @@ const Dashboard = () => {
 
       <ExamCountdownCard examDate={examDate} />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 border border-white/10 p-1.5 rounded-3xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mb-3 border border-white/10 p-2 rounded-3xl">
         <LastActivityCard activity={lastActivity} />
         <WeeklyForestPreview days={weekDays} />
       </div>
