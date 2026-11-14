@@ -119,7 +119,7 @@ const Leaderboard = () => {
   }
 
   return (
-    <div className="pb-24 md:pb-8 mt-20 lg:mt-6">
+    <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
       {/* Header */}
       {/* Header */}
       <div className="mb-6">

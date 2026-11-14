@@ -1030,7 +1030,7 @@ import {
   Music,
   VolumeX,
   Flame,
-  Timer,
+  // Timer,
   BarChart3,
 } from "lucide-react";
 import {
@@ -1333,11 +1333,11 @@ const Focus = () => {
     );
   }
   return (
-    <div className="pb-24 md:pb-8 mt-24 lg:mt-6">
+    <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
       {/* Header */}
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-          <Timer size={24} className="text-emerald-300" />
+          {/* <Timer size={24} className="text-emerald-300" /> */}
           Focus
         </h1>
         <p className="font-body text-sm text-white/50 mt-1">

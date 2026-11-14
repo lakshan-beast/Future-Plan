@@ -1294,7 +1294,7 @@ import {
   AlertTriangle,
   Clock,
   Lightbulb,
-  BarChart3,
+  // BarChart3,
   Activity,
   // Target,
 } from "lucide-react";
@@ -1554,11 +1554,11 @@ export default function Insights() {
   }
 
   return (
-    <div className="pb-24 md:pb-8 mt-20 lg:mt-6">
+    <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
       {/* Header */}
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-          <BarChart3 size={24} className="text-emerald-300" />
+          {/* <BarChart3 size={24} className="text-emerald-300" /> */}
           Insights
         </h1>
         <p className="font-body text-sm text-white/50 mt-1">
