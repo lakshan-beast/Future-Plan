@@ -108,14 +108,14 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="fixed hidden lg:flex w-72 flex-col border-r rounded-r-3xl border-white/10 bg-white/4 backdrop-blur-xl p-5 h-dvh">
+    <aside className="fixed hidden lg:flex w-72 flex-col border-r rounded-r-3xl border-white/10 bg-white/5 backdrop-blur-xl p-5 h-dvh">
       {/* Logo */}
       <div className="mb-8 flex items-center gap-2.5">
         <div className="w-10 h-10 rounded-bl-2xl rounded-tr-2xl rounded-br-md rounded-tl-md bg-gradient-to-br from-emerald-400 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-500/30">
           <GiDreamCatcher size={30} className="text-emerald-100" />
         </div>
         <h1 className="font-heading text-3xl font-bold text-white">
-          Dream<span className="text-emerald-300">U</span>Track
+          Dream<span className="text-emerald-300">T</span>rack
         </h1>
       </div>
 

@@ -1114,7 +1114,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="pb-24 md:pb-8 pt-20">
+    <div className="pb-24 md:pb-8 mt-20 lg:mt-6">
       <ProfileCard
         user={user}
         profile={profile}

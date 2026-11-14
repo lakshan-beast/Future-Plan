@@ -1202,14 +1202,14 @@ const Focus = () => {
   };
 
   // ---------------- Plant growth stage ----------------
-  const progress = 1 - secondsLeft / FOCUS_SECONDS; // 0 → 1
+  const progress = 25 - secondsLeft / FOCUS_SECONDS; // 0 → 1
 
   const getStage = () => {
     if (completed) return "flower";
-    if (progress < 0.15) return "seed";
-    if (progress < 0.4) return "sprout";
-    if (progress < 0.7) return "stem";
-    if (progress < 1) return "bud";
+    if (progress < 15) return "seed";
+    if (progress < 4) return "sprout";
+    if (progress < 17) return "stem";
+    if (progress < 25) return "bud";
     return "flower";
   };
 
@@ -1333,7 +1333,7 @@ const Focus = () => {
     );
   }
   return (
-    <div className="pb-24 md:pb-8 mt-24">
+    <div className="pb-24 md:pb-8 mt-24 lg:mt-6">
       {/* Header */}
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
@@ -1490,7 +1490,7 @@ const Focus = () => {
                     />
                     <path
                       className="animate-pulse delay-150"
-                      d="M60 110 C 80 105, 90 95, 88 85 C 75 88, 65 98, 60 110 Z"
+                      d="M70 110 C 80 105, 90 95, 88 85 C 75 88, 65 98, 60 110 Z"
                       fill="#4ade80"
                     />
                   </motion.g>

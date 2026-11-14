@@ -315,25 +315,53 @@ import Sidebar from "./components/Sidebar";
 import BottomNav from "./components/BottomNav";
 import ScrollToTop from "./components/ScrollTop";
 import Navbar from "./components/Navbar";
-import Loader from "./components/Loader";
+// import Loader from "./components/Loader";
 import Leaderboard from "./pages/LeaderBoard";
 
+// const AppLayout = () => {
+//   <Loader />;
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white">
+//       <ScrollToTop />
+//       <Navbar />
+//       <div className="flex">
+//         <Sidebar />
+//         <main className="flex-1 p-4 sm:p-6 lg:p-8">
+//           <Outlet />
+//         </main>
+//       </div>
+//       <BottomNav />
+//     </div>
+//   );
+// };
+
+
+
 const AppLayout = () => {
-  <Loader />;
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white">
+    <div className="min-h-screen bg-[#000014] text-white">
+    {/* <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white"> */}
       <ScrollToTop />
+
+      {/* Navbar — top, full width */}
       <Navbar />
+
       <div className="flex">
+        {/* Sidebar — desktop only, fixed left */}
         <Sidebar />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+
+        {/* Main content — offset for sidebar on desktop */}
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:px-8 lg:py-0 lg:ml-72 pt-0 mt-2 lg:pt-0 pb-24 lg:pb-8">
           <Outlet />
         </main>
       </div>
+
+      {/* Bottom nav — mobile only */}
       <BottomNav />
     </div>
   );
 };
+
 
 const router = createBrowserRouter([
   {

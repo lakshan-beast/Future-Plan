@@ -1192,7 +1192,7 @@ const Timetable = () => {
   }
 
   return (
-    <div className="pb-24 md:pb-8 mt-20">
+    <div className="pb-24 md:pb-8 mt-20 lg:mt-6">
       {/* Header */}
       <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>

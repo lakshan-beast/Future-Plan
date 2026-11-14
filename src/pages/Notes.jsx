@@ -601,7 +601,7 @@ const Notes = () => {
     "font-body w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 px-4 text-[15px] text-white placeholder-white/30 outline-none transition focus:border-emerald-400/70 focus:bg-white/[0.06] focus:ring-4 focus:ring-emerald-400/10";
 
   return (
-    <div className="pb-24 md:pb-8 mt-20">
+    <div className="pb-24 md:pb-8 mt-20 lg:mt-6">
       {/* Header */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
