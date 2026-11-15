@@ -482,7 +482,7 @@ export default function Leaderboard() {
               aria-hidden="true"
             />
 
-            <div>
+            <div className="border-l-2 border-l-slate-100/30 pl-3">
               <h2 className="text-sm font-semibold text-slate-100">
                 {myEntry
                   ? `Your position : #${myIndex + 1}`
