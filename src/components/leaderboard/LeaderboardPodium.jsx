@@ -259,12 +259,12 @@ export default function LeaderboardPodium({ leaders = [], userId }) {
                   </p>
                 </div>
 
-                <div className="shrink-0 text-right flex-col gap-0 pl-1.5 ml-3 border-l-2 border-l-slate-100/20">
+                <div className="shrink-0 text-right flex-col gap-0 pl-2.5 ml-3 border-l-2 border-l-slate-100/20">
                   <p className="font-heading text-sm font-bold tabular-nums text-amber-500 sm:text-xl">
                     {formatFocusMinutes(leader.totalMinutes)}
                   </p>
 
-                  <p className="-mt-2 flex items-center justify-end gap-1 text-[9px] text-slate-400 ">
+                  <p className="mt-0 flex items-center justify-end gap-1 text-[9px] text-slate-400 ">
                     <Clock3 size={10} aria-hidden="true" />
                     <span>Focus time</span>
                   </p>

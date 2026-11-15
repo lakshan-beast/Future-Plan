@@ -86,7 +86,7 @@ export default function LastActivityCard({ activity }) {
             </h3>
 
             {activity.detail && (
-              <p className="mt-2 break-words text-sm leading-6 text-slate-300">
+              <p className="mt-0 break-words text-sm leading-6 text-slate-300">
                 {activity.detail}
               </p>
             )}
@@ -94,7 +94,7 @@ export default function LastActivityCard({ activity }) {
             {activityDate && (
               <time
                 dateTime={activityDate.toISOString()}
-                className="mt-3 block text-xs leading-5 text-slate-400">
+                className="mt-1 text-right block text-xs leading-8 text-slate-400 border-t-2 border-t-slate-50/20">
                 {activityDate.toLocaleDateString("en-GB", {
                   day: "numeric",
                   month: "short",

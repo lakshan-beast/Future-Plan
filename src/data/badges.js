@@ -7,6 +7,8 @@ import {
   Flame,
   Crown,
   Star,
+  UserRoundPlus,
+  GraduationCap,
 } from "lucide-react";
 
 export const BADGES = [
@@ -80,5 +82,26 @@ export const BADGES = [
     theme: "from-amber-400 to-yellow-600",
     message:
       "Seventy-five hours of dedication. Celebrate this milestone, then set your next goal.",
+  },
+];
+
+export const JOURNEY_BADGES = [
+  {
+    id: "journey-account",
+    name: "Journey Begins",
+    icon: UserRoundPlus,
+    theme: "from-sky-400 to-indigo-600",
+    message: "Your DreamTrack account is ready. Your next chapter starts here.",
+    requirement: "Create your account",
+    kind: "account",
+  },
+  {
+    id: "journey-profile",
+    name: "Ready to Learn",
+    icon: GraduationCap,
+    theme: "from-violet-400 to-fuchsia-600",
+    message: "Your study level and subjects are set. Make your plan count.",
+    requirement: "Complete your study profile",
+    kind: "profile",
   },
 ];
