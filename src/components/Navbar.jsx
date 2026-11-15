@@ -521,179 +521,445 @@
 // export default Navbar;
 
 // src/components/Navbar.jsx
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import { Link } from "react-router-dom";
+// import { onAuthStateChanged, signOut } from "firebase/auth";
+// import { auth } from "../firebase/firebase";
+// import { motion, AnimatePresence } from "motion/react";
+// import { LogOut, Bell } from "lucide-react";
+// import { GiDreamCatcher } from "react-icons/gi";
+// import { FcGoogle } from "react-icons/fc";
+// import { MdOutlineMail } from "react-icons/md";
+// import { NOTIFICATION_EVENT } from "../utils/notification";
+
+// const Navbar = () => {
+//   const [user, setUser] = useState(null);
+//   const [menuOpen, setMenuOpen] = useState(false);
+//   const [unread, setUnread] = useState(false);
+
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+//       setUser(currentUser);
+//     });
+
+//     return () => unsubscribe();
+//   }, []);
+
+//   const provider = user?.providerData?.[0]?.providerId;
+//   const isGoogle = provider === "google.com";
+
+//   const handleLogout = async () => {
+//     await signOut(auth);
+//     window.location.href = "/login";
+//   };
+
+//   // listen — notification event
+//   useEffect(() => {
+//     const handler = () => setUnread(true);
+//     window.addEventListener(NOTIFICATION_EVENT, handler);
+//     return () => window.removeEventListener(NOTIFICATION_EVENT, handler);
+//   }, []);
+
+//   return (
+//     <div className="lg:hidden fixed top-3 left-0 right-0 z-40 px-3 pb-2 bg-gradient-to-b from-[#0b1020] to-transparent pointer-events-none">
+//       <div className="pointer-events-auto flex items-center justify-between rounded-full border border-white/15 bg-[#0e1424]/80 backdrop-blur-xl shadow-lg shadow-black/20 pr-3 pl-4 py-3">
+//         {/* Logo + name */}
+//         <Link to="/dashboard" className="flex items-center gap-2">
+//           {/* Logo icon */}
+//           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+//             <GiDreamCatcher size={26} className="text-emerald-50" />
+//           </div>
+
+//           <h1 className="font-heading text-[1.7rem] font-bold text-white">
+//             <span className="bg-emerald-400 mr-0.5 px-1.5 rounded-sm">
+//               Dream
+//             </span>
+//             <span className="text-emerald-300">Track</span>
+//           </h1>
+//         </Link>
+
+//         <motion.button
+//           type="button"
+//           onClick={() => setUnread(false)}
+//           aria-label="Notifications"
+//           animate={unread ? { rotate: [0, -8, 8, -4, 4, 0] } : { rotate: 0 }}
+//           transition={{ duration: 0.5 }}
+//           className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center relative">
+//           <Bell size={18} className="text-white/70" />
+
+//           {/* Unread dot */}
+//           {unread && (
+//             <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-400" />
+//           )}
+//         </motion.button>
+
+//         {/* Avatar + menu */}
+//         <div className="relative">
+//           <button
+//             type="button"
+//             onClick={() => setMenuOpen(!menuOpen)}
+//             aria-label="Open profile menu"
+//             aria-expanded={menuOpen}
+//             className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-400/30 flex items-center justify-center bg-white/5 active:scale-95 transition">
+//             {user?.photoURL ? (
+//               <img
+//                 src={user.photoURL}
+//                 alt={user.displayName || "Profile"}
+//                 className="w-full h-full object-cover"
+//               />
+//             ) : (
+//               <span className="font-heading text-sm font-bold text-emerald-300">
+//                 {(user?.displayName || user?.email || "U")[0].toUpperCase()}
+//               </span>
+//             )}
+//           </button>
+
+//           {/* Dropdown — overflow safe */}
+//           <AnimatePresence>
+//             {menuOpen && (
+//               <motion.div
+//                 initial={{ opacity: 0, y: -8, scale: 0.95 }}
+//                 animate={{ opacity: 1, y: 0, scale: 1 }}
+//                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
+//                 className="absolute right-0 top-12 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-white/10 bg-[#0e1424]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
+//                 <div className="p-4 border-b border-white/10">
+//                   <div className="flex items-center gap-3">
+//                     {user?.photoURL ? (
+//                       <img
+//                         src={user.photoURL}
+//                         alt={user.displayName || "Profile"}
+//                         className="w-10 h-10 rounded-full object-cover"
+//                       />
+//                     ) : (
+//                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shrink-0">
+//                         <span className="font-heading text-sm font-bold text-emerald-950">
+//                           {(user?.displayName ||
+//                             user?.email ||
+//                             "U")[0].toUpperCase()}
+//                         </span>
+//                       </div>
+//                     )}
+
+//                     <div className="min-w-0">
+//                       <p className="font-body text-sm font-medium truncate">
+//                         {user?.displayName || "Student"}
+//                       </p>
+//                       <p className="font-body text-xs text-white/40 truncate">
+//                         {user?.email}
+//                       </p>
+//                     </div>
+//                   </div>
+
+//                   {/* Member since */}
+//                   <p className="font-body text-[11px] text-white/30 mt-2 pt-2 border-t border-white/10">
+//                     Member since{" "}
+//                     {user?.metadata?.creationTime
+//                       ? new Date(user.metadata.creationTime).toLocaleDateString(
+//                           "en-GB",
+//                           {
+//                             day: "numeric",
+//                             month: "short",
+//                             year: "numeric",
+//                           },
+//                         )
+//                       : "—"}
+//                   </p>
+
+//                   <div className="mt-3 flex items-center gap-2">
+//                     <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+//                       {isGoogle ? (
+//                         <FcGoogle size={14} />
+//                       ) : (
+//                         <MdOutlineMail size={14} className="text-white/60" />
+//                       )}
+//                     </div>
+//                     <span className="font-body text-xs text-white/40">
+//                       {isGoogle ? "Google account" : "Email account"}
+//                     </span>
+//                   </div>
+//                 </div>
+
+//                 <button
+//                   type="button"
+//                   onClick={handleLogout}
+//                   className="w-full flex items-center justify-center gap-3 px-4 py-3 font-body text-sm text-red-300 hover:bg-red-500/10 transition">
+//                   <LogOut size={16} />
+//                   Log out
+//                 </button>
+//               </motion.div>
+//             )}
+//           </AnimatePresence>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Navbar;
+
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../firebase/firebase";
-import { motion, AnimatePresence } from "motion/react";
-import { LogOut, Bell } from "lucide-react";
+import { Bell, LogOut, Trophy } from "lucide-react";
 import { GiDreamCatcher } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMail } from "react-icons/md";
+
+import { auth } from "../firebase/firebase";
 import { NOTIFICATION_EVENT } from "../utils/notification";
 
-const Navbar = () => {
+export default function Navbar() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [unread, setUnread] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [error, setError] = useState("");
+
+  const profileContainerRef = useRef(null);
+  const profileButtonRef = useRef(null);
+  const firstActionRef = useRef(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe();
+    return onAuthStateChanged(auth, setUser);
   }, []);
 
-  const provider = user?.providerData?.[0]?.providerId;
-  const isGoogle = provider === "google.com";
-
-  const handleLogout = async () => {
-    await signOut(auth);
-    window.location.href = "/login";
-  };
-
-  // listen — notification event
   useEffect(() => {
-    const handler = () => setUnread(true);
-    window.addEventListener(NOTIFICATION_EVENT, handler);
-    return () => window.removeEventListener(NOTIFICATION_EVENT, handler);
+    const handleNotification = () => setUnread(true);
+
+    window.addEventListener(NOTIFICATION_EVENT, handleNotification);
+
+    return () => {
+      window.removeEventListener(NOTIFICATION_EVENT, handleNotification);
+    };
   }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    firstActionRef.current?.focus();
+
+    const handleOutsidePointer = (event) => {
+      if (
+        profileContainerRef.current &&
+        !profileContainerRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        profileButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("pointerdown", handleOutsidePointer);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handleOutsidePointer);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen]);
+
+  const isGoogle = user?.providerData?.some(
+    ({ providerId }) => providerId === "google.com",
+  );
+
+  const displayName = user?.displayName || "Student";
+  const initial = (displayName.trim()[0] || "S").toUpperCase();
+
+  const creationTime = user?.metadata?.creationTime;
+  const memberSince = creationTime
+    ? new Date(creationTime).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    : "—";
+
+  async function handleLogout() {
+    if (loggingOut) return;
+
+    setError("");
+    setLoggingOut(true);
+
+    try {
+      await signOut(auth);
+      navigate("/login", { replace: true });
+    } catch {
+      setError("Unable to log out. Please try again.");
+      setLoggingOut(false);
+    }
+  }
 
   return (
-    <div className="lg:hidden fixed top-3 left-0 right-0 z-40 px-3 pb-2 bg-gradient-to-b from-[#0b1020] to-transparent pointer-events-none">
-      <div className="pointer-events-auto flex items-center justify-between rounded-full border border-white/15 bg-[#0e1424]/80 backdrop-blur-xl shadow-lg shadow-black/20 pr-3 pl-4 py-3">
-        {/* Logo + name */}
-        <Link to="/dashboard" className="flex items-center gap-2">
-          {/* Logo icon */}
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-            <GiDreamCatcher size={26} className="text-emerald-50" />
-          </div>
+    <header className="pointer-events-none fixed inset-x-0 top-3 z-40 px-3 lg:hidden">
+      <div className="pointer-events-auto mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-2xl border border-emerald-300/15 bg-[#070e20]/95 px-3 py-3 shadow-lg shadow-black/20 backdrop-blur-xl">
+        <Link
+          to="/dashboard"
+          aria-label="DreamTrack dashboard"
+          className="flex min-w-0 items-center gap-2 rounded-lg">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-emerald-300/25 bg-emerald-400/10">
+            <GiDreamCatcher
+              size={25}
+              className="text-emerald-300"
+              aria-hidden="true"
+            />
+          </span>
 
-          <h1 className="font-heading text-[1.7rem] font-bold text-white">
-            <span className="bg-emerald-400 mr-0.5 px-1.5 rounded-sm">
-              Dream
-            </span>
-            <span className="text-emerald-300">Track</span>
-          </h1>
+          <span className="truncate font-heading text-xl font-bold tracking-tight text-white sm:text-2xl">
+            Dream<span className="text-emerald-300">Track</span>
+          </span>
         </Link>
-     
-     
-        <motion.button
-          type="button"
-          onClick={() => setUnread(false)}
-          aria-label="Notifications"
-          animate={unread ? { rotate: [0, -8, 8, -4, 4, 0] } : { rotate: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center relative">
-          <Bell size={18} className="text-white/70" />
 
-          {/* Unread dot */}
-          {unread && (
-            <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-400" />
-          )}
-        </motion.button>
-
-        {/* Avatar + menu */}
-        <div className="relative">
+        <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Open profile menu"
-            aria-expanded={menuOpen}
-            className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-400/30 flex items-center justify-center bg-white/5 active:scale-95 transition">
-            {user?.photoURL ? (
-              <img
-                src={user.photoURL}
-                alt={user.displayName || "Profile"}
-                className="w-full h-full object-cover"
+            onClick={() => setUnread(false)}
+            aria-label={
+              unread
+                ? "Unread notification received. Mark as read"
+                : "No unread notifications"
+            }
+            title={
+              unread ? "Mark notification as read" : "No unread notifications"
+            }
+            className="
+              relative flex size-11 items-center justify-center
+              rounded-xl border border-white/10 bg-white/[0.03]
+              text-slate-300 transition-colors
+              hover:border-emerald-300/30 hover:text-emerald-300
+            ">
+            <Bell size={19} aria-hidden="true" />
+
+            {unread && (
+              <span
+                aria-hidden="true"
+                className="absolute right-2 top-2 size-2 rounded-full bg-emerald-300 ring-2 ring-[#070e20]"
               />
-            ) : (
-              <span className="font-heading text-sm font-bold text-emerald-300">
-                {(user?.displayName || user?.email || "U")[0].toUpperCase()}
-              </span>
             )}
           </button>
 
-          {/* Dropdown — overflow safe */}
-          <AnimatePresence>
+          <div
+            ref={profileContainerRef}
+            className="relative"
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setMenuOpen(false);
+              }
+            }}>
+            <button
+              ref={profileButtonRef}
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label="Account options"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-account-panel"
+              className="
+                flex size-11 items-center justify-center
+                overflow-hidden rounded-full border-2
+                border-emerald-300/40 bg-emerald-400/10
+                text-sm font-bold text-emerald-200
+              ">
+              {user?.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt=""
+                  width={44}
+                  height={44}
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                initial
+              )}
+            </button>
+
             {menuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                className="absolute right-0 top-12 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-white/10 bg-[#0e1424]/95 backdrop-blur-xl shadow-2xl overflow-hidden">
-                <div className="p-4 border-b border-white/10">
-                  <div className="flex items-center gap-3">
-                    {user?.photoURL ? (
-                      <img
-                        src={user.photoURL}
-                        alt={user.displayName || "Profile"}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shrink-0">
-                        <span className="font-heading text-sm font-bold text-emerald-950">
-                          {(user?.displayName ||
-                            user?.email ||
-                            "U")[0].toUpperCase()}
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="min-w-0">
-                      <p className="font-body text-sm font-medium truncate">
-                        {user?.displayName || "Student"}
-                      </p>
-                      <p className="font-body text-xs text-white/40 truncate">
-                        {user?.email}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Member since */}
-                  <p className="font-body text-[11px] text-white/30 mt-2 pt-2 border-t border-white/10">
-                    Member since{" "}
-                    {user?.metadata?.creationTime
-                      ? new Date(user.metadata.creationTime).toLocaleDateString(
-                          "en-GB",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          },
-                        )
-                      : "—"}
+              <div
+                id="mobile-account-panel"
+                className="
+                  absolute right-0 top-14 w-72
+                  max-w-[calc(100vw-1.5rem)]
+                  overflow-hidden rounded-2xl border
+                  border-emerald-300/15 bg-[#0b1426]
+                  text-white shadow-2xl shadow-black/40
+                ">
+                <div className="border-b border-white/10 p-4">
+                  <p className="truncate text-sm font-semibold">
+                    {displayName}
                   </p>
 
-                  <div className="mt-3 flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                      {isGoogle ? (
-                        <FcGoogle size={14} />
-                      ) : (
-                        <MdOutlineMail size={14} className="text-white/60" />
-                      )}
-                    </div>
-                    <span className="font-body text-xs text-white/40">
-                      {isGoogle ? "Google account" : "Email account"}
-                    </span>
+                  <p className="mt-1 truncate text-xs text-slate-400">
+                    {user?.email}
+                  </p>
+
+                  <div className="mt-3 flex items-center gap-2 text-xs text-slate-300">
+                    {isGoogle ? (
+                      <FcGoogle size={15} aria-hidden="true" />
+                    ) : (
+                      <MdOutlineMail
+                        size={16}
+                        className="text-emerald-300"
+                        aria-hidden="true"
+                      />
+                    )}
+
+                    <span>{isGoogle ? "Google account" : "Email account"}</span>
                   </div>
+
+                  <p className="mt-3 text-xs text-slate-400">
+                    Member since {memberSince}
+                  </p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-3 px-4 py-3 font-body text-sm text-red-300 hover:bg-red-500/10 transition">
-                  <LogOut size={16} />
-                  Log out
-                </button>
-              </motion.div>
+                <div className="space-y-1 p-2">
+                  <Link
+                    ref={firstActionRef}
+                    to="/leaderboard"
+                    className="flex min-h-11 items-center gap-3 rounded-xl px-3 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-emerald-200">
+                    <Trophy
+                      size={17}
+                      className="text-emerald-300"
+                      aria-hidden="true"
+                    />
+                    Leaderboard
+                  </Link>
+
+                  {error && (
+                    <p role="alert" className="px-3 py-2 text-xs text-red-300">
+                      {error}
+                    </p>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    disabled={loggingOut}
+                    className="
+                      flex min-h-11 w-full items-center gap-3
+                      rounded-xl px-3 py-3 text-sm text-red-300
+                      hover:bg-red-400/10
+                      disabled:cursor-wait disabled:opacity-60
+                    ">
+                    <LogOut size={17} aria-hidden="true" />
+                    {loggingOut ? "Logging out…" : "Log out"}
+                  </button>
+                </div>
+              </div>
             )}
-          </AnimatePresence>
+          </div>
         </div>
       </div>
-    </div>
+    </header>
   );
-};
-
-export default Navbar;
+}
