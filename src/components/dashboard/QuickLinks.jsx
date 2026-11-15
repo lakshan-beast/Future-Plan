@@ -44,12 +44,12 @@ export default function QuickLinks() {
   return (
     <section
       aria-labelledby="quick-links-heading"
-      className="rounded-3xl border border-emerald-300/15 bg-[#0a1224] p-5 sm:p-6"
+      className="rounded-3xl border border-emerald-300/5 bg-[#0a122483] p-5 sm:p-6"
     >
       <div className="mb-5">
         <h2
           id="quick-links-heading"
-          className="flex items-center gap-2 text-sm font-semibold text-slate-100"
+          className="flex items-center gap-2 text-xl font-semibold text-slate-100"
         >
           <Zap
             size={18}
@@ -64,7 +64,7 @@ export default function QuickLinks() {
         </p>
       </div>
 
-      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {QUICK_LINKS.map(
           ({
             path,

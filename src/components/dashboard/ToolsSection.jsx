@@ -41,11 +41,11 @@ export default function ToolsSection() {
   return (
     <section
       aria-labelledby="tools-heading"
-      className="rounded-3xl border border-emerald-300/15 bg-[#0a1224] p-5 sm:p-6">
+      className="rounded-3xl border border-emerald-300/5 bg-[#0a122483] p-5 sm:p-6">
       <div className="mb-5">
         <h2
           id="tools-heading"
-          className="flex items-center gap-2 text-sm font-semibold text-slate-100">
+          className="flex items-center gap-2 text-xl font-semibold text-slate-100">
           <Wrench size={18} className="text-emerald-300" aria-hidden="true" />
           Study Tools
         </h2>
@@ -91,10 +91,10 @@ export default function ToolsSection() {
                 </span>
 
                 {comingSoon && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-[#080f20]/60 px-2.5 py-1 text-[10px] font-medium text-slate-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-[#080f20]/60 px-3 py-1 text-[10px] font-medium text-slate-300">
                     <span
                       aria-hidden="true"
-                      className="size-1.5 rounded-full bg-amber-300"
+                      className="size-1.5 rounded-full bg-amber-300 animate-pulse"
                     />
                     Coming soon
                   </span>
@@ -105,7 +105,7 @@ export default function ToolsSection() {
                 {label}
               </h3>
 
-              <p className="mt-1.5 text-xs leading-5 text-slate-400">
+              <p className="mt-0.5 ml-1.5 text-xs leading-5 text-slate-400/70 ">
                 {description}
               </p>
             </li>

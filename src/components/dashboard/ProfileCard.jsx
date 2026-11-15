@@ -312,7 +312,7 @@ function ProfileClock({ name }) {
 
       <time
         dateTime={now.toISOString()}
-        className="flex shrink-0 flex-wrap gap-x-4 gap-y-2 text-xs text-slate-300 xl:flex-col xl:items-end">
+        className="flex shrink-0 flex-wrap gap-x-4 gap-y-2 text-xs text-slate-300 xl:flex-col justify-between xl:items-end">
         <span className="inline-flex items-center gap-2">
           <CalendarDays
             size={15}
@@ -403,7 +403,7 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
         <div className="space-y-5 p-5 sm:p-6">
           {/* Profile details + responsive actions */}
           <div className="flex items-start justify-between gap-3 sm:items-center sm:gap-5">
-            <div className="flex min-w-0 flex-1 items-start gap-3 sm:items-center">
+            <div className="flex min-w-0 flex-1 items-center gap-3 sm:items-start justify-between">
               {user.photoURL ? (
                 <img
                   src={user.photoURL}
@@ -418,20 +418,19 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
                   {initial}
                 </span>
               )}
+            </div>
+            <div className="min-w-0">
+              <p className="break-words text-sm font-semibold text-white sm:text-base">
+                {displayName}
+              </p>
 
-              <div className="min-w-0">
-                <p className="break-words text-sm font-semibold text-white sm:text-base">
-                  {displayName}
-                </p>
+              <p className="mt-1 break-all text-xs text-slate-300">
+                {user.email}
+              </p>
 
-                <p className="mt-1 break-all text-xs text-slate-300">
-                  {user.email}
-                </p>
-
-                <p className="mt-2 text-xs leading-5 text-slate-400">
-                  Member since {memberSince}
-                </p>
-              </div>
+              <p className="mt-2 text-xs leading-5 text-slate-400">
+                Member since {memberSince}
+              </p>
             </div>
 
             {/* Mobile: vertical | sm and above: horizontal */}

@@ -1194,7 +1194,6 @@ function DashboardWelcome({ displayName }) {
     };
   }, []);
 
- 
   return (
     <section
       aria-labelledby="dashboard-heading"
@@ -1356,7 +1355,7 @@ export default function Dashboard() {
         streak={streak}
         onLogout={handleLogout}
       />
-      <BadgesAchievements />
+          <BadgesAchievements />
 
       <div className="grid min-w-0 grid-cols-1 items-start gap-5 xl:grid-cols-3">
         <div className="min-w-0 xl:col-span-2">
@@ -1368,14 +1367,13 @@ export default function Dashboard() {
         </div>
       </div>
 
-
       <div className="grid min-w-0 grid-cols-1 items-start gap-5 md:grid-cols-2">
         <div className="min-w-0">
           <ExamCountdownCard examDate={examDate} />
         </div>
 
         <div className="min-w-0">
-          <WeeklyForestPreview days={weekDays} />
+<WeeklyForestPreview days={weekDays} />
         </div>
       </div>
 

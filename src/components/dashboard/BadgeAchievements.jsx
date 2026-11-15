@@ -256,6 +256,7 @@ export default function BadgesAchievements() {
   const [error, setError] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [badgeQueue, setBadgeQueue] = useState([]);
+  //   const Icon = badge.icon;
 
   useEffect(() => {
     let active = true;
@@ -400,12 +401,12 @@ export default function BadgesAchievements() {
               return (
                 <li
                   key={badge.id}
-                  className={`flex w-28 shrink-0 flex-col items-center rounded-2xl border px-2 py-4 text-center lg:w-auto  ${
+                  className={`flex w-32 shrink-0 flex-col items-center rounded-2xl border px-2 py-4 text-center lg:w-auto  ${
                     badge.unlocked
                       ? "border-emerald-300/20 bg-emerald-400/[0.06]"
                       : "border-white/5 bg-white/[0.02]"
                   }`}>
-                  <span
+                  {/* <span
                     className={`flex size-12 items-center justify-center rounded-2xl ${
                       badge.unlocked
                         ? `bg-gradient-to-br ${badge.theme}`
@@ -414,6 +415,27 @@ export default function BadgesAchievements() {
                     {badge.unlocked ? (
                       <Icon
                         size={23}
+                        className="text-white"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <Lock
+                        size={19}
+                        className="text-slate-400"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span> */}
+
+                  <span
+                    className={`flex size-12 items-center justify-center rounded-2xl ${
+                      badge.unlocked
+                        ? `bg-gradient-to-br ${badge.theme}`
+                        : "bg-slate-800/70"
+                    }`}>
+                    {badge.unlocked ? (
+                      <Icon
+                        size={26}
                         className="text-white"
                         aria-hidden="true"
                       />
@@ -433,11 +455,15 @@ export default function BadgesAchievements() {
                     {badge.hours}h
                   </p>
 
-                  <p className="mt-1 text-[11px] leading-5 text-slate-300">
+                  <p className="mt-1 text-[11px] leading-5 text-slate-100">
                     {badge.name}
                   </p>
 
-                  <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[10px] text-slate-400">
+                  <p className="mt-1 text-[11px] leading-5 text-slate-300/50">
+                    {badge.message}
+                  </p>
+
+                  <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[10px] text-emerald-300">
                     {badge.unlocked && (
                       <CircleCheck
                         size={13}
