@@ -181,7 +181,7 @@ export default function LeaderboardPodium({ leaders = [], userId }) {
         <span className="text-xs text-slate-400">All-time focus</span>
       </div>
 
-      <ol className="flex justify-center gap-3 pt-3">
+      <ol className="flex-col lg:flex justify-center gap-3 space-y-5 pt-3">
         {leaders.slice(0, 3).map((leader, index) => {
           const rank = index + 1;
           const style = RANK_STYLES[rank];
