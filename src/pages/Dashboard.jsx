@@ -1049,9 +1049,107 @@
 // export default Dashboard;
 
 // src/pages/Dashboard.jsx
+// import { useEffect, useMemo, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { onAuthStateChanged, signOut } from "firebase/auth";
+// import { auth } from "../firebase/firebase";
+
+// import Loader from "../components/Loader";
+// import ProfileCard from "../components/dashboard/ProfileCard";
+// import DailyMotivation from "../components/dashboard/DailyMotivation";
+// import BadgesAchievements from "../components/dashboard/BadgeAchievements";
+// import ExamCountdownCard from "../components/dashboard/ExamCountdownCard";
+// import LastActivityCard from "../components/dashboard/LastActivityCard";
+// import WeeklyForestPreview from "../components/dashboard/WeeklyForestCard";
+// import QuickLinks from "../components/dashboard/QuickLinks";
+// import ToolsSection from "../components/dashboard/ToolsSection";
+
+// import { useDashboardData } from "../hooks/useDashboardData";
+// import {
+//   buildLastActivity,
+//   computeStreak,
+//   getLast7Days,
+// } from "../utils/dashboardUtils";
+
+// const Dashboard = () => {
+//   const navigate = useNavigate();
+
+//   const [user, setUser] = useState(null);
+//   const [authReady, setAuthReady] = useState(false);
+//   // const [streak, setStreak] = useState(0);
+
+//   // Firestore read — focusStats.currentStreak
+//   // const focusStats = data.focusStats || {};
+//   // setStreak(focusStats.currentStreak || 0);
+
+//   // ---------------- Auth state ----------------
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+//       setUser(currentUser);
+//       setAuthReady(true);
+//     });
+//     return unsubscribe;
+//   }, []);
+
+//   // Not signed in → go to login (instead of showing the loader forever)
+//   useEffect(() => {
+//     if (authReady && !user) navigate("/login", { replace: true });
+//   }, [authReady, user, navigate]);
+
+//   // ---------------- Data ----------------
+//   const { profile, examDate, papers, focusHistory, profileLoading } =
+//     useDashboardData(user);
+
+//   const streak = useMemo(() => computeStreak(focusHistory), [focusHistory]);
+//   const weekDays = useMemo(() => getLast7Days(focusHistory), [focusHistory]);
+//   const lastActivity = useMemo(
+//     () => buildLastActivity(papers, focusHistory),
+//     [papers, focusHistory],
+//   );
+
+//   const handleLogout = async () => {
+//     await signOut(auth);
+//     navigate("/login");
+//   };
+
+//   if (!user) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
+//         <Loader size="md" />
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="pb-24 md:pb-8 mt-22 lg:mt-6">
+//       <ProfileCard
+//         user={user}
+//         profile={profile}
+//         profileLoading={profileLoading}
+//         streak={streak}
+//         onLogout={handleLogout}
+//       />
+//       <BadgesAchievements />
+
+//       <DailyMotivation challengeDay={streak} />
+//       <ExamCountdownCard examDate={examDate} />
+//       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mb-3 border border-white/10 p-2 rounded-3xl">
+//         <LastActivityCard activity={lastActivity} />
+//         <WeeklyForestPreview days={weekDays} />
+//       </div>
+//       <QuickLinks />
+//       <ToolsSection />
+//     </div>
+//   );
+// };
+
+// export default Dashboard;
+
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { CalendarDays, Clock3 } from "lucide-react";
+
 import { auth } from "../firebase/firebase";
 
 import Loader from "../components/Loader";
@@ -1071,57 +1169,197 @@ import {
   getLast7Days,
 } from "../utils/dashboardUtils";
 
-const Dashboard = () => {
+function getGreeting(hour) {
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+function DashboardWelcome({ displayName }) {
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const updateTime = () => setNow(new Date());
+    const interval = window.setInterval(updateTime, 30_000);
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) updateTime();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  const dateLabel = now.toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  const timeLabel = now.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <section
+      aria-labelledby="dashboard-heading"
+      className="relative isolate overflow-hidden rounded-3xl border border-emerald-400/15 bg-[#080f20]">
+      {/* Decorative artwork */}
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 800 320"
+        preserveAspectRatio="xMidYMid slice"
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-50">
+        <defs>
+          <linearGradient id="dashboard-sky" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#080f20" />
+            <stop offset="65%" stopColor="#10363c" />
+            <stop offset="100%" stopColor="#153c37" />
+          </linearGradient>
+
+          <radialGradient id="dashboard-light">
+            <stop offset="0%" stopColor="#6ee7b7" stopOpacity=".45" />
+            <stop offset="100%" stopColor="#6ee7b7" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        <rect width="800" height="320" fill="url(#dashboard-sky)" />
+        <ellipse
+          cx="665"
+          cy="100"
+          rx="190"
+          ry="150"
+          fill="url(#dashboard-light)"
+        />
+        <circle cx="665" cy="78" r="24" fill="#a7f3d0" opacity=".55" />
+
+        <path
+          d="M0 280 145 200 260 255 420 150 545 220 690 125 800 205V320H0Z"
+          fill="#174b4d"
+        />
+        <path
+          d="M0 305 190 245 315 285 520 200 640 260 800 195V320H0Z"
+          fill="#0c3037"
+        />
+        <path d="M0 320 220 280 430 310 620 250 800 290V320Z" fill="#071923" />
+      </svg>
+
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#080f20] via-[#080f20]/90 to-transparent" />
+
+      <div className="p-5 sm:p-7 lg:p-8">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+          Your study overview
+        </p>
+
+        <h1
+          id="dashboard-heading"
+          className="font-heading text-3xl font-bold leading-tight text-white sm:text-4xl">
+          {getGreeting(now.getHours())},{" "}
+          <span className="text-emerald-300">{displayName}!</span>
+        </h1>
+
+        {/* <p className="mt-4 max-w-lg text-sm leading-7 text-slate-300">
+          See your study progress in one place and choose your next step for
+          today. Check your exam countdown, recent activity and milestones, then
+          keep moving towards your goals one focused session at a time.
+        </p> */}
+
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-slate-300 sm:text-sm">
+          <span className="inline-flex items-center gap-2">
+            <CalendarDays
+              size={16}
+              className="text-emerald-300"
+              aria-hidden="true"
+            />
+            <time dateTime={now.toISOString()}>{dateLabel}</time>
+          </span>
+
+          <span className="inline-flex items-center gap-2">
+            <Clock3 size={16} className="text-emerald-300" aria-hidden="true" />
+            <span className="tabular-nums">{timeLabel}</span>
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function Dashboard() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
   const [authReady, setAuthReady] = useState(false);
-  // const [streak, setStreak] = useState(0);
+  const [logoutError, setLogoutError] = useState("");
 
-  // Firestore read — focusStats.currentStreak
-  // const focusStats = data.focusStats || {};
-  // setStreak(focusStats.currentStreak || 0);
-
-  // ---------------- Auth state ----------------
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    return onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setAuthReady(true);
     });
-    return unsubscribe;
   }, []);
 
-  // Not signed in → go to login (instead of showing the loader forever)
   useEffect(() => {
-    if (authReady && !user) navigate("/login", { replace: true });
+    if (authReady && !user) {
+      navigate("/login", { replace: true });
+    }
   }, [authReady, user, navigate]);
 
-  // ---------------- Data ----------------
   const { profile, examDate, papers, focusHistory, profileLoading } =
     useDashboardData(user);
 
   const streak = useMemo(() => computeStreak(focusHistory), [focusHistory]);
+
   const weekDays = useMemo(() => getLast7Days(focusHistory), [focusHistory]);
+
   const lastActivity = useMemo(
     () => buildLastActivity(papers, focusHistory),
     [papers, focusHistory],
   );
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate("/login");
-  };
+  async function handleLogout() {
+    setLogoutError("");
 
-  if (!user) {
+    try {
+      await signOut(auth);
+      navigate("/login", { replace: true });
+    } catch {
+      setLogoutError("Unable to log out. Please try again.");
+    }
+  }
+
+  if (!authReady || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
+      <div
+        role="status"
+        className="flex min-h-[60vh] items-center justify-center">
         <Loader size="md" />
+        <span className="sr-only">Loading your dashboard…</span>
       </div>
     );
   }
 
+  const displayName = user.displayName?.trim().split(/\s+/)[0] || "Student";
+
   return (
-    <div className="pb-24 md:pb-8 mt-22 lg:mt-6">
+    <div className="mt-24 space-y-5 pb-6 lg:mt-6">
+      <DashboardWelcome displayName={displayName} />
+
+      {logoutError && (
+        <p
+          role="alert"
+          className="rounded-xl border border-red-400/20 bg-red-400/10 p-3 text-sm text-red-200">
+          {logoutError}
+        </p>
+      )}
+
+      {/* Retained until ProfileCard's existing contents are reviewed */}
       <ProfileCard
         user={user}
         profile={profile}
@@ -1129,18 +1367,31 @@ const Dashboard = () => {
         streak={streak}
         onLogout={handleLogout}
       />
+
+      <div className="grid min-w-0 grid-cols-1 items-start gap-5 xl:grid-cols-4">
+        <div className="min-w-0 xl:col-span-2">
+          <DailyMotivation challengeDay={streak} />
+        </div>
+
+        <div className="min-w-0">
+          <WeeklyForestPreview days={weekDays} />
+        </div>
+      </div>
+
       <BadgesAchievements />
 
-      <DailyMotivation challengeDay={streak} />
-      <ExamCountdownCard examDate={examDate} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mb-3 border border-white/10 p-2 rounded-3xl">
-        <LastActivityCard activity={lastActivity} />
-        <WeeklyForestPreview days={weekDays} />
+      <div className="grid min-w-0 grid-cols-1 items-start gap-5 md:grid-cols-2">
+        <div className="min-w-0">
+          <LastActivityCard activity={lastActivity} />
+        </div>
+
+        <div className="min-w-0">
+          <ExamCountdownCard examDate={examDate} />
+        </div>
       </div>
+
       <QuickLinks />
       <ToolsSection />
     </div>
   );
-};
-
-export default Dashboard;
+}
