@@ -235,7 +235,7 @@ import { auth, db } from "../../firebase/firebase";
 import { BADGES } from "../../data/badges";
 import AchievementModal from "./AchievementModal";
 
-const VISIBLE_COUNT = 8;
+const VISIBLE_COUNT = 5;
 
 function readSeenBadges(uid) {
   try {
@@ -358,10 +358,12 @@ export default function BadgesAchievements() {
     <section
       aria-labelledby="milestones-heading"
       className="rounded-3xl border border-emerald-300/15 bg-[#0a1224] p-5 sm:p-6">
+      <AchievementModal badge={currentBadge} onClose={handleCloseAchievement} />
+
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2
           id="milestones-heading"
-          className="flex items-center gap-2 text-sm font-semibold text-slate-100">
+          className="flex items-center gap-2 text-xl font-semibold text-slate-100">
           <Award size={19} className="text-amber-300" aria-hidden="true" />
           Study Milestones
         </h2>
@@ -374,7 +376,7 @@ export default function BadgesAchievements() {
       </div>
 
       {loading ? (
-        <p role="status" className="py-8 text-sm text-slate-400">
+        <p role="status" className="py-8 text-sm text-slate-400 text-center">
           Loading your milestones…
         </p>
       ) : error ? (
@@ -383,17 +385,12 @@ export default function BadgesAchievements() {
         </p>
       ) : (
         <>
-          <AchievementModal
-            badge={currentBadge}
-            onClose={handleCloseAchievement}
-          />
-
           <ul
             aria-label="Study milestones"
             className="
               mt-5 flex gap-3 overflow-x-auto pb-3
               lg:grid lg:grid-cols-4 lg:overflow-visible
-              xl:grid-cols-8
+              xl:grid-cols-5
             ">
             {visibleBadges.map((badge) => {
               const Icon = badge.icon;
@@ -401,10 +398,10 @@ export default function BadgesAchievements() {
               return (
                 <li
                   key={badge.id}
-                  className={`flex w-32 shrink-0 flex-col items-center rounded-2xl border px-2 py-4 text-center lg:w-auto  ${
+                  className={`flex w-40 shrink-0 flex-col items-center rounded-b-3xl border-2 px-2 py-4 text-center lg:w-auto  ${
                     badge.unlocked
-                      ? "border-emerald-300/20 bg-emerald-400/[0.06]"
-                      : "border-white/5 bg-white/[0.02]"
+                      ? "border-emerald-300/10 bg-emerald-400/6"
+                      : "border-white/5 bg-white/2"
                   }`}>
                   {/* <span
                     className={`flex size-12 items-center justify-center rounded-2xl ${
@@ -449,21 +446,21 @@ export default function BadgesAchievements() {
                   </span>
 
                   <p
-                    className={`mt-3 font-heading text-lg font-bold  ${
+                    className={`mt-4 font-heading text-lg font-bold  ${
                       badge.unlocked ? "text-amber-200" : "text-slate-300"
                     }`}>
                     {badge.hours}h
                   </p>
 
-                  <p className="mt-1 text-[11px] leading-5 text-slate-100">
+                  <p className="mt-1 text-[11px] leading-5 text-slate-100 text-left">
                     {badge.name}
                   </p>
 
-                  <p className="mt-1 text-[11px] leading-5 text-slate-300/50">
+                  <p className="mt-1 text-[11px] leading-5 text-slate-300/70 text-left px-2">
                     {badge.message}
                   </p>
 
-                  <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[10px] text-emerald-300">
+                  <span className="mt-auto inline-flex items-center gap-1 pt-4 text-[12px] text-emerald-300">
                     {badge.unlocked && (
                       <CircleCheck
                         size={13}

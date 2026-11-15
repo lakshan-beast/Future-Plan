@@ -305,14 +305,14 @@ function ProfileClock({ name }) {
           <span className="break-words text-emerald-300">{name}!</span>
         </h1>
 
-        <p className="mt-2 text-sm leading-6 text-slate-300/50">
+        {/* <p className="mt-2 text-sm leading-6 text-slate-300/50">
           Small steps today, stronger habits tomorrow.
-        </p>
+        </p> */}
       </div>
 
       <time
         dateTime={now.toISOString()}
-        className="flex shrink-0 flex-wrap gap-x-4 gap-y-2 text-xs text-slate-300 xl:flex-col justify-between xl:items-end">
+        className="flex shrink-0 flex-wrap gap-x-4 gap-y-2 text-xs text-slate-300 justify-between xl:items-end">
         <span className="inline-flex items-center gap-2">
           <CalendarDays
             size={15}
@@ -403,34 +403,36 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
         <div className="space-y-5 p-5 sm:p-6">
           {/* Profile details + responsive actions */}
           <div className="flex items-start justify-between gap-3 sm:items-center sm:gap-5">
-            <div className="flex min-w-0 flex-1 items-center gap-3 sm:items-start justify-between">
-              {user.photoURL ? (
-                <img
-                  src={user.photoURL}
-                  alt=""
-                  width={48}
-                  height={48}
-                  referrerPolicy="no-referrer"
-                  className="size-12 shrink-0 rounded-full object-cover ring-2 ring-emerald-300/40"
-                />
-              ) : (
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-300 to-teal-400 text-xl font-bold text-emerald-950">
-                  {initial}
-                </span>
-              )}
-            </div>
-            <div className="min-w-0">
-              <p className="break-words text-sm font-semibold text-white sm:text-base">
-                {displayName}
-              </p>
+            <div className="flex gap-3">
+              <div className="flex min-w-0 flex-1 items-center gap-3 sm:items-start justify-between">
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt=""
+                    width={48}
+                    height={48}
+                    referrerPolicy="no-referrer"
+                    className="size-12 shrink-0 rounded-full object-cover ring-2 ring-emerald-300/40"
+                  />
+                ) : (
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-300 to-teal-400 text-xl font-bold text-emerald-950">
+                    {initial}
+                  </span>
+                )}
+              </div>
+              <div className="">
+                <p className="break-words text-sm font-semibold text-white sm:text-base">
+                  {displayName}
+                </p>
 
-              <p className="mt-1 break-all text-xs text-slate-300">
-                {user.email}
-              </p>
+                <p className="mt-1 break-all text-xs text-slate-300">
+                  {user.email}
+                </p>
 
-              <p className="mt-2 text-xs leading-5 text-slate-400">
-                Member since {memberSince}
-              </p>
+                <p className="mt-2 text-xs leading-5 text-slate-400 border-t">
+                  Member since {memberSince}
+                </p>
+              </div>
             </div>
 
             {/* Mobile: vertical | sm and above: horizontal */}
@@ -484,10 +486,10 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
           {/* Stronger streak background */}
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-full border border-orange-300/30 bg-gradient-to-r from-orange-500/25 via-orange-400/15 to-amber-400/10 px-4 py-2 pl-5 shadow-[inset_0_1px_0_rgba(253,186,116,0.08)]">
             <div className="flex items-center gap-3">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-orange-300/20 bg-orange-400/5">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-full border-none border-orange-300/20 bg-orange-400/5">
                 <Flame
                   size={25}
-                  className="text-orange-300"
+                  className="text-orange-400 animate-pulse"
                   aria-hidden="true"
                 />
               </span>
