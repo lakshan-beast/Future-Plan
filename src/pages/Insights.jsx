@@ -1282,659 +1282,781 @@
 // }
 
 // src/pages/Insights.jsx
-import { useEffect, useState, useMemo } from "react";
-import { motion } from "motion/react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+// import { useEffect, useState, useMemo } from "react";
+// import { motion } from "motion/react";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { auth } from "../firebase/firebase";
+// import {
+//   TrendingUp,
+//   TrendingDown,
+//   Minus,
+//   Award,
+//   AlertTriangle,
+//   Clock,
+//   Lightbulb,
+//   // BarChart3,
+//   Activity,
+//   // Target,
+// } from "lucide-react";
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+//   LineChart,
+//   Line,
+//   RadarChart,
+//   Radar,
+//   PolarGrid,
+//   PolarAngleAxis,
+//   PolarRadiusAxis,
+// } from "recharts";
+
+// const EMERALD = "#34d399";
+// const TEAL = "#2dd4bf";
+
+// const truncate = (str, len = 8) =>
+//   str && str.length > len ? `${str.slice(0, len)}…` : str;
+
+// const tooltipStyle = {
+//   backgroundColor: "#0e1424",
+//   border: "1px solid rgba(255,255,255,0.1)",
+//   borderRadius: "12px",
+//   fontSize: "12px",
+// };
+
+// const cardClass =
+//   "rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6";
+
+// export default function Insights() {
+//   const [user, setUser] = useState(null);
+//   const [papers, setPapers] = useState([]);
+//   const [focusHistory, setFocusHistory] = useState([]);
+
+//   // ---------------- Auth + data load ----------------
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+//       setUser(currentUser);
+
+//       if (currentUser) {
+//         const uid = currentUser.uid;
+
+//         // Papers — user-scoped localStorage (marks field)
+//         const savedPapers = localStorage.getItem(`dreamutrack-papers-${uid}`);
+//         setPapers(savedPapers ? JSON.parse(savedPapers) : []);
+
+//         // Focus history
+//         const savedFocus = localStorage.getItem(
+//           `dreamutrack-focus-history-${uid}`,
+//         );
+//         setFocusHistory(savedFocus ? JSON.parse(savedFocus) : []);
+//       } else {
+//         setPapers([]);
+//         setFocusHistory([]);
+//       }
+//     });
+
+//     return () => unsubscribe();
+//   }, []);
+
+//   // ---------------- Helper: get marks (backward compat) ----------------
+//   const getMarks = (paper) => paper.marks ?? paper.percentage ?? 0;
+
+//   // ---------------- Subject performance ----------------
+//   const subjectPerformance = useMemo(() => {
+//     const groups = {};
+
+//     papers.forEach((p) => {
+//       const marks = getMarks(p);
+//       if (!groups[p.subject]) {
+//         groups[p.subject] = { total: 0, count: 0 };
+//       }
+//       groups[p.subject].total += marks;
+//       groups[p.subject].count++;
+//     });
+
+//     return Object.entries(groups)
+//       .map(([subject, data]) => ({
+//         subject,
+//         average: Math.round(data.total / data.count),
+//         count: data.count,
+//       }))
+//       .sort((a, b) => b.average - a.average);
+//   }, [papers]);
+
+//   // ---------------- Marks trend ----------------
+//   const marksTrend = useMemo(() => {
+//     return papers
+//       .slice()
+//       .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+//       .map((p, i) => ({
+//         name: p.paperName || `P${i + 1}`,
+//         marks: getMarks(p),
+//         type: p.paperType,
+//       }));
+//   }, [papers]);
+
+//   // ---------------- Weak areas ----------------
+//   const weakAreas = useMemo(() => {
+//     return subjectPerformance
+//       .filter((s) => s.average < 60)
+//       .sort((a, b) => a.average - b.average)
+//       .map((s) => {
+//         const subjectPapers = papers
+//           .filter((p) => p.subject === s.subject)
+//           .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+//         let trend = "stable";
+//         if (subjectPapers.length >= 2) {
+//           const first = getMarks(subjectPapers[0]);
+//           const last = getMarks(subjectPapers[subjectPapers.length - 1]);
+//           if (last > first + 5) trend = "improving";
+//           else if (last < first - 5) trend = "declining";
+//         }
+
+//         return { ...s, trend };
+//       });
+//   }, [subjectPerformance, papers]);
+
+//   // ---------------- Error analysis ----------------
+//   const errorAnalysis = useMemo(() => {
+//     const errorCounts = {};
+
+//     papers.forEach((p) => {
+//       (p.errors || []).forEach((err) => {
+//         errorCounts[err] = (errorCounts[err] || 0) + 1;
+//       });
+//     });
+
+//     return Object.entries(errorCounts)
+//       .sort((a, b) => b[1] - a[1])
+//       .slice(0, 5)
+//       .map(([tag, count]) => ({ tag, count }));
+//   }, [papers]);
+
+//   // ---------------- Focus by subject ----------------
+//   const focusBySubject = useMemo(() => {
+//     const groups = {};
+
+//     focusHistory.forEach((session) => {
+//       if (!session.subject) return;
+//       groups[session.subject] =
+//         (groups[session.subject] || 0) + (session.duration || 0);
+//     });
+
+//     return Object.entries(groups)
+//       .map(([subject, minutes]) => ({ subject, minutes }))
+//       .sort((a, b) => b.minutes - a.minutes);
+//   }, [focusHistory]);
+
+//   // ---------------- Overall stats ----------------
+//   const overallStats = useMemo(() => {
+//     if (papers.length === 0) {
+//       return {
+//         avgMarks: 0,
+//         totalPapers: 0,
+//         trend: "stable",
+//         totalFocusMinutes: 0,
+//       };
+//     }
+
+//     const avgMarks = Math.round(
+//       papers.reduce((sum, p) => sum + getMarks(p), 0) / papers.length,
+//     );
+
+//     const sorted = papers
+//       .slice()
+//       .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+//     const first = getMarks(sorted[0]);
+//     const last = getMarks(sorted[sorted.length - 1]);
+
+//     const trend =
+//       last > first + 5
+//         ? "improving"
+//         : last < first - 5
+//           ? "declining"
+//           : "stable";
+
+//     const totalFocusMinutes = focusHistory.reduce(
+//       (sum, s) => sum + (s.duration || 0),
+//       0,
+//     );
+
+//     return {
+//       avgMarks,
+//       totalPapers: papers.length,
+//       trend,
+//       totalFocusMinutes,
+//     };
+//   }, [papers, focusHistory]);
+
+//   // ---------------- Recommendations ----------------
+//   const recommendations = useMemo(() => {
+//     const recs = [];
+
+//     weakAreas.forEach((area) => {
+//       recs.push({
+//         icon: <AlertTriangle size={16} className="text-orange-400" />,
+//         message: `${area.subject} marks අඩුයි (average ${area.average}%) — මේ subject එකට වැඩියෙන් focus කරන්න`,
+//       });
+//     });
+
+//     if (focusBySubject.length > 0) {
+//       const total = focusBySubject.reduce((s, f) => s + f.minutes, 0);
+//       const avg = total / focusBySubject.length;
+
+//       focusBySubject.forEach((f) => {
+//         if (f.minutes < avg * 0.5) {
+//           recs.push({
+//             icon: <Clock size={16} className="text-blue-400" />,
+//             message: `${f.subject} focus time අඩුයි (${f.minutes}m) — sessions වැඩි කරන්න`,
+//           });
+//         }
+//       });
+//     }
+
+//     if (errorAnalysis.length > 0) {
+//       const top = errorAnalysis[0];
+//       recs.push({
+//         icon: <AlertTriangle size={16} className="text-red-400" />,
+//         message: `“${top.tag}” error එක වැඩියි (${top.count} පාරක්) — targeted practice කරන්න`,
+//       });
+//     }
+
+//     if (recs.length === 0) {
+//       recs.push({
+//         icon: <Lightbulb size={16} className="text-yellow-400" />,
+//         message: "වැඩි papers සහ focus sessions add කරලා insights ලබාගන්න",
+//       });
+//     }
+
+//     return recs;
+//   }, [weakAreas, focusBySubject, errorAnalysis]);
+
+//   // ---------------- Radar data ----------------
+//   const radarData = useMemo(() => {
+//     return subjectPerformance.map((s) => ({
+//       subject: truncate(s.subject, 6),
+//       value: s.average,
+//     }));
+//   }, [subjectPerformance]);
+
+//   if (!user) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
+//         <div className="w-8 h-8 rounded-full border-2 border-emerald-400/30 border-t-emerald-400 animate-spin" />
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
+//       {/* Header */}
+//       <div className="mb-6">
+//         <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
+//           {/* <BarChart3 size={24} className="text-emerald-300" /> */}
+//           Insights
+//         </h1>
+//         <p className="font-body text-sm text-white/50 mt-1">
+//           Analyze your performance, find weak areas, and improve.
+//         </p>
+//       </div>
+
+//       {/* Stats cards */}
+//       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+//         {[
+//           {
+//             icon: <Award size={16} className="text-emerald-300" />,
+//             label: "Average",
+//             value: `${overallStats.avgMarks}%`,
+//           },
+//           {
+//             icon:
+//               overallStats.trend === "improving" ? (
+//                 <TrendingUp size={16} className="text-emerald-300" />
+//               ) : overallStats.trend === "declining" ? (
+//                 <TrendingDown size={16} className="text-red-400" />
+//               ) : (
+//                 <Minus size={16} className="text-white/40" />
+//               ),
+//             label: "Trend",
+//             value: overallStats.trend,
+//           },
+//           {
+//             icon: <Activity size={16} className="text-teal-300" />,
+//             label: "Papers",
+//             value: overallStats.totalPapers,
+//           },
+//           {
+//             icon: <Clock size={16} className="text-blue-300" />,
+//             label: "Focus",
+//             value: `${Math.floor(overallStats.totalFocusMinutes / 60)}h ${
+//               overallStats.totalFocusMinutes % 60
+//             }m`,
+//           },
+//         ].map((stat, i) => (
+//           <motion.div
+//             key={stat.label}
+//             initial={{ opacity: 0, y: 16 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ delay: i * 0.06 }}
+//             className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
+//             <div className="flex items-center gap-1.5 font-body text-xs text-white/50 mb-1.5">
+//               {stat.icon}
+//               {stat.label}
+//             </div>
+//             <div className="font-heading text-xl sm:text-2xl font-bold capitalize truncate">
+//               {stat.value}
+//             </div>
+//           </motion.div>
+//         ))}
+//       </div>
+
+//       {/* Subject performance */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 16 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.2 }}
+//         className={`${cardClass} mb-4`}>
+//         <h3 className="font-heading font-semibold mb-4">Subject Performance</h3>
+
+//         {subjectPerformance.length === 0 ? (
+//           <p className="font-body text-sm text-white/40 py-6 text-center">
+//             No papers yet. Add paper results to see insights.
+//           </p>
+//         ) : (
+//           <div className="h-52 sm:h-64 w-full">
+//             <ResponsiveContainer width="100%" height="100%">
+//               <BarChart
+//                 data={subjectPerformance}
+//                 margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+//                 <CartesianGrid
+//                   strokeDasharray="3 3"
+//                   stroke="rgba(255,255,255,0.08)"
+//                   vertical={false}
+//                 />
+//                 <XAxis
+//                   dataKey="subject"
+//                   tickFormatter={(v) => truncate(v, 6)}
+//                   interval="preserveStartEnd"
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                   axisLine={false}
+//                   tickLine={false}
+//                 />
+//                 <YAxis
+//                   domain={[0, 100]}
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                   axisLine={false}
+//                   tickLine={false}
+//                   width={35}
+//                 />
+//                 <Tooltip
+//                   contentStyle={tooltipStyle}
+//                   cursor={{ fill: "rgba(255,255,255,0.04)" }}
+//                 />
+//                 <Bar
+//                   dataKey="average"
+//                   fill={EMERALD}
+//                   radius={[8, 8, 0, 0]}
+//                   maxBarSize={40}
+//                 />
+//               </BarChart>
+//             </ResponsiveContainer>
+//           </div>
+//         )}
+//       </motion.div>
+
+//       {/* Marks trend */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 16 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.3 }}
+//         className={`${cardClass} mb-4`}>
+//         <h3 className="font-heading font-semibold mb-4">
+//           Marks Trend Over Time
+//         </h3>
+
+//         {marksTrend.length === 0 ? (
+//           <p className="font-body text-sm text-white/40 py-6 text-center">
+//             No papers yet.
+//           </p>
+//         ) : (
+//           <div className="h-52 sm:h-64 w-full">
+//             <ResponsiveContainer width="100%" height="100%">
+//               <LineChart
+//                 data={marksTrend}
+//                 margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+//                 <CartesianGrid
+//                   strokeDasharray="3 3"
+//                   stroke="rgba(255,255,255,0.08)"
+//                   vertical={false}
+//                 />
+//                 <XAxis
+//                   dataKey="name"
+//                   tickFormatter={(v) => truncate(v, 6)}
+//                   interval="preserveStartEnd"
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                   axisLine={false}
+//                   tickLine={false}
+//                 />
+//                 <YAxis
+//                   domain={[0, 100]}
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                   axisLine={false}
+//                   tickLine={false}
+//                   width={35}
+//                 />
+//                 <Tooltip contentStyle={tooltipStyle} />
+//                 <Line
+//                   type="monotone"
+//                   dataKey="marks"
+//                   stroke={EMERALD}
+//                   strokeWidth={2.5}
+//                   dot={{ r: 3, fill: EMERALD }}
+//                   activeDot={{ r: 5 }}
+//                 />
+//               </LineChart>
+//             </ResponsiveContainer>
+//           </div>
+//         )}
+//       </motion.div>
+
+//       {/* Subject balance — radar */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 16 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.4 }}
+//         className={`${cardClass} mb-4`}>
+//         <h3 className="font-heading font-semibold mb-4">Subject Balance</h3>
+
+//         {radarData.length === 0 ? (
+//           <p className="font-body text-sm text-white/40 py-6 text-center">
+//             No data yet.
+//           </p>
+//         ) : (
+//           <div className="h-56 sm:h-72 w-full">
+//             <ResponsiveContainer width="100%" height="100%">
+//               <RadarChart data={radarData} outerRadius="70%">
+//                 <PolarGrid stroke="rgba(255,255,255,0.1)" />
+//                 <PolarAngleAxis
+//                   dataKey="subject"
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                 />
+//                 <PolarRadiusAxis
+//                   domain={[0, 100]}
+//                   tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 9 }}
+//                   axisLine={false}
+//                 />
+//                 <Radar
+//                   dataKey="value"
+//                   stroke={TEAL}
+//                   fill={TEAL}
+//                   fillOpacity={0.25}
+//                   strokeWidth={2}
+//                 />
+//                 <Tooltip contentStyle={tooltipStyle} />
+//               </RadarChart>
+//             </ResponsiveContainer>
+//           </div>
+//         )}
+//       </motion.div>
+
+//       {/* Weak areas + Errors */}
+//       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
+//         {/* Weak areas */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 16 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.5 }}
+//           className={cardClass}>
+//           <h3 className="font-heading font-semibold mb-4 flex items-center gap-2">
+//             <AlertTriangle size={18} className="text-orange-400" />
+//             Areas Needing Attention
+//           </h3>
+
+//           {weakAreas.length === 0 ? (
+//             <p className="font-body text-sm text-white/40">
+//               No weak areas detected. Keep it up!
+//             </p>
+//           ) : (
+//             <div className="space-y-3">
+//               {weakAreas.map((area) => (
+//                 <div
+//                   key={area.subject}
+//                   className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
+//                   <div className="flex items-center justify-between mb-1.5">
+//                     <span className="font-body font-medium text-sm truncate">
+//                       {area.subject}
+//                     </span>
+//                     <span
+//                       className={`font-body text-[10px] px-2 py-0.5 rounded-full shrink-0 ${
+//                         area.trend === "declining"
+//                           ? "bg-red-500/15 text-red-300"
+//                           : area.trend === "improving"
+//                             ? "bg-emerald-500/15 text-emerald-300"
+//                             : "bg-white/10 text-white/50"
+//                       }`}>
+//                       {area.trend}
+//                     </span>
+//                   </div>
+//                   <p className="font-body text-xs text-white/50">
+//                     Average {area.average}% · {area.count} papers
+//                   </p>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+//         </motion.div>
+
+//         {/* Error analysis */}
+//         <motion.div
+//           initial={{ opacity: 0, y: 16 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.6 }}
+//           className={cardClass}>
+//           <h3 className="font-heading font-semibold mb-4">Common Errors</h3>
+
+//           {errorAnalysis.length === 0 ? (
+//             <p className="font-body text-sm text-white/40">
+//               No error data yet.
+//             </p>
+//           ) : (
+//             <div className="space-y-3">
+//               {errorAnalysis.map((err, i) => {
+//                 const width = (err.count / errorAnalysis[0].count) * 100;
+
+//                 return (
+//                   <div key={err.tag}>
+//                     <div className="flex items-center justify-between font-body text-xs mb-1.5">
+//                       <span className="text-white/70 truncate">{err.tag}</span>
+//                       <span className="text-white/40 shrink-0">
+//                         {err.count}
+//                       </span>
+//                     </div>
+//                     <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+//                       <motion.div
+//                         initial={{ width: 0 }}
+//                         animate={{ width: `${width}%` }}
+//                         transition={{ delay: i * 0.06, duration: 0.5 }}
+//                         className="h-full rounded-full bg-gradient-to-r from-orange-500 to-red-500"
+//                       />
+//                     </div>
+//                   </div>
+//                 );
+//               })}
+//             </div>
+//           )}
+//         </motion.div>
+//       </div>
+
+//       {/* Focus time */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 16 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.7 }}
+//         className={`${cardClass} mb-4`}>
+//         <h3 className="font-heading font-semibold mb-4">
+//           Focus Time by Subject
+//         </h3>
+
+//         {focusBySubject.length === 0 ? (
+//           <p className="font-body text-sm text-white/40 py-6 text-center">
+//             No focus sessions yet.
+//           </p>
+//         ) : (
+//           <div className="h-52 sm:h-64 w-full">
+//             <ResponsiveContainer width="100%" height="100%">
+//               <BarChart
+//                 data={focusBySubject}
+//                 margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+//                 <CartesianGrid
+//                   strokeDasharray="3 3"
+//                   stroke="rgba(255,255,255,0.08)"
+//                   vertical={false}
+//                 />
+//                 <XAxis
+//                   dataKey="subject"
+//                   tickFormatter={(v) => truncate(v, 6)}
+//                   interval="preserveStartEnd"
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                   axisLine={false}
+//                   tickLine={false}
+//                 />
+//                 <YAxis
+//                   tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
+//                   axisLine={false}
+//                   tickLine={false}
+//                   width={35}
+//                 />
+//                 <Tooltip
+//                   contentStyle={tooltipStyle}
+//                   cursor={{ fill: "rgba(255,255,255,0.04)" }}
+//                 />
+//                 <Bar
+//                   dataKey="minutes"
+//                   fill={TEAL}
+//                   radius={[8, 8, 0, 0]}
+//                   maxBarSize={40}
+//                 />
+//               </BarChart>
+//             </ResponsiveContainer>
+//           </div>
+//         )}
+//       </motion.div>
+
+//       {/* Recommendations */}
+//       <motion.div
+//         initial={{ opacity: 0, y: 16 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ delay: 0.8 }}
+//         className={cardClass}>
+//         <h3 className="font-heading font-semibold mb-4 flex items-center gap-2">
+//           <Lightbulb size={18} className="text-yellow-400" />
+//           Recommendations
+//         </h3>
+
+//         <div className="space-y-3">
+//           {recommendations.map((rec, i) => (
+//             <motion.div
+//               key={i}
+//               initial={{ opacity: 0, x: -16 }}
+//               animate={{ opacity: 1, x: 0 }}
+//               transition={{ delay: i * 0.06 }}
+//               className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
+//               <div className="shrink-0 mt-0.5">{rec.icon}</div>
+//               <p className="font-body text-sm text-white/70 leading-relaxed">
+//                 {rec.message}
+//               </p>
+//             </motion.div>
+//           ))}
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// }
+
+import { Navigate } from "react-router-dom";
+import { AlertCircle, BarChart3 } from "lucide-react";
+
+import Loader from "../components/Loader";
+import { useInsights } from "../hooks/useInsights";
+
+import InsightsStats from "../components/insights/InsightsStats";
+
 import {
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  Award,
-  AlertTriangle,
-  Clock,
-  Lightbulb,
-  // BarChart3,
-  Activity,
-  // Target,
-} from "lucide-react";
+  SubjectPerformanceChart,
+  MarksTrendChart,
+  SubjectBalanceChart,
+  FocusSubjectChart,
+} from "../components/insights/InsightsCharts";
+
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-} from "recharts";
+  WeakAreasCard,
+  CommonErrorsCard,
+} from "../components/insights/InsightsAnalysis";
 
-const EMERALD = "#34d399";
-const TEAL = "#2dd4bf";
-
-const truncate = (str, len = 8) =>
-  str && str.length > len ? `${str.slice(0, len)}…` : str;
-
-const tooltipStyle = {
-  backgroundColor: "#0e1424",
-  border: "1px solid rgba(255,255,255,0.1)",
-  borderRadius: "12px",
-  fontSize: "12px",
-};
-
-const cardClass =
-  "rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6";
+import InsightsRecommendations from "../components/insights/InsightsRecommendations";
 
 export default function Insights() {
-  const [user, setUser] = useState(null);
-  const [papers, setPapers] = useState([]);
-  const [focusHistory, setFocusHistory] = useState([]);
+  const insights = useInsights();
 
-  // ---------------- Auth + data load ----------------
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-
-      if (currentUser) {
-        const uid = currentUser.uid;
-
-        // Papers — user-scoped localStorage (marks field)
-        const savedPapers = localStorage.getItem(`dreamutrack-papers-${uid}`);
-        setPapers(savedPapers ? JSON.parse(savedPapers) : []);
-
-        // Focus history
-        const savedFocus = localStorage.getItem(
-          `dreamutrack-focus-history-${uid}`,
-        );
-        setFocusHistory(savedFocus ? JSON.parse(savedFocus) : []);
-      } else {
-        setPapers([]);
-        setFocusHistory([]);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // ---------------- Helper: get marks (backward compat) ----------------
-  const getMarks = (paper) => paper.marks ?? paper.percentage ?? 0;
-
-  // ---------------- Subject performance ----------------
-  const subjectPerformance = useMemo(() => {
-    const groups = {};
-
-    papers.forEach((p) => {
-      const marks = getMarks(p);
-      if (!groups[p.subject]) {
-        groups[p.subject] = { total: 0, count: 0 };
-      }
-      groups[p.subject].total += marks;
-      groups[p.subject].count++;
-    });
-
-    return Object.entries(groups)
-      .map(([subject, data]) => ({
-        subject,
-        average: Math.round(data.total / data.count),
-        count: data.count,
-      }))
-      .sort((a, b) => b.average - a.average);
-  }, [papers]);
-
-  // ---------------- Marks trend ----------------
-  const marksTrend = useMemo(() => {
-    return papers
-      .slice()
-      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-      .map((p, i) => ({
-        name: p.paperName || `P${i + 1}`,
-        marks: getMarks(p),
-        type: p.paperType,
-      }));
-  }, [papers]);
-
-  // ---------------- Weak areas ----------------
-  const weakAreas = useMemo(() => {
-    return subjectPerformance
-      .filter((s) => s.average < 60)
-      .sort((a, b) => a.average - b.average)
-      .map((s) => {
-        const subjectPapers = papers
-          .filter((p) => p.subject === s.subject)
-          .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-        let trend = "stable";
-        if (subjectPapers.length >= 2) {
-          const first = getMarks(subjectPapers[0]);
-          const last = getMarks(subjectPapers[subjectPapers.length - 1]);
-          if (last > first + 5) trend = "improving";
-          else if (last < first - 5) trend = "declining";
-        }
-
-        return { ...s, trend };
-      });
-  }, [subjectPerformance, papers]);
-
-  // ---------------- Error analysis ----------------
-  const errorAnalysis = useMemo(() => {
-    const errorCounts = {};
-
-    papers.forEach((p) => {
-      (p.errors || []).forEach((err) => {
-        errorCounts[err] = (errorCounts[err] || 0) + 1;
-      });
-    });
-
-    return Object.entries(errorCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([tag, count]) => ({ tag, count }));
-  }, [papers]);
-
-  // ---------------- Focus by subject ----------------
-  const focusBySubject = useMemo(() => {
-    const groups = {};
-
-    focusHistory.forEach((session) => {
-      if (!session.subject) return;
-      groups[session.subject] =
-        (groups[session.subject] || 0) + (session.duration || 0);
-    });
-
-    return Object.entries(groups)
-      .map(([subject, minutes]) => ({ subject, minutes }))
-      .sort((a, b) => b.minutes - a.minutes);
-  }, [focusHistory]);
-
-  // ---------------- Overall stats ----------------
-  const overallStats = useMemo(() => {
-    if (papers.length === 0) {
-      return {
-        avgMarks: 0,
-        totalPapers: 0,
-        trend: "stable",
-        totalFocusMinutes: 0,
-      };
-    }
-
-    const avgMarks = Math.round(
-      papers.reduce((sum, p) => sum + getMarks(p), 0) / papers.length,
-    );
-
-    const sorted = papers
-      .slice()
-      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-    const first = getMarks(sorted[0]);
-    const last = getMarks(sorted[sorted.length - 1]);
-
-    const trend =
-      last > first + 5
-        ? "improving"
-        : last < first - 5
-          ? "declining"
-          : "stable";
-
-    const totalFocusMinutes = focusHistory.reduce(
-      (sum, s) => sum + (s.duration || 0),
-      0,
-    );
-
-    return {
-      avgMarks,
-      totalPapers: papers.length,
-      trend,
-      totalFocusMinutes,
-    };
-  }, [papers, focusHistory]);
-
-  // ---------------- Recommendations ----------------
-  const recommendations = useMemo(() => {
-    const recs = [];
-
-    weakAreas.forEach((area) => {
-      recs.push({
-        icon: <AlertTriangle size={16} className="text-orange-400" />,
-        message: `${area.subject} marks අඩුයි (average ${area.average}%) — මේ subject එකට වැඩියෙන් focus කරන්න`,
-      });
-    });
-
-    if (focusBySubject.length > 0) {
-      const total = focusBySubject.reduce((s, f) => s + f.minutes, 0);
-      const avg = total / focusBySubject.length;
-
-      focusBySubject.forEach((f) => {
-        if (f.minutes < avg * 0.5) {
-          recs.push({
-            icon: <Clock size={16} className="text-blue-400" />,
-            message: `${f.subject} focus time අඩුයි (${f.minutes}m) — sessions වැඩි කරන්න`,
-          });
-        }
-      });
-    }
-
-    if (errorAnalysis.length > 0) {
-      const top = errorAnalysis[0];
-      recs.push({
-        icon: <AlertTriangle size={16} className="text-red-400" />,
-        message: `“${top.tag}” error එක වැඩියි (${top.count} පාරක්) — targeted practice කරන්න`,
-      });
-    }
-
-    if (recs.length === 0) {
-      recs.push({
-        icon: <Lightbulb size={16} className="text-yellow-400" />,
-        message: "වැඩි papers සහ focus sessions add කරලා insights ලබාගන්න",
-      });
-    }
-
-    return recs;
-  }, [weakAreas, focusBySubject, errorAnalysis]);
-
-  // ---------------- Radar data ----------------
-  const radarData = useMemo(() => {
-    return subjectPerformance.map((s) => ({
-      subject: truncate(s.subject, 6),
-      value: s.average,
-    }));
-  }, [subjectPerformance]);
-
-  if (!user) {
+  if (insights.loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0b1020]">
-        <div className="w-8 h-8 rounded-full border-2 border-emerald-400/30 border-t-emerald-400 animate-spin" />
+      <div
+        role="status"
+        className="flex min-h-[60vh] items-center justify-center">
+        <Loader size="md" />
+        <span className="sr-only">Loading your study insights…</span>
       </div>
     );
   }
 
+  if (!insights.user) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
-    <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-          {/* <BarChart3 size={24} className="text-emerald-300" /> */}
+    <div className="mt-24 space-y-5 pb-6 lg:mt-6">
+      <header>
+        <h1 className="flex items-center gap-3 font-heading text-3xl font-bold text-white">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-emerald-300/20 bg-emerald-400/10">
+            <BarChart3
+              size={23}
+              className="text-emerald-300"
+              aria-hidden="true"
+            />
+          </span>
           Insights
         </h1>
-        <p className="font-body text-sm text-white/50 mt-1">
-          Analyze your performance, find weak areas, and improve.
+
+        <p className="mt-3 max-w-xl text-sm leading-tight text-slate-400">
+          Turn your recorded study activity into a clearer picture of your
+          progress. Compare subject marks, review recurring mistakes and see
+          where your focus time goes, then decide what to work on next.
         </p>
+      </header>
+
+      {insights.error && (
+        <p
+          role="alert"
+          className="flex items-start gap-2 rounded-2xl border border-amber-300/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
+          <AlertCircle
+            size={18}
+            className="mt-0.5 shrink-0"
+            aria-hidden="true"
+          />
+          {insights.error}
+        </p>
+      )}
+
+      {insights.ignoredPapers > 0 && (
+        <p className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-xs leading-6 text-slate-300">
+          {insights.ignoredPapers} saved{" "}
+          {insights.ignoredPapers === 1 ? "record was" : "records were"}{" "}
+          excluded because a valid subject or marks value was missing. Saved
+          records have not been changed.
+        </p>
+      )}
+
+      <InsightsStats stats={insights.overallStats} />
+
+      <p className="px-1 text-xs leading-6 text-slate-400">
+        “First → Latest” compares the earliest and latest dated results across
+        all recorded subjects. Use subject-level results to assess changes
+        within a single subject.
+      </p>
+
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-2">
+        <SubjectPerformanceChart data={insights.subjectPerformance} />
+
+        <MarksTrendChart data={insights.marksTrend} />
       </div>
 
-      {/* Stats cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-        {[
-          {
-            icon: <Award size={16} className="text-emerald-300" />,
-            label: "Average",
-            value: `${overallStats.avgMarks}%`,
-          },
-          {
-            icon:
-              overallStats.trend === "improving" ? (
-                <TrendingUp size={16} className="text-emerald-300" />
-              ) : overallStats.trend === "declining" ? (
-                <TrendingDown size={16} className="text-red-400" />
-              ) : (
-                <Minus size={16} className="text-white/40" />
-              ),
-            label: "Trend",
-            value: overallStats.trend,
-          },
-          {
-            icon: <Activity size={16} className="text-teal-300" />,
-            label: "Papers",
-            value: overallStats.totalPapers,
-          },
-          {
-            icon: <Clock size={16} className="text-blue-300" />,
-            label: "Focus",
-            value: `${Math.floor(overallStats.totalFocusMinutes / 60)}h ${
-              overallStats.totalFocusMinutes % 60
-            }m`,
-          },
-        ].map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.06 }}
-            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
-            <div className="flex items-center gap-1.5 font-body text-xs text-white/50 mb-1.5">
-              {stat.icon}
-              {stat.label}
-            </div>
-            <div className="font-heading text-xl sm:text-2xl font-bold capitalize truncate">
-              {stat.value}
-            </div>
-          </motion.div>
-        ))}
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-2">
+        <SubjectBalanceChart data={insights.subjectPerformance} />
+
+        <FocusSubjectChart data={insights.focusBySubject} />
       </div>
 
-      {/* Subject performance */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className={`${cardClass} mb-4`}>
-        <h3 className="font-heading font-semibold mb-4">Subject Performance</h3>
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-2">
+        <WeakAreasCard
+          areas={insights.weakAreas}
+          paperCount={insights.overallStats.totalPapers}
+        />
 
-        {subjectPerformance.length === 0 ? (
-          <p className="font-body text-sm text-white/40 py-6 text-center">
-            No papers yet. Add paper results to see insights.
-          </p>
-        ) : (
-          <div className="h-52 sm:h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={subjectPerformance}
-                margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.08)"
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="subject"
-                  tickFormatter={(v) => truncate(v, 6)}
-                  interval="preserveStartEnd"
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  domain={[0, 100]}
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={35}
-                />
-                <Tooltip
-                  contentStyle={tooltipStyle}
-                  cursor={{ fill: "rgba(255,255,255,0.04)" }}
-                />
-                <Bar
-                  dataKey="average"
-                  fill={EMERALD}
-                  radius={[8, 8, 0, 0]}
-                  maxBarSize={40}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </motion.div>
-
-      {/* Marks trend */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className={`${cardClass} mb-4`}>
-        <h3 className="font-heading font-semibold mb-4">
-          Marks Trend Over Time
-        </h3>
-
-        {marksTrend.length === 0 ? (
-          <p className="font-body text-sm text-white/40 py-6 text-center">
-            No papers yet.
-          </p>
-        ) : (
-          <div className="h-52 sm:h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={marksTrend}
-                margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.08)"
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="name"
-                  tickFormatter={(v) => truncate(v, 6)}
-                  interval="preserveStartEnd"
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  domain={[0, 100]}
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={35}
-                />
-                <Tooltip contentStyle={tooltipStyle} />
-                <Line
-                  type="monotone"
-                  dataKey="marks"
-                  stroke={EMERALD}
-                  strokeWidth={2.5}
-                  dot={{ r: 3, fill: EMERALD }}
-                  activeDot={{ r: 5 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </motion.div>
-
-      {/* Subject balance — radar */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className={`${cardClass} mb-4`}>
-        <h3 className="font-heading font-semibold mb-4">Subject Balance</h3>
-
-        {radarData.length === 0 ? (
-          <p className="font-body text-sm text-white/40 py-6 text-center">
-            No data yet.
-          </p>
-        ) : (
-          <div className="h-56 sm:h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={radarData} outerRadius="70%">
-                <PolarGrid stroke="rgba(255,255,255,0.1)" />
-                <PolarAngleAxis
-                  dataKey="subject"
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                />
-                <PolarRadiusAxis
-                  domain={[0, 100]}
-                  tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 9 }}
-                  axisLine={false}
-                />
-                <Radar
-                  dataKey="value"
-                  stroke={TEAL}
-                  fill={TEAL}
-                  fillOpacity={0.25}
-                  strokeWidth={2}
-                />
-                <Tooltip contentStyle={tooltipStyle} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </motion.div>
-
-      {/* Weak areas + Errors */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
-        {/* Weak areas */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className={cardClass}>
-          <h3 className="font-heading font-semibold mb-4 flex items-center gap-2">
-            <AlertTriangle size={18} className="text-orange-400" />
-            Areas Needing Attention
-          </h3>
-
-          {weakAreas.length === 0 ? (
-            <p className="font-body text-sm text-white/40">
-              No weak areas detected. Keep it up!
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {weakAreas.map((area) => (
-                <div
-                  key={area.subject}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-body font-medium text-sm truncate">
-                      {area.subject}
-                    </span>
-                    <span
-                      className={`font-body text-[10px] px-2 py-0.5 rounded-full shrink-0 ${
-                        area.trend === "declining"
-                          ? "bg-red-500/15 text-red-300"
-                          : area.trend === "improving"
-                            ? "bg-emerald-500/15 text-emerald-300"
-                            : "bg-white/10 text-white/50"
-                      }`}>
-                      {area.trend}
-                    </span>
-                  </div>
-                  <p className="font-body text-xs text-white/50">
-                    Average {area.average}% · {area.count} papers
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </motion.div>
-
-        {/* Error analysis */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className={cardClass}>
-          <h3 className="font-heading font-semibold mb-4">Common Errors</h3>
-
-          {errorAnalysis.length === 0 ? (
-            <p className="font-body text-sm text-white/40">
-              No error data yet.
-            </p>
-          ) : (
-            <div className="space-y-3">
-              {errorAnalysis.map((err, i) => {
-                const width = (err.count / errorAnalysis[0].count) * 100;
-
-                return (
-                  <div key={err.tag}>
-                    <div className="flex items-center justify-between font-body text-xs mb-1.5">
-                      <span className="text-white/70 truncate">{err.tag}</span>
-                      <span className="text-white/40 shrink-0">
-                        {err.count}
-                      </span>
-                    </div>
-                    <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${width}%` }}
-                        transition={{ delay: i * 0.06, duration: 0.5 }}
-                        className="h-full rounded-full bg-gradient-to-r from-orange-500 to-red-500"
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </motion.div>
+        <CommonErrorsCard errors={insights.errorAnalysis} />
       </div>
 
-      {/* Focus time */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-        className={`${cardClass} mb-4`}>
-        <h3 className="font-heading font-semibold mb-4">
-          Focus Time by Subject
-        </h3>
+      <InsightsRecommendations items={insights.recommendations} />
 
-        {focusBySubject.length === 0 ? (
-          <p className="font-body text-sm text-white/40 py-6 text-center">
-            No focus sessions yet.
-          </p>
-        ) : (
-          <div className="h-52 sm:h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={focusBySubject}
-                margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.08)"
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="subject"
-                  tickFormatter={(v) => truncate(v, 6)}
-                  interval="preserveStartEnd"
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={35}
-                />
-                <Tooltip
-                  contentStyle={tooltipStyle}
-                  cursor={{ fill: "rgba(255,255,255,0.04)" }}
-                />
-                <Bar
-                  dataKey="minutes"
-                  fill={TEAL}
-                  radius={[8, 8, 0, 0]}
-                  maxBarSize={40}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </motion.div>
-
-      {/* Recommendations */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className={cardClass}>
-        <h3 className="font-heading font-semibold mb-4 flex items-center gap-2">
-          <Lightbulb size={18} className="text-yellow-400" />
-          Recommendations
-        </h3>
-
-        <div className="space-y-3">
-          {recommendations.map((rec, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.06 }}
-              className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-3.5">
-              <div className="shrink-0 mt-0.5">{rec.icon}</div>
-              <p className="font-body text-sm text-white/70 leading-relaxed">
-                {rec.message}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+      <p className="px-1 text-xs leading-6 text-slate-400">
+        These insights use papers and focus sessions stored in this browser for
+        your account. They may not include activity recorded on another device.
+      </p>
     </div>
   );
 }

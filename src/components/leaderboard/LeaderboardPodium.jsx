@@ -237,11 +237,9 @@ export default function LeaderboardPodium({ leaders = [], userId }) {
                     </h3>
 
                     {isMe && (
-                      <span className="absolute -top-3 left-12 flex size-8
-                  items-center justify-center rounded-full
-                  border shadow-lg shadow-black/20
-                  sm:left-4 sm:size-9 border-emerald-300/20 bg-emerald-400/80 px-7 py-0.5 text-[9px] font-semibold text-emerald-100">
-                      {/* <span className="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-0.5 text-[9px] font-semibold text-emerald-200"> */}
+                      <span
+                        className="absolute -top-3 left-12 flex size-8 items-center justify-center rounded-full border shadow-lg shadow-black/20 sm:left-4 sm:size-9 border-emerald-300/20 bg-emerald-400/90 px-7 py-0.5 text-[9px] font-semibold text-emerald-100">
+                        {/* <span className="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-0.5 text-[9px] font-semibold text-emerald-200"> */}
                         You
                       </span>
                     )}

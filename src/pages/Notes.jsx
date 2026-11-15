@@ -416,567 +416,727 @@
 // export default Notes;
 
 // src/pages/Notes.jsx
-import { useEffect, useState, useMemo } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase/firebase";
-import { motion, AnimatePresence } from "motion/react";
-import {
-  Plus,
-  Search,
-  Star,
-  Trash2,
-  Edit3,
-  BookOpen,
-  X,
-  Check,
-  Copy,
-  Filter,
-} from "lucide-react";
+// import { useEffect, useState, useMemo } from "react";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { doc, getDoc } from "firebase/firestore";
+// import { auth, db } from "../firebase/firebase";
+// import { motion, AnimatePresence } from "motion/react";
+// import {
+//   Plus,
+//   Search,
+//   Star,
+//   Trash2,
+//   Edit3,
+//   BookOpen,
+//   X,
+//   Check,
+//   Copy,
+//   Filter,
+// } from "lucide-react";
 
-const Notes = () => {
-  const [user, setUser] = useState(null);
-  const [subjects, setSubjects] = useState([]);
-  const [formulas, setFormulas] = useState([]);
+// const Notes = () => {
+//   const [user, setUser] = useState(null);
+//   const [subjects, setSubjects] = useState([]);
+//   const [formulas, setFormulas] = useState([]);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [showFavouritesOnly, setShowFavouritesOnly] = useState(false);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [selectedSubject, setSelectedSubject] = useState("");
+//   const [showFavouritesOnly, setShowFavouritesOnly] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingId, setEditingId] = useState(null);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [editingId, setEditingId] = useState(null);
 
-  const [title, setTitle] = useState("");
-  const [formula, setFormula] = useState("");
-  const [subject, setSubject] = useState("");
-  const [noteType, setNoteType] = useState("Formula"); // Formula | Concept | Definition
-  const [explanation, setExplanation] = useState("");
-  const [example, setExample] = useState("");
-  const [tags, setTags] = useState("");
+//   const [title, setTitle] = useState("");
+//   const [formula, setFormula] = useState("");
+//   const [subject, setSubject] = useState("");
+//   const [noteType, setNoteType] = useState("Formula"); // Formula | Concept | Definition
+//   const [explanation, setExplanation] = useState("");
+//   const [example, setExample] = useState("");
+//   const [tags, setTags] = useState("");
 
-  // ---------------- Auth + load data ----------------
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
+//   // ---------------- Auth + load data ----------------
+//   useEffect(() => {
+//     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+//       setUser(currentUser);
 
-      if (currentUser) {
-        const uid = currentUser.uid;
+//       if (currentUser) {
+//         const uid = currentUser.uid;
 
-        // Subjects — Firestore profile එකෙන් (O/L + A/L)
-        try {
-          const snapshot = await getDoc(doc(db, "users", uid));
-          const data = snapshot.exists() ? snapshot.data() : {};
-          setSubjects(data.profile?.subjects || []);
-        } catch (err) {
-          console.error("Failed to load subjects:", err);
-        }
+//         // Subjects — Firestore profile එකෙන් (O/L + A/L)
+//         try {
+//           const snapshot = await getDoc(doc(db, "users", uid));
+//           const data = snapshot.exists() ? snapshot.data() : {};
+//           setSubjects(data.profile?.subjects || []);
+//         } catch (err) {
+//           console.error("Failed to load subjects:", err);
+//         }
 
-        // Formulas — user-scoped localStorage
-        const saved = localStorage.getItem(`dreamutrack-formulas-${uid}`);
-        setFormulas(saved ? JSON.parse(saved) : []);
-      } else {
-        setSubjects([]);
-        setFormulas([]);
-      }
-    });
+//         // Formulas — user-scoped localStorage
+//         const saved = localStorage.getItem(`dreamutrack-formulas-${uid}`);
+//         setFormulas(saved ? JSON.parse(saved) : []);
+//       } else {
+//         setSubjects([]);
+//         setFormulas([]);
+//       }
+//     });
 
-    return () => unsubscribe();
-  }, []);
+//     return () => unsubscribe();
+//   }, []);
 
-  // ---------------- Save formulas — useEffect (fix) ----------------
-  useEffect(() => {
-    if (!user) return;
-    localStorage.setItem(
-      `dreamutrack-formulas-${user.uid}`,
-      JSON.stringify(formulas),
+//   // ---------------- Save formulas — useEffect (fix) ----------------
+//   useEffect(() => {
+//     if (!user) return;
+//     localStorage.setItem(
+//       `dreamutrack-formulas-${user.uid}`,
+//       JSON.stringify(formulas),
+//     );
+//   }, [formulas, user]);
+
+//   // ---------------- Filtered formulas ----------------
+//   const filteredFormulas = useMemo(() => {
+//     return formulas
+//       .filter((f) => {
+//         const q = searchQuery.toLowerCase();
+//         const matchesSearch =
+//           !q ||
+//           f.title.toLowerCase().includes(q) ||
+//           f.formula.toLowerCase().includes(q) ||
+//           (f.tags || []).some((tag) => tag.toLowerCase().includes(q));
+
+//         const matchesSubject =
+//           !selectedSubject || f.subject === selectedSubject;
+
+//         const matchesFavourite = !showFavouritesOnly || f.favourite;
+
+//         return matchesSearch && matchesSubject && matchesFavourite;
+//       })
+//       .sort((a, b) => {
+//         // Favourites first, then newest
+//         if (a.favourite !== b.favourite) return a.favourite ? -1 : 1;
+//         return new Date(b.createdAt) - new Date(a.createdAt);
+//       });
+//   }, [formulas, searchQuery, selectedSubject, showFavouritesOnly]);
+
+//   // ---------------- Add / edit ----------------
+//   const handleSave = () => {
+//     if (!title.trim() || !formula.trim()) return;
+
+//     const newFormula = {
+//       id: editingId || `formula-${Date.now()}`,
+//       title: title.trim(),
+//       formula: formula.trim(),
+//       subject: subject || "General",
+//       noteType,
+//       explanation: explanation.trim(),
+//       example: example.trim(),
+//       tags: tags
+//         .split(",")
+//         .map((t) => t.trim())
+//         .filter(Boolean),
+//       favourite: false,
+//       createdAt: new Date().toISOString(),
+//     };
+
+//     setFormulas((prev) =>
+//       editingId
+//         ? prev.map((f) => (f.id === editingId ? newFormula : f))
+//         : [...prev, newFormula],
+//     );
+
+//     // Reset
+//     setTitle("");
+//     setFormula("");
+//     setSubject("");
+//     setNoteType("Formula");
+//     setExplanation("");
+//     setExample("");
+//     setTags("");
+//     setIsModalOpen(false);
+//     setEditingId(null);
+//   };
+
+//   const handleEdit = (f) => {
+//     setTitle(f.title);
+//     setFormula(f.formula);
+//     setSubject(f.subject);
+//     setNoteType(f.noteType || "Formula");
+//     setExplanation(f.explanation || "");
+//     setExample(f.example || "");
+//     setTags((f.tags || []).join(", "));
+//     setEditingId(f.id);
+//     setIsModalOpen(true);
+//   };
+
+//   const handleDelete = (id) => {
+//     setFormulas((prev) => prev.filter((f) => f.id !== id));
+//   };
+
+//   const toggleFavourite = (id) => {
+//     setFormulas((prev) =>
+//       prev.map((f) => (f.id === id ? { ...f, favourite: !f.favourite } : f)),
+//     );
+//   };
+
+//   const copyFormula = async (text) => {
+//     try {
+//       await navigator.clipboard.writeText(text);
+//     } catch (err) {
+//       console.error("Copy failed:", err);
+//     }
+//   };
+
+//   const openAddModal = () => {
+//     setEditingId(null);
+//     setTitle("");
+//     setFormula("");
+//     setSubject("");
+//     setNoteType("Formula");
+//     setExplanation("");
+//     setExample("");
+//     setTags("");
+//     setIsModalOpen(true);
+//   };
+
+//   const inputClass =
+//     "font-body w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 px-4 text-[15px] text-white placeholder-white/30 outline-none transition focus:border-emerald-400/70 focus:bg-white/[0.06] focus:ring-4 focus:ring-emerald-400/10";
+
+//   return (
+//     <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
+//       {/* Header */}
+//       <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+//         <div>
+//           <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
+//             {/* <BookOpen size={24} className="text-emerald-300" /> */}
+//             Notes & Formulas
+//           </h1>
+//           <p className="font-body text-sm text-white/50 mt-1">
+//             Save formulas, key concepts and quick references.
+//           </p>
+//         </div>
+
+//         <button
+//           type="button"
+//           onClick={openAddModal}
+//           className="font-body flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-5 py-3 font-semibold text-emerald-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition">
+//           <Plus size={18} />
+//           Add Note
+//         </button>
+//       </div>
+
+//       {/* Search + filters */}
+//       <div className="flex flex-col sm:flex-row gap-3 mb-6">
+//         <div className="relative flex-1">
+//           <Search
+//             size={18}
+//             className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
+//           />
+//           <input
+//             type="text"
+//             value={searchQuery}
+//             onChange={(e) => setSearchQuery(e.target.value)}
+//             placeholder="Search notes, formulas, tags..."
+//             className={`${inputClass} pl-11`}
+//           />
+//         </div>
+
+//         <div className="flex gap-3">
+//           <div className="relative">
+//             <Filter
+//               size={16}
+//               className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none"
+//             />
+//             <select
+//               value={selectedSubject}
+//               onChange={(e) => setSelectedSubject(e.target.value)}
+//               className={`${inputClass} pl-10 pr-8 appearance-none min-w-[150px]`}>
+//               <option value="" className="bg-[#0e1424]">
+//                 All subjects
+//               </option>
+//               {subjects.map((s) => (
+//                 <option key={s} value={s} className="bg-[#0e1424]">
+//                   {s}
+//                 </option>
+//               ))}
+//             </select>
+//           </div>
+
+//           <button
+//             type="button"
+//             onClick={() => setShowFavouritesOnly(!showFavouritesOnly)}
+//             aria-pressed={showFavouritesOnly}
+//             className={`flex items-center gap-2 rounded-xl border px-4 py-3 font-body text-sm transition ${
+//               showFavouritesOnly
+//                 ? "border-amber-400/50 bg-amber-400/15 text-amber-300"
+//                 : "border-white/10 bg-white/[0.04] text-white/60 hover:bg-white/10"
+//             }`}>
+//             <Star
+//               size={16}
+//               className={showFavouritesOnly ? "fill-amber-300" : ""}
+//             />
+//             <span className="hidden sm:inline">Favourites</span>
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Empty state */}
+//       {filteredFormulas.length === 0 ? (
+//         <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 text-center">
+//           <BookOpen size={48} className="mx-auto text-white/20 mb-4" />
+//           <p className="font-body text-white/50">
+//             {searchQuery || selectedSubject || showFavouritesOnly
+//               ? "No notes match your filters."
+//               : "No notes yet. Add your first formula or concept!"}
+//           </p>
+//         </div>
+//       ) : (
+//         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+//           <AnimatePresence>
+//             {filteredFormulas.map((f) => (
+//               <motion.div
+//                 key={f.id}
+//                 initial={{ opacity: 0, y: 16 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 exit={{ opacity: 0, scale: 0.95 }}
+//                 className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-5 hover:border-emerald-400/30 transition-colors">
+//                 {/* Header */}
+//                 <div className="flex items-start justify-between gap-2 mb-3">
+//                   <div className="min-w-0">
+//                     <span className="font-body text-[10px] uppercase tracking-wider text-emerald-300/70">
+//                       {f.noteType || "Formula"}
+//                     </span>
+//                     <h3 className="font-heading font-semibold text-[15px] truncate">
+//                       {f.title}
+//                     </h3>
+//                   </div>
+
+//                   <button
+//                     type="button"
+//                     onClick={() => toggleFavourite(f.id)}
+//                     aria-label={
+//                       f.favourite
+//                         ? "Remove from favourites"
+//                         : "Add to favourites"
+//                     }
+//                     className="shrink-0 text-white/30 hover:text-amber-300 transition">
+//                     <Star
+//                       size={17}
+//                       className={
+//                         f.favourite ? "fill-amber-300 text-amber-300" : ""
+//                       }
+//                     />
+//                   </button>
+//                 </div>
+
+//                 {/* Formula box */}
+//                 <div className="relative rounded-xl border border-white/10 bg-black/20 px-4 py-3 mb-3">
+//                   <p className="font-mono text-sm text-emerald-100/90 break-words">
+//                     {f.formula}
+//                   </p>
+//                   <button
+//                     type="button"
+//                     onClick={() => copyFormula(f.formula)}
+//                     aria-label="Copy formula"
+//                     className="absolute right-2 top-2 w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-white/40 opacity-0 group-hover:opacity-100 hover:text-white transition">
+//                     <Copy size={13} />
+//                   </button>
+//                 </div>
+
+//                 {/* Subject badge */}
+//                 <span className="inline-block self-start rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 font-body text-[11px] text-emerald-300 mb-3">
+//                   {f.subject}
+//                 </span>
+
+//                 {/* Explanation */}
+//                 {f.explanation && (
+//                   <p className="font-body text-sm text-white/60 mb-2 leading-relaxed">
+//                     {f.explanation}
+//                   </p>
+//                 )}
+
+//                 {/* Example */}
+//                 {f.example && (
+//                   <p className="font-body text-xs text-white/40 mb-3">
+//                     Example: {f.example}
+//                   </p>
+//                 )}
+
+//                 {/* Tags */}
+//                 {(f.tags || []).length > 0 && (
+//                   <div className="flex flex-wrap gap-1.5 mb-3">
+//                     {f.tags.map((tag) => (
+//                       <span
+//                         key={tag}
+//                         className="rounded-full bg-white/5 border border-white/10 px-2 py-0.5 font-body text-[11px] text-white/50">
+//                         #{tag}
+//                       </span>
+//                     ))}
+//                   </div>
+//                 )}
+
+//                 {/* Actions — bottom */}
+//                 <div className="flex items-center gap-2 mt-auto pt-2">
+//                   <button
+//                     type="button"
+//                     onClick={() => handleEdit(f)}
+//                     className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-body text-xs text-white/60 hover:text-white hover:bg-white/10 transition">
+//                     <Edit3 size={12} />
+//                     Edit
+//                   </button>
+
+//                   <button
+//                     type="button"
+//                     onClick={() => handleDelete(f.id)}
+//                     className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-body text-xs text-white/60 hover:text-red-300 hover:border-red-400/30 hover:bg-red-500/10 transition">
+//                     <Trash2 size={12} />
+//                     Delete
+//                   </button>
+//                 </div>
+//               </motion.div>
+//             ))}
+//           </AnimatePresence>
+//         </div>
+//       )}
+
+//       {/* Modal */}
+//       <AnimatePresence>
+//         {isModalOpen && (
+//           <motion.div
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+//             onClick={() => setIsModalOpen(false)}>
+//             <motion.div
+//               initial={{ opacity: 0, scale: 0.95, y: 20 }}
+//               animate={{ opacity: 1, scale: 1, y: 0 }}
+//               exit={{ opacity: 0, scale: 0.95, y: 20 }}
+//               onClick={(e) => e.stopPropagation()}
+//               className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e1424] p-6 max-h-[70vh] overflow-y-auto scrollbar-none">
+//               {/* Modal header */}
+//               <div className="flex items-center justify-between mb-5">
+//                 <h2 className="font-heading text-xl font-bold">
+//                   {editingId ? "Edit Note" : "Add Note"}
+//                 </h2>
+//                 <button
+//                   type="button"
+//                   onClick={() => setIsModalOpen(false)}
+//                   aria-label="Close"
+//                   className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition">
+//                   <X size={18} />
+//                 </button>
+//               </div>
+
+//               {/* Form */}
+//               <div className="space-y-4">
+//                 {/* Note type */}
+//                 <div>
+//                   <label className="font-body block text-sm text-white/70 mb-2">
+//                     Note type
+//                   </label>
+//                   <div className="grid grid-cols-3 gap-2">
+//                     {["Formula", "Concept", "Definition"].map((type) => (
+//                       <button
+//                         key={type}
+//                         type="button"
+//                         onClick={() => setNoteType(type)}
+//                         className={`rounded-xl border py-2.5 font-body text-xs font-medium transition ${
+//                           noteType === type
+//                             ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
+//                             : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
+//                         }`}>
+//                         {type}
+//                       </button>
+//                     ))}
+//                   </div>
+//                 </div>
+
+//                 {/* Title */}
+//                 <div>
+//                   <label
+//                     htmlFor="note-title"
+//                     className="font-body block text-sm text-white/70 mb-2">
+//                     Title
+//                   </label>
+//                   <input
+//                     id="note-title"
+//                     type="text"
+//                     value={title}
+//                     onChange={(e) => setTitle(e.target.value)}
+//                     placeholder="e.g. Newton's Second Law"
+//                     className={inputClass}
+//                   />
+//                 </div>
+
+//                 {/* Formula */}
+//                 <div>
+//                   <label
+//                     htmlFor="note-formula"
+//                     className="font-body block text-sm text-white/70 mb-2">
+//                     {noteType === "Formula" ? "Formula" : "Key point"}
+//                   </label>
+//                   <input
+//                     id="note-formula"
+//                     type="text"
+//                     value={formula}
+//                     onChange={(e) => setFormula(e.target.value)}
+//                     placeholder={
+//                       noteType === "Formula"
+//                         ? "e.g. F = ma"
+//                         : "e.g. Force = mass × acceleration"
+//                     }
+//                     className={inputClass}
+//                   />
+//                 </div>
+
+//                 {/* Subject */}
+//                 <div>
+//                   <label
+//                     htmlFor="note-subject"
+//                     className="font-body block text-sm text-white/70 mb-2">
+//                     Subject
+//                   </label>
+//                   <select
+//                     id="note-subject"
+//                     value={subject}
+//                     onChange={(e) => setSubject(e.target.value)}
+//                     className={inputClass}>
+//                     <option value="" className="bg-[#0e1424]">
+//                       Select subject
+//                     </option>
+//                     {subjects.map((s) => (
+//                       <option key={s} value={s} className="bg-[#0e1424]">
+//                         {s}
+//                       </option>
+//                     ))}
+//                   </select>
+//                 </div>
+
+//                 {/* Explanation */}
+//                 <div>
+//                   <label
+//                     htmlFor="note-explanation"
+//                     className="font-body block text-sm text-white/70 mb-2">
+//                     Explanation (optional)
+//                   </label>
+//                   <textarea
+//                     id="note-explanation"
+//                     value={explanation}
+//                     onChange={(e) => setExplanation(e.target.value)}
+//                     placeholder="Short explanation..."
+//                     rows={3}
+//                     className={`${inputClass} resize-none`}
+//                   />
+//                 </div>
+
+//                 {/* Example */}
+//                 <div>
+//                   <label
+//                     htmlFor="note-example"
+//                     className="font-body block text-sm text-white/70 mb-2">
+//                     Example (optional)
+//                   </label>
+//                   <input
+//                     id="note-example"
+//                     type="text"
+//                     value={example}
+//                     onChange={(e) => setExample(e.target.value)}
+//                     placeholder="e.g. F = 5kg × 2m/s² = 10N"
+//                     className={inputClass}
+//                   />
+//                 </div>
+
+//                 {/* Tags */}
+//                 <div>
+//                   <label
+//                     htmlFor="note-tags"
+//                     className="font-body block text-sm text-white/70 mb-2">
+//                     Tags (comma separated)
+//                   </label>
+//                   <input
+//                     id="note-tags"
+//                     type="text"
+//                     value={tags}
+//                     onChange={(e) => setTags(e.target.value)}
+//                     placeholder="e.g. mechanics, dynamics"
+//                     className={inputClass}
+//                   />
+//                 </div>
+
+//                 {/* Save */}
+//                 <button
+//                   type="button"
+//                   onClick={handleSave}
+//                   className="font-body w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-400 py-3.5 font-semibold text-emerald-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition">
+//                   <Check size={18} />
+//                   {editingId ? "Update Note" : "Save Note"}
+//                 </button>
+//               </div>
+//             </motion.div>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   );
+// };
+
+// export default Notes;
+
+import { Navigate } from "react-router-dom";
+import { AlertCircle, BookOpen, Plus } from "lucide-react";
+
+import Loader from "../components/Loader";
+import { useNotes } from "../hooks/useNotes";
+
+import NotesToolbar from "../components/notes/NotesToolbar";
+import NoteCard from "../components/notes/NoteCard";
+import NoteModal from "../components/notes/NoteModal";
+
+export default function Notes() {
+  const notes = useNotes();
+
+  if (notes.loading) {
+    return (
+      <div
+        role="status"
+        className="flex min-h-[60vh] items-center justify-center">
+        <Loader size="md" />
+        <span className="sr-only">Loading your notes…</span>
+      </div>
     );
-  }, [formulas, user]);
+  }
 
-  // ---------------- Filtered formulas ----------------
-  const filteredFormulas = useMemo(() => {
-    return formulas
-      .filter((f) => {
-        const q = searchQuery.toLowerCase();
-        const matchesSearch =
-          !q ||
-          f.title.toLowerCase().includes(q) ||
-          f.formula.toLowerCase().includes(q) ||
-          (f.tags || []).some((tag) => tag.toLowerCase().includes(q));
+  if (!notes.user) {
+    return <Navigate to="/login" replace />;
+  }
 
-        const matchesSubject =
-          !selectedSubject || f.subject === selectedSubject;
-
-        const matchesFavourite = !showFavouritesOnly || f.favourite;
-
-        return matchesSearch && matchesSubject && matchesFavourite;
-      })
-      .sort((a, b) => {
-        // Favourites first, then newest
-        if (a.favourite !== b.favourite) return a.favourite ? -1 : 1;
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      });
-  }, [formulas, searchQuery, selectedSubject, showFavouritesOnly]);
-
-  // ---------------- Add / edit ----------------
-  const handleSave = () => {
-    if (!title.trim() || !formula.trim()) return;
-
-    const newFormula = {
-      id: editingId || `formula-${Date.now()}`,
-      title: title.trim(),
-      formula: formula.trim(),
-      subject: subject || "General",
-      noteType,
-      explanation: explanation.trim(),
-      example: example.trim(),
-      tags: tags
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean),
-      favourite: false,
-      createdAt: new Date().toISOString(),
-    };
-
-    setFormulas((prev) =>
-      editingId
-        ? prev.map((f) => (f.id === editingId ? newFormula : f))
-        : [...prev, newFormula],
-    );
-
-    // Reset
-    setTitle("");
-    setFormula("");
-    setSubject("");
-    setNoteType("Formula");
-    setExplanation("");
-    setExample("");
-    setTags("");
-    setIsModalOpen(false);
-    setEditingId(null);
-  };
-
-  const handleEdit = (f) => {
-    setTitle(f.title);
-    setFormula(f.formula);
-    setSubject(f.subject);
-    setNoteType(f.noteType || "Formula");
-    setExplanation(f.explanation || "");
-    setExample(f.example || "");
-    setTags((f.tags || []).join(", "));
-    setEditingId(f.id);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (id) => {
-    setFormulas((prev) => prev.filter((f) => f.id !== id));
-  };
-
-  const toggleFavourite = (id) => {
-    setFormulas((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, favourite: !f.favourite } : f)),
-    );
-  };
-
-  const copyFormula = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (err) {
-      console.error("Copy failed:", err);
-    }
-  };
-
-  const openAddModal = () => {
-    setEditingId(null);
-    setTitle("");
-    setFormula("");
-    setSubject("");
-    setNoteType("Formula");
-    setExplanation("");
-    setExample("");
-    setTags("");
-    setIsModalOpen(true);
-  };
-
-  const inputClass =
-    "font-body w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 px-4 text-[15px] text-white placeholder-white/30 outline-none transition focus:border-emerald-400/70 focus:bg-white/[0.06] focus:ring-4 focus:ring-emerald-400/10";
+  const hasFilters =
+    notes.searchQuery.trim() || notes.selectedSubject || notes.favouritesOnly;
 
   return (
-    <div className="pb-24 md:pb-8 mt-23 lg:mt-6">
-      {/* Header */}
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="mt-24 space-y-5 pb-6 lg:mt-6">
+      <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
-          <h1 className="font-heading text-2xl font-bold flex items-center gap-2">
-            {/* <BookOpen size={24} className="text-emerald-300" /> */}
+          <h1 className="flex items-center gap-3 font-heading text-3xl font-bold text-white">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-emerald-300/20 bg-emerald-400/10">
+              <BookOpen
+                size={23}
+                className="text-emerald-300"
+                aria-hidden="true"
+              />
+            </span>
             Notes & Formulas
           </h1>
-          <p className="font-body text-sm text-white/50 mt-1">
-            Save formulas, key concepts and quick references.
+
+          <p className="mt-3 max-w-xl text-sm leading-tight text-slate-400">
+            Keep important formulas, concepts and definitions in one place. Add
+            explanations and examples in your own words, organise notes by
+            subject, and favourite the references you want to revisit.
           </p>
         </div>
 
         <button
           type="button"
-          onClick={openAddModal}
-          className="font-body flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-5 py-3 font-semibold text-emerald-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition">
-          <Plus size={18} />
+          onClick={notes.openAdd}
+          disabled={!notes.storageReady}
+          className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-emerald-300 px-5 text-sm font-semibold text-emerald-950 hover:bg-emerald-200 disabled:cursor-not-allowed disabled:opacity-50">
+          <Plus size={18} aria-hidden="true" />
           Add Note
         </button>
-      </div>
+      </header>
 
-      {/* Search + filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1">
-          <Search
+      {notes.pageError && (
+        <p
+          role="alert"
+          className="flex items-start gap-2 rounded-2xl border border-amber-300/20 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
+          <AlertCircle
             size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
+            className="mt-0.5 shrink-0"
+            aria-hidden="true"
           />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search notes, formulas, tags..."
-            className={`${inputClass} pl-11`}
-          />
-        </div>
+          {notes.pageError}
+        </p>
+      )}
 
-        <div className="flex gap-3">
-          <div className="relative">
-            <Filter
-              size={16}
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none"
+      <NotesToolbar
+        subjects={notes.subjectOptions}
+        searchQuery={notes.searchQuery}
+        onSearch={notes.setSearchQuery}
+        selectedSubject={notes.selectedSubject}
+        onSubjectChange={notes.setSelectedSubject}
+        favouritesOnly={notes.favouritesOnly}
+        onFavouritesChange={notes.setFavouritesOnly}
+        visibleCount={notes.filteredNotes.length}
+        totalCount={notes.notes.length}
+        onClear={notes.clearFilters}
+      />
+
+      {notes.filteredNotes.length === 0 ? (
+        <section
+          aria-label="Notes empty state"
+          className="rounded-3xl border border-emerald-300/15 bg-[#0a1224] px-5 py-12 text-center">
+          <span className="mx-auto flex size-16 items-center justify-center rounded-2xl border border-emerald-300/15 bg-emerald-400/10">
+            <BookOpen
+              size={29}
+              className="text-emerald-300"
+              aria-hidden="true"
             />
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className={`${inputClass} pl-10 pr-8 appearance-none min-w-[150px]`}>
-              <option value="" className="bg-[#0e1424]">
-                All subjects
-              </option>
-              {subjects.map((s) => (
-                <option key={s} value={s} className="bg-[#0e1424]">
-                  {s}
-                </option>
-              ))}
-            </select>
-          </div>
+          </span>
 
-          <button
-            type="button"
-            onClick={() => setShowFavouritesOnly(!showFavouritesOnly)}
-            aria-pressed={showFavouritesOnly}
-            className={`flex items-center gap-2 rounded-xl border px-4 py-3 font-body text-sm transition ${
-              showFavouritesOnly
-                ? "border-amber-400/50 bg-amber-400/15 text-amber-300"
-                : "border-white/10 bg-white/[0.04] text-white/60 hover:bg-white/10"
-            }`}>
-            <Star
-              size={16}
-              className={showFavouritesOnly ? "fill-amber-300" : ""}
-            />
-            <span className="hidden sm:inline">Favourites</span>
-          </button>
-        </div>
-      </div>
+          <h2 className="mt-5 font-heading text-xl font-bold text-white">
+            {!notes.storageReady
+              ? "Your notes could not be loaded"
+              : hasFilters
+                ? "No matching notes"
+                : "Build your revision collection"}
+          </h2>
 
-      {/* Empty state */}
-      {filteredFormulas.length === 0 ? (
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 text-center">
-          <BookOpen size={48} className="mx-auto text-white/20 mb-4" />
-          <p className="font-body text-white/50">
-            {searchQuery || selectedSubject || showFavouritesOnly
-              ? "No notes match your filters."
-              : "No notes yet. Add your first formula or concept!"}
+          <p className="mx-auto mt-3 max-w-sm text-sm leading-tight text-slate-400">
+            {!notes.storageReady
+              ? "Your saved data has not been overwritten. Check browser storage before trying again."
+              : hasFilters
+                ? "Try another search or clear your filters to see more notes."
+                : "Save your first formula, concept or definition and keep it ready for revision."}
           </p>
-        </div>
+
+          {notes.storageReady && (
+            <button
+              type="button"
+              onClick={hasFilters ? notes.clearFilters : notes.openAdd}
+              className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl border border-emerald-300/25 bg-emerald-400/10 px-4 text-xs font-medium text-emerald-200 hover:bg-emerald-400/15">
+              {hasFilters ? "Clear filters" : "Add your first note"}
+            </button>
+          )}
+        </section>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          <AnimatePresence>
-            {filteredFormulas.map((f) => (
-              <motion.div
-                key={f.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-5 hover:border-emerald-400/30 transition-colors">
-                {/* Header */}
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <div className="min-w-0">
-                    <span className="font-body text-[10px] uppercase tracking-wider text-emerald-300/70">
-                      {f.noteType || "Formula"}
-                    </span>
-                    <h3 className="font-heading font-semibold text-[15px] truncate">
-                      {f.title}
-                    </h3>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => toggleFavourite(f.id)}
-                    aria-label={
-                      f.favourite
-                        ? "Remove from favourites"
-                        : "Add to favourites"
-                    }
-                    className="shrink-0 text-white/30 hover:text-amber-300 transition">
-                    <Star
-                      size={17}
-                      className={
-                        f.favourite ? "fill-amber-300 text-amber-300" : ""
-                      }
-                    />
-                  </button>
-                </div>
-
-                {/* Formula box */}
-                <div className="relative rounded-xl border border-white/10 bg-black/20 px-4 py-3 mb-3">
-                  <p className="font-mono text-sm text-emerald-100/90 break-words">
-                    {f.formula}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => copyFormula(f.formula)}
-                    aria-label="Copy formula"
-                    className="absolute right-2 top-2 w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center text-white/40 opacity-0 group-hover:opacity-100 hover:text-white transition">
-                    <Copy size={13} />
-                  </button>
-                </div>
-
-                {/* Subject badge */}
-                <span className="inline-block self-start rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 font-body text-[11px] text-emerald-300 mb-3">
-                  {f.subject}
-                </span>
-
-                {/* Explanation */}
-                {f.explanation && (
-                  <p className="font-body text-sm text-white/60 mb-2 leading-relaxed">
-                    {f.explanation}
-                  </p>
-                )}
-
-                {/* Example */}
-                {f.example && (
-                  <p className="font-body text-xs text-white/40 mb-3">
-                    Example: {f.example}
-                  </p>
-                )}
-
-                {/* Tags */}
-                {(f.tags || []).length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {f.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-white/5 border border-white/10 px-2 py-0.5 font-body text-[11px] text-white/50">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Actions — bottom */}
-                <div className="flex items-center gap-2 mt-auto pt-2">
-                  <button
-                    type="button"
-                    onClick={() => handleEdit(f)}
-                    className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-body text-xs text-white/60 hover:text-white hover:bg-white/10 transition">
-                    <Edit3 size={12} />
-                    Edit
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(f.id)}
-                    className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-body text-xs text-white/60 hover:text-red-300 hover:border-red-400/30 hover:bg-red-500/10 transition">
-                    <Trash2 size={12} />
-                    Delete
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 2xl:grid-cols-3">
+          {notes.filteredNotes.map((note) => (
+            <NoteCard
+              key={note.id}
+              note={note}
+              disabled={!notes.storageReady}
+              onFavourite={notes.toggleFavourite}
+              onEdit={notes.openEdit}
+              onDelete={notes.deleteNote}
+            />
+          ))}
         </div>
       )}
 
-      {/* Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-            onClick={() => setIsModalOpen(false)}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e1424] p-6 max-h-[70vh] overflow-y-auto scrollbar-none">
-              {/* Modal header */}
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="font-heading text-xl font-bold">
-                  {editingId ? "Edit Note" : "Add Note"}
-                </h2>
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  aria-label="Close"
-                  className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition">
-                  <X size={18} />
-                </button>
-              </div>
+      <p className="px-1 text-xs leading-tight text-slate-400">
+        Notes are stored in this browser for your account. They are not synced
+        to cloud storage.
+      </p>
 
-              {/* Form */}
-              <div className="space-y-4">
-                {/* Note type */}
-                <div>
-                  <label className="font-body block text-sm text-white/70 mb-2">
-                    Note type
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {["Formula", "Concept", "Definition"].map((type) => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => setNoteType(type)}
-                        className={`rounded-xl border py-2.5 font-body text-xs font-medium transition ${
-                          noteType === type
-                            ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
-                            : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
-                        }`}>
-                        {type}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Title */}
-                <div>
-                  <label
-                    htmlFor="note-title"
-                    className="font-body block text-sm text-white/70 mb-2">
-                    Title
-                  </label>
-                  <input
-                    id="note-title"
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="e.g. Newton's Second Law"
-                    className={inputClass}
-                  />
-                </div>
-
-                {/* Formula */}
-                <div>
-                  <label
-                    htmlFor="note-formula"
-                    className="font-body block text-sm text-white/70 mb-2">
-                    {noteType === "Formula" ? "Formula" : "Key point"}
-                  </label>
-                  <input
-                    id="note-formula"
-                    type="text"
-                    value={formula}
-                    onChange={(e) => setFormula(e.target.value)}
-                    placeholder={
-                      noteType === "Formula"
-                        ? "e.g. F = ma"
-                        : "e.g. Force = mass × acceleration"
-                    }
-                    className={inputClass}
-                  />
-                </div>
-
-                {/* Subject */}
-                <div>
-                  <label
-                    htmlFor="note-subject"
-                    className="font-body block text-sm text-white/70 mb-2">
-                    Subject
-                  </label>
-                  <select
-                    id="note-subject"
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                    className={inputClass}>
-                    <option value="" className="bg-[#0e1424]">
-                      Select subject
-                    </option>
-                    {subjects.map((s) => (
-                      <option key={s} value={s} className="bg-[#0e1424]">
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Explanation */}
-                <div>
-                  <label
-                    htmlFor="note-explanation"
-                    className="font-body block text-sm text-white/70 mb-2">
-                    Explanation (optional)
-                  </label>
-                  <textarea
-                    id="note-explanation"
-                    value={explanation}
-                    onChange={(e) => setExplanation(e.target.value)}
-                    placeholder="Short explanation..."
-                    rows={3}
-                    className={`${inputClass} resize-none`}
-                  />
-                </div>
-
-                {/* Example */}
-                <div>
-                  <label
-                    htmlFor="note-example"
-                    className="font-body block text-sm text-white/70 mb-2">
-                    Example (optional)
-                  </label>
-                  <input
-                    id="note-example"
-                    type="text"
-                    value={example}
-                    onChange={(e) => setExample(e.target.value)}
-                    placeholder="e.g. F = 5kg × 2m/s² = 10N"
-                    className={inputClass}
-                  />
-                </div>
-
-                {/* Tags */}
-                <div>
-                  <label
-                    htmlFor="note-tags"
-                    className="font-body block text-sm text-white/70 mb-2">
-                    Tags (comma separated)
-                  </label>
-                  <input
-                    id="note-tags"
-                    type="text"
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    placeholder="e.g. mechanics, dynamics"
-                    className={inputClass}
-                  />
-                </div>
-
-                {/* Save */}
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className="font-body w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-400 py-3.5 font-semibold text-emerald-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition">
-                  <Check size={18} />
-                  {editingId ? "Update Note" : "Save Note"}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <NoteModal
+        open={notes.modalOpen}
+        editingId={notes.editingId}
+        subjects={notes.subjectOptions}
+        form={notes.form}
+        error={notes.formError}
+        onChange={notes.updateForm}
+        onSave={notes.saveNote}
+        onClose={notes.closeModal}
+      />
     </div>
   );
-};
-
-export default Notes;
+}

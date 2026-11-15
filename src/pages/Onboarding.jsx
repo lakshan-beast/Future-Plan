@@ -753,7 +753,7 @@ import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { motion } from "motion/react";
+// import { motion } from "motion/react";
 import {
   GraduationCap,
   // BookOpen,
@@ -996,238 +996,656 @@ const Onboarding = () => {
 
   const olSelectedCount = Object.values(olOptional).filter((s) => s).length;
 
+  // return (
+  //   <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white flex items-center justify-center px-4 py-10">
+  //     <motion.div
+  //       initial={{ opacity: 0, y: 20 }}
+  //       animate={{ opacity: 1, y: 0 }}
+  //       className="w-full max-w-2xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8">
+  //       {/* Header */}
+  //       <div className="flex items-center gap-3 mb-6">
+  //         <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
+  //           <Sparkles size={20} className="text-emerald-950" />
+  //         </div>
+  //         <div>
+  //           <h1 className="font-heading text-xl font-bold">
+  //             {isExisting ? "Update your profile" : "Set up your profile"}
+  //           </h1>
+  //           <p className="font-body text-xs text-white/50">
+  //             {isExisting
+  //               ? "Update your subjects and exam details anytime."
+  //               : "Tell us about your studies to personalize DreamUTrack."}
+  //           </p>
+  //         </div>
+  //       </div>
+
+  //       {/* Level */}
+  //       <div className="mb-6">
+  //         <label className="font-body block text-sm text-white/70 mb-2">
+  //           <GraduationCap size={14} className="inline mr-1.5 -mt-0.5" />
+  //           Select your level
+  //         </label>
+  //         <div className="grid grid-cols-2 gap-3">
+  //           {[
+  //             { value: "OL", label: "O/L" },
+  //             { value: "AL", label: "A/L" },
+  //           ].map((option) => (
+  //             <button
+  //               key={option.value}
+  //               type="button"
+  //               onClick={() => {
+  //                 setLevel(option.value);
+  //                 setOlOptional({
+  //                   "Group 01": "",
+  //                   "Group 02": "",
+  //                   "Group 03": "",
+  //                 });
+  //                 setAlStream("");
+  //                 setAlSubjects([]);
+  //               }}
+  //               className={`rounded-xl border py-3 font-body text-sm font-medium transition ${
+  //                 level === option.value
+  //                   ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
+  //                   : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
+  //               }`}>
+  //               {option.label}
+  //             </button>
+  //           ))}
+  //         </div>
+  //       </div>
+
+  //       {/* O/L — main + optional */}
+  //       {level === "OL" && (
+  //         <>
+  //           {/* Main subjects — auto */}
+  //           <div className="mb-6">
+  //             <label className="font-body block text-sm text-white/70 mb-2">
+  //               Main subjects (automatic)
+  //             </label>
+  //             <div className="flex flex-wrap gap-2">
+  //               {OL_MAIN_SUBJECTS.map((subject) => (
+  //                 <span
+  //                   key={subject}
+  //                   className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1.5 font-body text-xs text-emerald-300">
+  //                   <Check size={12} />
+  //                   {subject}
+  //                 </span>
+  //               ))}
+  //             </div>
+  //             <p className="font-body text-[11px] text-white/30 mt-2">
+  //               These 6 subjects are included automatically.
+  //             </p>
+  //           </div>
+
+  //           {/* Optional — 1 from each group */}
+  //           <div className="mb-6">
+  //             <label className="font-body block text-sm text-white/70 mb-2">
+  //               Select 1 subject from each group ({olSelectedCount}/3)
+  //             </label>
+
+  //             {Object.entries(OL_OPTIONAL_GROUPS).map(
+  //               ([groupName, options]) => (
+  //                 <div key={groupName} className="mb-4">
+  //                   <p className="font-body text-xs text-white/40 mb-2">
+  //                     {groupName}
+  //                   </p>
+  //                   <div className="flex flex-wrap gap-2">
+  //                     {options.map((subject) => (
+  //                       <button
+  //                         key={subject}
+  //                         type="button"
+  //                         onClick={() => handleOlOptional(groupName, subject)}
+  //                         className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-body text-xs transition ${
+  //                           olOptional[groupName] === subject
+  //                             ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
+  //                             : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
+  //                         }`}>
+  //                         {olOptional[groupName] === subject && (
+  //                           <Check size={12} />
+  //                         )}
+  //                         {subject}
+  //                       </button>
+  //                     ))}
+  //                   </div>
+  //                 </div>
+  //               ),
+  //             )}
+  //           </div>
+  //         </>
+  //       )}
+
+  //       {/* A/L — stream + 3 subjects */}
+  //       {level === "AL" && (
+  //         <>
+  //           {/* Stream */}
+  //           <div className="mb-6">
+  //             <label className="font-body block text-sm text-white/70 mb-2">
+  //               Select your stream
+  //             </label>
+  //             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+  //               {Object.entries(AL_STREAMS).map(([key, stream]) => (
+  //                 <button
+  //                   key={key}
+  //                   type="button"
+  //                   onClick={() => {
+  //                     setAlStream(key);
+  //                     setAlSubjects([]);
+  //                   }}
+  //                   className={`rounded-xl border py-2.5 font-body text-sm transition ${
+  //                     alStream === key
+  //                       ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
+  //                       : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
+  //                   }`}>
+  //                   {stream.label}
+  //                 </button>
+  //               ))}
+  //             </div>
+  //           </div>
+
+  //           {/* 3 subjects */}
+  //           {alStream && (
+  //             <div className="mb-6">
+  //               <label className="font-body block text-sm text-white/70 mb-2">
+  //                 Select 3 main subjects ({alSubjects.length}/3)
+  //               </label>
+  //               <p className="font-body text-[11px] text-white/30 mb-3">
+  //                 {AL_STREAMS[alStream].note}
+  //               </p>
+
+  //               <div className="flex flex-wrap gap-2">
+  //                 {AL_STREAMS[alStream].options.map((subject) => (
+  //                   <button
+  //                     key={subject}
+  //                     type="button"
+  //                     onClick={() => handleAlSubject(subject)}
+  //                     disabled={
+  //                       !alSubjects.includes(subject) && alSubjects.length >= 3
+  //                     }
+  //                     className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-body text-xs transition ${
+  //                       alSubjects.includes(subject)
+  //                         ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
+  //                         : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10 disabled:opacity-40"
+  //                     }`}>
+  //                     {alSubjects.includes(subject) && <Check size={12} />}
+  //                     {subject}
+  //                   </button>
+  //                 ))}
+  //               </div>
+
+  //               {/* Common subjects — auto */}
+  //               <p className="font-body text-[11px] text-white/30 mt-3">
+  //                 English + Common General are added automatically (minor
+  //                 focus).
+  //               </p>
+  //             </div>
+  //           )}
+  //         </>
+  //       )}
+
+  //       {/* Exam date */}
+  //       <div className="mb-6">
+  //         <label
+  //           htmlFor="examDate"
+  //           className="font-body block text-sm text-white/70 mb-2">
+  //           <CalendarDays size={14} className="inline mr-1.5 -mt-0.5" />
+  //           Exam date (optional)
+  //         </label>
+  //         <input
+  //           id="examDate"
+  //           type="date"
+  //           value={examDate}
+  //           onChange={(e) => setExamDate(e.target.value)}
+  //           className="font-body w-full rounded-xl border border-white/10 bg-white/5 py-3 px-4 text-sm text-white outline-none focus:border-emerald-400/70 transition"
+  //         />
+  //       </div>
+
+  //       {/* Error */}
+  //       {error && (
+  //         <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 font-body text-sm text-red-300 mb-4">
+  //           <AlertCircle size={16} className="shrink-0 mt-0.5" />
+  //           {error}
+  //         </div>
+  //       )}
+
+  //       {/* Save */}
+  //       <button
+  //         type="button"
+  //         onClick={handleSave}
+  //         disabled={saving}
+  //         className="font-body w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-400 py-3.5 font-semibold text-emerald-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition disabled:opacity-60">
+  //         {saving ? (
+  //           <div className="w-4 h-4 rounded-full border-2 border-emerald-950/30 border-t-emerald-950 animate-spin" />
+  //         ) : (
+  //           <ArrowRight size={18} />
+  //         )}
+  //         {saving
+  //           ? "Saving..."
+  //           : isExisting
+  //             ? "Update profile"
+  //             : "Continue to Dashboard"}
+  //       </button>
+  //     </motion.div>
+  //   </div>
+  // );
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0b1020] via-[#131a35] to-[#1b1035] text-white flex items-center justify-center px-4 py-10">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-2xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
-            <Sparkles size={20} className="text-emerald-950" />
-          </div>
-          <div>
-            <h1 className="font-heading text-xl font-bold">
-              {isExisting ? "Update your profile" : "Set up your profile"}
-            </h1>
-            <p className="font-body text-xs text-white/50">
-              {isExisting
-                ? "Update your subjects and exam details anytime."
-                : "Tell us about your studies to personalize DreamUTrack."}
-            </p>
-          </div>
-        </div>
+    <div className="relative isolate min-h-screen overflow-hidden bg-[#000014] px-4 py-8 text-white sm:py-12">
+      {/* Decorative background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-gradient-to-b from-emerald-400/[0.07] to-transparent"
+      />
 
-        {/* Level */}
-        <div className="mb-6">
-          <label className="font-body block text-sm text-white/70 mb-2">
-            <GraduationCap size={14} className="inline mr-1.5 -mt-0.5" />
-            Select your level
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { value: "OL", label: "O/L" },
-              { value: "AL", label: "A/L" },
-            ].map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => {
-                  setLevel(option.value);
-                  setOlOptional({
-                    "Group 01": "",
-                    "Group 02": "",
-                    "Group 03": "",
-                  });
-                  setAlStream("");
-                  setAlSubjects([]);
-                }}
-                className={`rounded-xl border py-3 font-body text-sm font-medium transition ${
-                  level === option.value
-                    ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
-                    : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
-                }`}>
-                {option.label}
-              </button>
-            ))}
+      <div className="mx-auto w-full max-w-3xl">
+        {/* Page header */}
+        <header className="mb-6">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-400/10 px-3 py-1.5 text-xs text-emerald-200">
+            <Sparkles size={13} aria-hidden="true" />
+            DreamTrack · Study Profile
           </div>
-        </div>
 
-        {/* O/L — main + optional */}
-        {level === "OL" && (
-          <>
-            {/* Main subjects — auto */}
-            <div className="mb-6">
-              <label className="font-body block text-sm text-white/70 mb-2">
-                Main subjects (automatic)
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {OL_MAIN_SUBJECTS.map((subject) => (
-                  <span
-                    key={subject}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1.5 font-body text-xs text-emerald-300">
-                    <Check size={12} />
-                    {subject}
-                  </span>
-                ))}
-              </div>
-              <p className="font-body text-[11px] text-white/30 mt-2">
-                These 6 subjects are included automatically.
+          <h1 className="font-heading text-3xl font-bold leading-tight sm:text-4xl">
+            {isExisting ? "Update your profile" : "Make DreamTrack yours"}
+          </h1>
+
+          <p className="mt-3 max-w-xl text-sm leading-7 text-slate-400">
+            {isExisting
+              ? "Keep your study profile up to date. Review your exam level, adjust your subjects and update your exam date so your workspace stays relevant to your goals."
+              : "Choose your exam level and the subjects you study. Add your exam date when you are ready, and use these details to personalize your DreamTrack workspace."}
+          </p>
+        </header>
+
+        <div className="overflow-hidden rounded-3xl border border-emerald-300/15 bg-[#0a1224] shadow-2xl shadow-black/10">
+          {/* Card heading */}
+          <div className="flex items-center gap-3 border-b border-white/10 bg-emerald-400/[0.03] px-5 py-5 sm:px-7">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-emerald-300/25 bg-emerald-400/10">
+              <GraduationCap
+                size={23}
+                className="text-emerald-300"
+                aria-hidden="true"
+              />
+            </span>
+
+            <div>
+              <h2 className="text-sm font-semibold text-slate-100">
+                Your study details
+              </h2>
+
+              <p className="mt-1 text-xs leading-5 text-slate-400">
+                Select the options that match your current studies.
               </p>
             </div>
+          </div>
 
-            {/* Optional — 1 from each group */}
-            <div className="mb-6">
-              <label className="font-body block text-sm text-white/70 mb-2">
-                Select 1 subject from each group ({olSelectedCount}/3)
-              </label>
+          <div className="space-y-7 p-5 sm:p-7">
+            {/* Exam level */}
+            <fieldset>
+              <legend className="mb-3 text-sm font-semibold text-slate-200">
+                Select your exam level
+              </legend>
 
-              {Object.entries(OL_OPTIONAL_GROUPS).map(
-                ([groupName, options]) => (
-                  <div key={groupName} className="mb-4">
-                    <p className="font-body text-xs text-white/40 mb-2">
-                      {groupName}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {options.map((subject) => (
-                        <button
-                          key={subject}
-                          type="button"
-                          onClick={() => handleOlOptional(groupName, subject)}
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-body text-xs transition ${
-                            olOptional[groupName] === subject
-                              ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
-                              : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
-                          }`}>
-                          {olOptional[groupName] === subject && (
-                            <Check size={12} />
-                          )}
-                          {subject}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ),
-              )}
-            </div>
-          </>
-        )}
-
-        {/* A/L — stream + 3 subjects */}
-        {level === "AL" && (
-          <>
-            {/* Stream */}
-            <div className="mb-6">
-              <label className="font-body block text-sm text-white/70 mb-2">
-                Select your stream
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                {Object.entries(AL_STREAMS).map(([key, stream]) => (
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  {
+                    value: "OL",
+                    label: "O/L",
+                    description: "Ordinary Level",
+                  },
+                  {
+                    value: "AL",
+                    label: "A/L",
+                    description: "Advanced Level",
+                  },
+                ].map((option) => (
                   <button
-                    key={key}
+                    key={option.value}
                     type="button"
+                    aria-pressed={level === option.value}
                     onClick={() => {
-                      setAlStream(key);
+                      setLevel(option.value);
+
+                      setOlOptional({
+                        "Group 01": "",
+                        "Group 02": "",
+                        "Group 03": "",
+                      });
+
+                      setAlStream("");
                       setAlSubjects([]);
                     }}
-                    className={`rounded-xl border py-2.5 font-body text-sm transition ${
-                      alStream === key
-                        ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
-                        : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10"
-                    }`}>
-                    {stream.label}
+                    className={`
+                    relative rounded-2xl border px-4 py-5
+                    text-left transition-colors
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-2
+                    focus-visible:outline-emerald-300
+                    ${
+                      level === option.value
+                        ? "border-emerald-300/50 bg-emerald-400/10"
+                        : "border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/5"
+                    }
+                  `}>
+                    <span
+                      className={`
+                      block font-heading text-2xl font-bold
+                      ${
+                        level === option.value
+                          ? "text-emerald-200"
+                          : "text-white"
+                      }
+                    `}>
+                      {option.label}
+                    </span>
+
+                    <span className="mt-1 block text-xs text-slate-400">
+                      {option.description}
+                    </span>
+
+                    {level === option.value && (
+                      <Check
+                        size={16}
+                        className="absolute right-3 top-3 text-emerald-300"
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
                 ))}
               </div>
+            </fieldset>
+
+            {/* O/L subjects */}
+            {level === "OL" && (
+              <>
+                <section aria-labelledby="ol-main-heading">
+                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                    <h3
+                      id="ol-main-heading"
+                      className="text-sm font-semibold text-slate-200">
+                      Main subjects
+                    </h3>
+
+                    <span className="rounded-full bg-emerald-400/10 px-2.5 py-1 text-[10px] font-medium text-emerald-200">
+                      Included automatically
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 rounded-2xl border border-white/10 bg-[#070e1d] p-4">
+                    {OL_MAIN_SUBJECTS.map((subject) => (
+                      <span
+                        key={subject}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300/15 bg-emerald-400/[0.06] px-3 py-2 text-xs text-emerald-100">
+                        <Check
+                          size={12}
+                          className="text-emerald-300"
+                          aria-hidden="true"
+                        />
+                        {subject}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="mt-2 text-xs leading-5 text-slate-400">
+                    These 6 subjects are included automatically.
+                  </p>
+                </section>
+
+                <section aria-labelledby="ol-optional-heading">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <h3
+                      id="ol-optional-heading"
+                      className="text-sm font-semibold text-slate-200">
+                      Optional subjects
+                    </h3>
+
+                    <span className="shrink-0 rounded-full border border-emerald-300/20 bg-emerald-400/10 px-2.5 py-1 text-xs text-emerald-200">
+                      {olSelectedCount} / 3 selected
+                    </span>
+                  </div>
+
+                  <div className="space-y-4">
+                    {Object.entries(OL_OPTIONAL_GROUPS).map(
+                      ([groupName, options]) => (
+                        <fieldset
+                          key={groupName}
+                          className="rounded-2xl border border-white/10 bg-[#070e1d] p-4">
+                          <legend className="px-2 text-xs font-medium text-slate-300">
+                            {groupName} · Choose one
+                          </legend>
+
+                          <div className="flex flex-wrap gap-2">
+                            {options.map((subject) => {
+                              const selected =
+                                olOptional[groupName] === subject;
+
+                              return (
+                                <button
+                                  key={subject}
+                                  type="button"
+                                  aria-pressed={selected}
+                                  onClick={() =>
+                                    handleOlOptional(groupName, subject)
+                                  }
+                                  className={`
+                                  inline-flex min-h-10 items-center
+                                  gap-1.5 rounded-xl border
+                                  px-3 py-2 text-left text-xs
+                                  transition-colors
+                                  focus-visible:outline-2
+                                  focus-visible:outline-offset-2
+                                  focus-visible:outline-emerald-300
+                                  ${
+                                    selected
+                                      ? "border-emerald-300/40 bg-emerald-400/15 text-emerald-100"
+                                      : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.07]"
+                                  }
+                                `}>
+                                  {selected && (
+                                    <Check
+                                      size={13}
+                                      className="shrink-0"
+                                      aria-hidden="true"
+                                    />
+                                  )}
+
+                                  {subject}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </fieldset>
+                      ),
+                    )}
+                  </div>
+                </section>
+              </>
+            )}
+
+            {/* A/L subjects */}
+            {level === "AL" && (
+              <>
+                <fieldset>
+                  <legend className="mb-3 text-sm font-semibold text-slate-200">
+                    Select your stream
+                  </legend>
+
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+                    {Object.entries(AL_STREAMS).map(([key, stream]) => (
+                      <button
+                        key={key}
+                        type="button"
+                        aria-pressed={alStream === key}
+                        onClick={() => {
+                          setAlStream(key);
+                          setAlSubjects([]);
+                        }}
+                        className={`
+                        min-h-12 rounded-xl border px-3 py-3
+                        text-sm transition-colors
+                        focus-visible:outline-2
+                        focus-visible:outline-offset-2
+                        focus-visible:outline-emerald-300
+                        ${
+                          alStream === key
+                            ? "border-emerald-300/40 bg-emerald-400/15 text-emerald-200"
+                            : "border-white/10 bg-white/[0.02] text-slate-300 hover:bg-white/5"
+                        }
+                      `}>
+                        {stream.label}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+
+                {alStream && (
+                  <fieldset className="rounded-2xl border border-white/10 bg-[#070e1d] p-4 sm:p-5">
+                    <legend className="px-2 text-sm font-semibold text-slate-200">
+                      Main subjects · {alSubjects.length} / 3
+                    </legend>
+
+                    <p className="mb-4 text-xs leading-5 text-slate-400">
+                      {AL_STREAMS[alStream].note}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {AL_STREAMS[alStream].options.map((subject) => {
+                        const selected = alSubjects.includes(subject);
+
+                        return (
+                          <button
+                            key={subject}
+                            type="button"
+                            aria-pressed={selected}
+                            onClick={() => handleAlSubject(subject)}
+                            disabled={!selected && alSubjects.length >= 3}
+                            className={`
+                            inline-flex min-h-11 items-center
+                            gap-1.5 rounded-xl border px-3 py-2
+                            text-left text-xs transition-colors
+                            focus-visible:outline-2
+                            focus-visible:outline-offset-2
+                            focus-visible:outline-emerald-300
+                            disabled:cursor-not-allowed
+                            disabled:opacity-40
+                            ${
+                              selected
+                                ? "border-emerald-300/40 bg-emerald-400/15 text-emerald-100"
+                                : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.07]"
+                            }
+                          `}>
+                            {selected && (
+                              <Check
+                                size={13}
+                                className="shrink-0"
+                                aria-hidden="true"
+                              />
+                            )}
+
+                            {subject}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <p className="mt-4 border-t border-white/10 pt-3 text-xs leading-6 text-slate-400">
+                      English + Common General are added automatically (minor
+                      focus).
+                    </p>
+                  </fieldset>
+                )}
+              </>
+            )}
+
+            {/* Exam date */}
+            <div className="border-t border-white/10 pt-6">
+              <label
+                htmlFor="examDate"
+                className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-200">
+                <CalendarDays
+                  size={17}
+                  className="text-white"
+                  aria-hidden="true"
+                />
+                Exam date
+                <span className="text-xs font-normal text-slate-400">
+                  Optional
+                </span>
+              </label>
+
+              <input
+                id="examDate"
+                type="date"
+                value={examDate}
+                onChange={(event) => setExamDate(event.target.value)}
+                style={{ colorScheme: "dark" }}
+                className="
+                min-h-12 w-full min-w-0 rounded-xl
+                border border-white/15 bg-[#070e1d]
+                px-4 py-3 text-sm text-white
+                transition-colors
+                focus-visible:border-emerald-300/60
+                focus-visible:outline-2
+                focus-visible:outline-offset-2
+                focus-visible:outline-emerald-300
+              "
+              />
+
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                This date is used for your dashboard exam countdown. You can
+                update it later.
+              </p>
             </div>
 
-            {/* 3 subjects */}
-            {alStream && (
-              <div className="mb-6">
-                <label className="font-body block text-sm text-white/70 mb-2">
-                  Select 3 main subjects ({alSubjects.length}/3)
-                </label>
-                <p className="font-body text-[11px] text-white/30 mb-3">
-                  {AL_STREAMS[alStream].note}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {AL_STREAMS[alStream].options.map((subject) => (
-                    <button
-                      key={subject}
-                      type="button"
-                      onClick={() => handleAlSubject(subject)}
-                      disabled={
-                        !alSubjects.includes(subject) && alSubjects.length >= 3
-                      }
-                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-body text-xs transition ${
-                        alSubjects.includes(subject)
-                          ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-300"
-                          : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10 disabled:opacity-40"
-                      }`}>
-                      {alSubjects.includes(subject) && <Check size={12} />}
-                      {subject}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Common subjects — auto */}
-                <p className="font-body text-[11px] text-white/30 mt-3">
-                  English + Common General are added automatically (minor
-                  focus).
-                </p>
+            {/* Existing validation / save errors */}
+            {error && (
+              <div
+                role="alert"
+                className="flex items-start gap-2 rounded-xl border border-red-300/25 bg-red-400/10 px-4 py-3 text-sm leading-6 text-red-200">
+                <AlertCircle
+                  size={17}
+                  className="mt-0.5 shrink-0"
+                  aria-hidden="true"
+                />
+                <p>{error}</p>
               </div>
             )}
-          </>
-        )}
 
-        {/* Exam date */}
-        <div className="mb-6">
-          <label
-            htmlFor="examDate"
-            className="font-body block text-sm text-white/70 mb-2">
-            <CalendarDays size={14} className="inline mr-1.5 -mt-0.5" />
-            Exam date (optional)
-          </label>
-          <input
-            id="examDate"
-            type="date"
-            value={examDate}
-            onChange={(e) => setExamDate(e.target.value)}
-            className="font-body w-full rounded-xl border border-white/10 bg-white/5 py-3 px-4 text-sm text-white outline-none focus:border-emerald-400/70 transition"
-          />
-        </div>
+            {/* Save */}
+            <div className="border-t border-white/10 pt-5">
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saving}
+                className="
+                flex min-h-12 w-full items-center justify-center
+                gap-2 rounded-xl bg-emerald-300 px-5 py-3.5
+                text-sm font-semibold text-emerald-950
+                transition-colors hover:bg-emerald-200
+                focus-visible:outline-2
+                focus-visible:outline-offset-4
+                focus-visible:outline-emerald-300
+                disabled:cursor-wait disabled:opacity-60
+              ">
+                {saving ? (
+                  <span
+                    aria-hidden="true"
+                    className="size-4 animate-spin rounded-full border-2 border-emerald-950/25 border-t-emerald-950 motion-reduce:animate-none"
+                  />
+                ) : (
+                  <ArrowRight size={18} aria-hidden="true" />
+                )}
 
-        {/* Error */}
-        {error && (
-          <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 font-body text-sm text-red-300 mb-4">
-            <AlertCircle size={16} className="shrink-0 mt-0.5" />
-            {error}
+                {saving
+                  ? "Saving..."
+                  : isExisting
+                    ? "Update profile"
+                    : "Continue to Dashboard"}
+              </button>
+            </div>
           </div>
-        )}
-
-        {/* Save */}
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={saving}
-          className="font-body w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-400 py-3.5 font-semibold text-emerald-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition disabled:opacity-60">
-          {saving ? (
-            <div className="w-4 h-4 rounded-full border-2 border-emerald-950/30 border-t-emerald-950 animate-spin" />
-          ) : (
-            <ArrowRight size={18} />
-          )}
-          {saving
-            ? "Saving..."
-            : isExisting
-              ? "Update profile"
-              : "Continue to Dashboard"}
-        </button>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Onboarding;
-

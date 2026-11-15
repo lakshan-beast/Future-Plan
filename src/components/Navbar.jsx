@@ -803,7 +803,7 @@ export default function Navbar() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-3 z-40 px-3 lg:hidden">
-      <div className="pointer-events-auto mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-2xl border border-emerald-300/15 bg-[#070e20]/95 px-3 py-3 shadow-lg shadow-black/20 backdrop-blur-xl">
+      <div className="pointer-events-auto mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-4xl border border-emerald-300/15 bg-[#070e20]/95 px-3 py-3 shadow-lg shadow-black/20 backdrop-blur-xl">
         <Link
           to="/dashboard"
           aria-label="DreamTrack dashboard"
