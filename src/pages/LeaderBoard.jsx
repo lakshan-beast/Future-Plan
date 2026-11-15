@@ -382,7 +382,7 @@ export default function Leaderboard() {
   const myEntry = myIndex >= 0 ? leaders[myIndex] : null;
 
   return (
-    <div className="mt-24 space-y-6 pb-6 lg:mt-6">
+    <div className="mt-24 space-y-8 pb-8 lg:mt-6">
       <header>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>

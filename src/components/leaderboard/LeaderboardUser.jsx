@@ -13,8 +13,8 @@ export default function LeaderboardUser({ leader, large = false }) {
     <span
       className={`
         inline-flex shrink-0 items-center justify-center
-        overflow-hidden rounded-full border
-        border-emerald-300/25 bg-emerald-300
+        overflow-hidden rounded-full border-2
+        border-slate-300/25 bg-slate-300
         font-heading font-bold text-emerald-950
         ${sizeClass}
       `}>

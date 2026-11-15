@@ -210,8 +210,8 @@ import {
   LogOut,
 } from "lucide-react";
 import { GiDreamCatcher } from "react-icons/gi";
-import { FcGoogle } from "react-icons/fc";
-import { MdOutlineMail } from "react-icons/md";
+// import { FcGoogle } from "react-icons/fc";
+// import { MdOutlineMail } from "react-icons/md";
 
 import { auth } from "../firebase/firebase";
 
@@ -283,9 +283,9 @@ export default function Sidebar() {
     return onAuthStateChanged(auth, setUser);
   }, []);
 
-  const isGoogle = user?.providerData?.some(
-    ({ providerId }) => providerId === "google.com",
-  );
+  // const isGoogle = user?.providerData?.some(
+  //   ({ providerId }) => providerId === "google.com",
+  // );
 
   const displayName = user?.displayName || "Student";
   const initial = (displayName.trim()[0] || "S").toUpperCase();
@@ -310,7 +310,7 @@ export default function Sidebar() {
       aria-label="Desktop sidebar"
       className="
         fixed inset-y-0 left-0 z-40 hidden h-dvh w-72
-        flex-col overflow-y-auto border-r border-emerald-300/10
+        flex-col overflow-y-auto rounded-r-4xl border-r-2 border-emerald-300/10
         bg-[#050b1b] px-5 py-6 text-white lg:flex
       ">
       <NavLink
@@ -329,12 +329,12 @@ export default function Sidebar() {
           Dream<span className="text-emerald-300">Track</span>
         </span>
       </NavLink>
-
+{/* 
       <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
         Study workspace
-      </p>
+      </p> */}
 
-      <nav aria-label="Main navigation" className="space-y-2">
+      <nav aria-label="Main navigation" className="space-y-1.5">
         {LINKS.map(({ to, label, icon: Icon }) => {
           const isDashboardRoot = to === "/dashboard" && pathname === "/";
 
@@ -347,13 +347,13 @@ export default function Sidebar() {
                 const active = isActive || isDashboardRoot;
 
                 return `
-                  group flex min-h-12 items-center gap-3 rounded-xl
+                  group flex min-h-12 items-center gap-13 rounded-xl
                   border px-4 py-3 text-sm font-medium
                   transition-colors motion-reduce:transition-none
                   ${
                     active
-                      ? "border-emerald-300/40 bg-emerald-400/15 text-emerald-200 shadow-[0_0_20px_rgba(52,211,153,0.08)]"
-                      : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/5 hover:text-white"
+                      ? "border-emerald-300/15 bg-emerald-400/10 text-emerald-200 shadow-[0_0_20px_rgba(52,211,153,0.08)]"
+                      : "border-slate-600/30 text-slate-300/60 hover:border-white/10 hover:bg-white/5 hover:text-white"
                   }
                 `;
               }}>
@@ -398,7 +398,7 @@ export default function Sidebar() {
           </div>
         </div>
 
-        <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
+        {/* <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
           {isGoogle ? (
             <FcGoogle size={15} aria-hidden="true" />
           ) : (
@@ -409,7 +409,7 @@ export default function Sidebar() {
             />
           )}
           <span>{isGoogle ? "Google account" : "Email account"}</span>
-        </div>
+        </div> */}
 
         {error && (
           <p role="alert" className="mt-3 text-xs text-red-300">
