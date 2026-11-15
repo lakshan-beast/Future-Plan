@@ -403,7 +403,7 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
         <div className="space-y-5 p-5 sm:p-6">
           {/* Profile details + responsive actions */}
           <div className="flex items-start justify-between gap-3 sm:items-center sm:gap-5">
-            <div className="flex gap-3">
+            <div className="flex-col md:flex-row gap-3 ">
               <div className="flex min-w-0 flex-1 items-center gap-3 sm:items-start justify-between">
                 {user.photoURL ? (
                   <img
@@ -436,7 +436,7 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
             </div>
 
             {/* Mobile: vertical | sm and above: horizontal */}
-            <div className="flex shrink-0 flex-col items-center gap-2 sm:flex-row">
+            <div className="flex shrink-0 flex-col items-center gap-1 sm:flex-row">
               <Link
                 to="/onboarding"
                 aria-label="Edit profile"

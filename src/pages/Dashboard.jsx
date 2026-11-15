@@ -1336,7 +1336,7 @@ export default function Dashboard() {
   const displayName = user.displayName?.trim().split(/\s+/)[0] || "Student";
 
   return (
-    <div className="mt-24 space-y-5 pb-6 lg:mt-3">
+    <div className="mt-24 space-y-3 pb-6 lg:mt-3">
       <DashboardWelcome displayName={displayName} />
 
       {logoutError && (
@@ -1359,7 +1359,7 @@ export default function Dashboard() {
 
       <div className="grid min-w-0 grid-cols-1 items-start gap-5 xl:grid-cols-3">
         <div className="min-w-0 xl:col-span-2">
-          <DailyMotivation challengeDay={streak} />
+          <WeeklyForestPreview days={weekDays} />
         </div>
 
         <div className="min-w-0">
@@ -1373,7 +1373,7 @@ export default function Dashboard() {
         </div>
 
         <div className="min-w-0">
-          <WeeklyForestPreview days={weekDays} />
+          <DailyMotivation challengeDay={streak} />
         </div>
       </div>
 

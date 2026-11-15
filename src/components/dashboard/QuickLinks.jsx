@@ -81,10 +81,10 @@ export default function QuickLinks() {
                 to={path}
                 className={`
                   group relative flex h-full flex-col
-                  overflow-hidden rounded-2xl border
+                  overflow-hidden rounded-2xl border-2
                   border-white/10 bg-gradient-to-br ${color}
                   p-3.5 transition-colors duration-200
-                  hover:border-emerald-300/30
+                  hover:border-emerald-300/10 
                   focus-visible:outline-2
                   focus-visible:outline-offset-4
                   focus-visible:outline-emerald-300
@@ -124,7 +124,7 @@ export default function QuickLinks() {
                   {label}
                 </h3>
 
-                <p className="mt-1.5 text-xs leading-5 text-slate-400">
+                <p className="mt-1.5 text-xs leading-5 text-slate-400/80 pl-2">
                   {description}
                 </p>
               </Link>
