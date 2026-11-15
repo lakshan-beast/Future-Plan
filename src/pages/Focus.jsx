@@ -1782,7 +1782,7 @@ export default function Focus() {
           />
         </div>
 
-        <div className="min-w-0 space-y-5">
+        <div className="min-w-0 space-y-3">
           <FocusStreakCard streak={currentStreak} />
           <FocusWeeklyChart data={weeklyData} />
 
