@@ -816,7 +816,7 @@ export default function Navbar() {
             />
           </span>
 
-          <span className="truncate font-heading text-xl font-bold tracking-tight text-white sm:text-2xl">
+          <span className="truncate font-heading text-2xl font-bold tracking-tight text-white sm:text-2xl">
             Dream<span className="text-emerald-300">Track</span>
           </span>
         </Link>

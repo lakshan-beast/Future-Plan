@@ -1194,18 +1194,7 @@ function DashboardWelcome({ displayName }) {
     };
   }, []);
 
-  const dateLabel = now.toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
-  const timeLabel = now.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
+ 
   return (
     <section
       aria-labelledby="dashboard-heading"
@@ -1253,7 +1242,7 @@ function DashboardWelcome({ displayName }) {
 
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#080f20] via-[#080f20]/90 to-transparent" />
 
-      <div className="p-5 sm:p-7 lg:p-8">
+      {/* <div className="p-5 sm:p-7 lg:p-8">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
           Your study overview
         </p>
@@ -1265,11 +1254,11 @@ function DashboardWelcome({ displayName }) {
           <span className="text-emerald-300">{displayName}!</span>
         </h1>
 
-        {/* <p className="mt-4 max-w-lg text-sm leading-7 text-slate-300">
+        <p className="mt-4 max-w-lg text-sm leading-7 text-slate-300">
           See your study progress in one place and choose your next step for
           today. Check your exam countdown, recent activity and milestones, then
           keep moving towards your goals one focused session at a time.
-        </p> */}
+        </p>
 
         <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-slate-300 sm:text-sm">
           <span className="inline-flex items-center gap-2">
@@ -1286,7 +1275,7 @@ function DashboardWelcome({ displayName }) {
             <span className="tabular-nums">{timeLabel}</span>
           </span>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
@@ -1348,7 +1337,7 @@ export default function Dashboard() {
   const displayName = user.displayName?.trim().split(/\s+/)[0] || "Student";
 
   return (
-    <div className="mt-24 space-y-5 pb-6 lg:mt-6">
+    <div className="mt-24 space-y-5 pb-6 lg:mt-3">
       <DashboardWelcome displayName={displayName} />
 
       {logoutError && (
@@ -1367,26 +1356,26 @@ export default function Dashboard() {
         streak={streak}
         onLogout={handleLogout}
       />
+      <BadgesAchievements />
 
-      <div className="grid min-w-0 grid-cols-1 items-start gap-5 xl:grid-cols-4">
+      <div className="grid min-w-0 grid-cols-1 items-start gap-5 xl:grid-cols-3">
         <div className="min-w-0 xl:col-span-2">
           <DailyMotivation challengeDay={streak} />
         </div>
 
         <div className="min-w-0">
-          <WeeklyForestPreview days={weekDays} />
+          <LastActivityCard activity={lastActivity} />
         </div>
       </div>
 
-      <BadgesAchievements />
 
       <div className="grid min-w-0 grid-cols-1 items-start gap-5 md:grid-cols-2">
         <div className="min-w-0">
-          <LastActivityCard activity={lastActivity} />
+          <ExamCountdownCard examDate={examDate} />
         </div>
 
         <div className="min-w-0">
-          <ExamCountdownCard examDate={examDate} />
+          <WeeklyForestPreview days={weekDays} />
         </div>
       </div>
 
