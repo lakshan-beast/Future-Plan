@@ -484,8 +484,8 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
           </div>
 
           {/* Stronger streak background */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-full border border-orange-300/30 bg-gradient-to-r from-orange-500/25 via-orange-400/15 to-amber-400/10 px-4 py-2 pl-5 shadow-[inset_0_1px_0_rgba(253,186,116,0.08)]">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-4xl border border-orange-300/30 bg-gradient-to-r from-orange-500/25 via-orange-400/15 to-amber-400/10 px-2 py-2 pl-2 shadow-[inset_0_1px_0_rgba(253,186,116,0.08)]">
+            <div className="flex items-center gap-2">
               <span className="flex size-11 shrink-0 items-center justify-center rounded-full border-none border-orange-300/20 bg-orange-400/5">
                 <Flame
                   size={25}
@@ -509,7 +509,7 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
             <Link
               to="/leaderboard"
               className="inline-flex min-h-10 items-center gap-1 rounded-lg px-2 text-xs font-medium text-orange-100 transition-colors hover:bg-orange-300/10 hover:text-white">
-              View leaderboard
+               Leaderboard
               <ChevronRight size={14} aria-hidden="true" />
             </Link>
           </div>
