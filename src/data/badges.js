@@ -1,0 +1,78 @@
+// src/data/badges.js
+import {
+  Sprout,
+  Rocket,
+  Compass,
+  Trophy,
+  BookOpen,
+  Flame,
+  Crown,
+  Star,
+} from "lucide-react";
+
+export const BADGES = [
+  {
+    id: 1,
+    name: "First Step",
+    hours: 1,
+    icon: Sprout,
+    theme: "from-emerald-400 to-teal-500",
+    message: "Your journey has begun.",
+  },
+  {
+    id: 2,
+    name: "Getting Started",
+    hours: 3,
+    icon: Rocket,
+    theme: "from-teal-400 to-cyan-500",
+    message: "You're building momentum.",
+  },
+  {
+    id: 3,
+    name: "Focus Builder",
+    hours: 6,
+    icon: Star,
+    theme: "from-cyan-400 to-blue-500",
+    message: "Focus is becoming a habit.",
+  },
+  {
+    id: 4,
+    name: "Focus Master",
+    hours: 10,
+    icon: Compass,
+    theme: "from-blue-400 to-indigo-500",
+    message: "You've found your direction.",
+  },
+  {
+    id: 5,
+    name: "Dedicated Learner",
+    hours: 20,
+    icon: BookOpen,
+    theme: "from-indigo-400 to-purple-500",
+    message: "Knowledge is unlocking.",
+  },
+  {
+    id: 6,
+    name: "Study Champion",
+    hours: 35,
+    icon: Trophy,
+    theme: "from-purple-400 to-fuchsia-500",
+    message: "A well-earned victory.",
+  },
+  {
+    id: 7,
+    name: "Unstoppable",
+    hours: 50,
+    icon: Flame,
+    theme: "from-orange-400 to-red-500",
+    message: "Rising beyond limits.",
+  },
+  {
+    id: 8,
+    name: "Dream Achiever",
+    hours: 75,
+    icon: Crown,
+    theme: "from-amber-400 to-yellow-500",
+    message: "Reaching the summit.",
+  },
+];

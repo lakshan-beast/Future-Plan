@@ -1056,6 +1056,8 @@ import { auth } from "../firebase/firebase";
 
 import Loader from "../components/Loader";
 import ProfileCard from "../components/dashboard/ProfileCard";
+import DailyMotivation from "../components/dashboard/DailyMotivation";
+import BadgesAchievements from "../components/dashboard/BadgeAchievements";
 import ExamCountdownCard from "../components/dashboard/ExamCountdownCard";
 import LastActivityCard from "../components/dashboard/LastActivityCard";
 import WeeklyForestPreview from "../components/dashboard/WeeklyForestCard";
@@ -1074,6 +1076,11 @@ const Dashboard = () => {
 
   const [user, setUser] = useState(null);
   const [authReady, setAuthReady] = useState(false);
+  // const [streak, setStreak] = useState(0);
+
+  // Firestore read — focusStats.currentStreak
+  // const focusStats = data.focusStats || {};
+  // setStreak(focusStats.currentStreak || 0);
 
   // ---------------- Auth state ----------------
   useEffect(() => {
@@ -1122,14 +1129,14 @@ const Dashboard = () => {
         streak={streak}
         onLogout={handleLogout}
       />
+      <BadgesAchievements />
 
+      <DailyMotivation challengeDay={streak} />
       <ExamCountdownCard examDate={examDate} />
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mb-3 border border-white/10 p-2 rounded-3xl">
         <LastActivityCard activity={lastActivity} />
         <WeeklyForestPreview days={weekDays} />
       </div>
-
       <QuickLinks />
       <ToolsSection />
     </div>

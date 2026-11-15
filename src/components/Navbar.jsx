@@ -526,14 +526,16 @@ import { Link } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { motion, AnimatePresence } from "motion/react";
-import { LogOut } from "lucide-react";
+import { LogOut, Bell } from "lucide-react";
 import { GiDreamCatcher } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMail } from "react-icons/md";
+import { NOTIFICATION_EVENT } from "../utils/notification";
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [unread, setUnread] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -550,6 +552,13 @@ const Navbar = () => {
     await signOut(auth);
     window.location.href = "/login";
   };
+
+  // listen — notification event
+  useEffect(() => {
+    const handler = () => setUnread(true);
+    window.addEventListener(NOTIFICATION_EVENT, handler);
+    return () => window.removeEventListener(NOTIFICATION_EVENT, handler);
+  }, []);
 
   return (
     <div className="lg:hidden fixed top-3 left-0 right-0 z-40 px-3 pb-2 bg-gradient-to-b from-[#0b1020] to-transparent pointer-events-none">
@@ -568,6 +577,22 @@ const Navbar = () => {
             <span className="text-emerald-300">Track</span>
           </h1>
         </Link>
+     
+     
+        <motion.button
+          type="button"
+          onClick={() => setUnread(false)}
+          aria-label="Notifications"
+          animate={unread ? { rotate: [0, -8, 8, -4, 4, 0] } : { rotate: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center relative">
+          <Bell size={18} className="text-white/70" />
+
+          {/* Unread dot */}
+          {unread && (
+            <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-emerald-400" />
+          )}
+        </motion.button>
 
         {/* Avatar + menu */}
         <div className="relative">

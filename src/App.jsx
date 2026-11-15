@@ -317,6 +317,7 @@ import ScrollToTop from "./components/ScrollTop";
 import Navbar from "./components/Navbar";
 // import Loader from "./components/Loader";
 import Leaderboard from "./pages/LeaderBoard";
+import NotificationToasts from "./components/NotificationToasts";
 
 // const AppLayout = () => {
 //   <Loader />;
@@ -357,6 +358,7 @@ const AppLayout = () => {
       </div>
 
       {/* Bottom nav — mobile only */}
+      <NotificationToasts />
       <BottomNav />
     </div>
   );
