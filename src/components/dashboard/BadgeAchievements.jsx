@@ -234,6 +234,22 @@ import { Award, CircleCheck, ChevronDown, ChevronUp, Lock } from "lucide-react";
 import { auth, db } from "../../firebase/firebase";
 import { BADGES } from "../../data/badges";
 import AchievementModal from "./AchievementModal";
+import { motion } from "motion/react";
+
+const listVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      StaggerChildren: 0.3,
+      delay: 0.3,
+    },
+  },
+};
+const itemsVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { y: 0, opacity: 1 },
+};
 
 const VISIBLE_COUNT = 5;
 
@@ -385,7 +401,12 @@ export default function BadgesAchievements() {
         </p>
       ) : (
         <>
-          <ul
+          <motion.ul
+            variants={listVariants}
+            initial="hidden"
+            animate="visible"
+            // animate={{ y: 0, opacity: 1 }}
+            // transition={{ ease: "easeOut", delay: 0.3 }}
             aria-label="Study milestones"
             className="
               mt-5 flex gap-3 overflow-x-auto pb-3
@@ -396,7 +417,8 @@ export default function BadgesAchievements() {
               const Icon = badge.icon;
 
               return (
-                <li
+                <motion.li
+                  variants={itemsVariants}
                   key={badge.id}
                   className={`flex w-40 shrink-0 flex-col items-center rounded-b-3xl border-2 px-2 py-4 text-center lg:w-auto  ${
                     badge.unlocked
@@ -470,10 +492,10 @@ export default function BadgesAchievements() {
                     )}
                     {badge.unlocked ? "Unlocked" : "Locked"}
                   </span>
-                </li>
+                </motion.li>
               );
             })}
-          </ul>
+          </motion.ul>
 
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
             <p className="text-xs leading-5 text-slate-400">

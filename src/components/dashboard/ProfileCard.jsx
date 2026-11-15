@@ -403,7 +403,7 @@ export default function ProfileCard({ user, streak = 0, onLogout }) {
         <div className="space-y-5 p-5 sm:p-6">
           {/* Profile details + responsive actions */}
           <div className="flex items-start justify-between gap-3 sm:items-center sm:gap-5">
-            <div className="flex-col md:flex-row gap-3 ">
+            <div className="flex-col md:flex-row gap-3 space-y-2">
               <div className="flex min-w-0 flex-1 items-center gap-3 sm:items-start justify-between">
                 {user.photoURL ? (
                   <img
