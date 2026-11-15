@@ -2024,7 +2024,7 @@ export default function Insights() {
 
       <InsightsStats stats={insights.overallStats} />
 
-      <p className="px-1 text-xs leading-6 text-slate-400">
+      <p className="px-1 text-xs leading-tight text-slate-400">
         “First → Latest” compares the earliest and latest dated results across
         all recorded subjects. Use subject-level results to assess changes
         within a single subject.
