@@ -624,16 +624,16 @@ function MilestoneBanner({
         aria-hidden="true"
         className={`absolute inset-x-2 top-2 z-10 h-2 rounded-full border shadow-lg ${
           badge.unlocked
-            ? "border-amber-200/30 bg-gradient-to-r from-[#765a2d] via-[#e2c487] to-[#765a2d]"
+            ? "border-amber-200/30 bg-gradient-to-r from-[#815918] via-[#e2c487] to-[#765a2d]"
             : "border-slate-500/30 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700"
         }`}
       />
 
       {/* Pennant surface */}
       <div
-        className={`relative flex h-full min-h-80 flex-col items-center overflow-hidden px-5 pb-12 pt-7 text-center ${
+        className={`relative flex h-full min-h-80 flex-col items-center overflow-hidden px-5 pb-12 pt-2 py-3 text-center ${
           badge.unlocked
-            ? "bg-gradient-to-b from-[#22352d] via-[#11251f] to-[#0a1719]"
+            ? "bg-gradient-to-b from-[#03f337af] via-[#11251f] to-[#0a1719]"
             : isNext
               ? "bg-gradient-to-b from-[#23332e] via-[#12201f] to-[#0a151b]"
               : "bg-gradient-to-b from-[#1b2435] via-[#111a29] to-[#0a1220]"
@@ -664,7 +664,7 @@ function MilestoneBanner({
         />
 
         <span
-          className={`relative mb-4 inline-flex min-h-6 items-center gap-1 rounded-full border px-2 py-1 text-[9px] font-medium uppercase tracking-[0.14em] ${
+          className={`relative mb-2 inline-flex min-h-6 items-center gap-1 rounded-full border px-2 py-0 text-[9px] font-medium uppercase tracking-[0.14em] ${
             isNext
               ? "border-amber-300/30 bg-amber-400/10 text-amber-200"
               : badge.unlocked
@@ -688,7 +688,7 @@ function MilestoneBanner({
           {badge.unlocked && (
             <div
               aria-hidden="true"
-              className="absolute -inset-3 rounded-full bg-amber-200/10 blur-xl"
+              className="absolute -inset-3 rounded-full bg-amber-600/10 blur-xl"
             />
           )}
 
@@ -717,17 +717,17 @@ function MilestoneBanner({
         </div>
 
         <p
-          className={`relative mt-6 font-heading text-2xl font-bold ${
+          className={`relative mt-2 font-heading text-2xl font-bold ${
             badge.unlocked ? "text-amber-100" : "text-slate-300"
           }`}>
           {badge.kind === "focus" ? `${badge.hours}h` : "Journey"}
         </p>
 
-        <h3 className="relative mt-1 font-heading text-sm font-bold text-slate-100">
+        <h3 className="relative mt-0 font-heading text-sm font-bold text-slate-100">
           {badge.name}
         </h3>
 
-        <p className="relative mt-3 text-[11px] leading-tight text-slate-400">
+        <p className="relative mt-1 mb-2 text-[11px] leading-tight text-slate-400">
           {badge.unlocked
             ? badge.message
             : badge.kind === "focus"
@@ -735,7 +735,7 @@ function MilestoneBanner({
               : badge.requirement}
         </p>
 
-        <div className="relative mt-auto w-full pt-5">
+        <div className="relative mt-auto w-full pt-3 border-t-2 border-t-emerald-200/10">
           {isNext && (
             <div className="mb-3">
               <div className="mb-1.5 flex justify-between text-[9px] text-amber-100/80">
@@ -906,20 +906,20 @@ export default function BadgesAchievements() {
       <div className="relative">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="mb-2 text-[9px] uppercase tracking-[0.24em] text-amber-200/70">
+            {/* <p className="mb-2 text-[9px] uppercase tracking-[0.24em] text-emerald-200/70">
               Your hall of achievements
-            </p>
+            </p> */}
 
             <h2
               id="milestones-heading"
               className="flex items-center gap-2 text-sm font-semibold text-slate-100">
-              <Crown size={19} className="text-amber-200" aria-hidden="true" />
+              <Crown size={19} className="text-emerald-200" aria-hidden="true" />
               Study Milestones
             </h2>
           </div>
 
           {!loading && !error && (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200/15 bg-amber-300/5 px-3 py-1.5 text-[11px] text-amber-100">
+            <span className="inline-flex items-center gap-2 rounded-full border border-amber-200/15 bg-amber-300/5 px-3 py-1.5 text-[11px] text-emerald-200">
               <Award size={13} aria-hidden="true" />
               {unlockedCount} / {badges.length} earned
             </span>
@@ -954,7 +954,7 @@ export default function BadgesAchievements() {
             </ul>
 
             <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
-              <p className="text-xs leading-6 text-slate-400">
+              <p className="text-xs leading-tight text-slate-400">
                 {nextBadge
                   ? `${Math.max(
                       0,
@@ -968,7 +968,7 @@ export default function BadgesAchievements() {
                   type="button"
                   onClick={() => setShowAll((value) => !value)}
                   aria-expanded={showAll}
-                  className="inline-flex min-h-10 items-center gap-1.5 rounded-lg px-2 text-xs text-amber-200 hover:bg-amber-300/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200">
+                  className="inline-flex min-h-10 items-center gap-1.5 rounded-lg px-2 text-xs text-emerald-200 hover:bg-amber-300/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-200">
                   {showAll ? "Show less" : "View all banners"}
 
                   {showAll ? (
