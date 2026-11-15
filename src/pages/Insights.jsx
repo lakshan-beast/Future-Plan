@@ -2053,7 +2053,7 @@ export default function Insights() {
 
       <InsightsRecommendations items={insights.recommendations} />
 
-      <p className="px-1 text-xs leading-6 text-slate-400">
+      <p className="px-1 text-xs leading-tight text-slate-400">
         These insights use papers and focus sessions stored in this browser for
         your account. They may not include activity recorded on another device.
       </p>
